@@ -7,9 +7,9 @@ import { getNetwork, setSnapshotIndex } from './data/neuralNetworkActions';
 import json from './network/data.json';
 import TrainingImage from './TrainingImage';
 import LayerModal from './networkModals/LayerModal';
-import Slider from 'material-ui/lib/slider';
-import FlatButton from 'material-ui/lib/flat-button';
+import NetworkToolbar from './NetworkToolbar';
 import RaisedButton from 'material-ui/lib/raised-button';
+
 
 export class Main extends React.Component {
   constructor(props) {
@@ -34,8 +34,8 @@ export class Main extends React.Component {
     this.props.dispatch(setSnapshotIndex(val));
   }
   render() {
-      // const trainingDataPoint = json[0];
-    const trainingDataPoint = null;
+      const trainingDataPoint = json[0];
+    // const trainingDataPoint = null;
 
     const $$snapshot = this.props.$$network.get(
       String(this.props.snapshotIndex)
@@ -44,36 +44,22 @@ export class Main extends React.Component {
       return false;
     }
 
-    const max = Number(_.max(this.props.$$network.keySeq().toJS()));
+    const totalEpochs = Number(_.max(this.props.$$network.keySeq().toJS()));
 
-    const isAnyModalOpen = _.isNumber(this.state.layerModalIndex)
+    const isAnyModalOpen = _.isNumber(this.state.layerModalIndex);
 
         // <NetworkSummary $$testResults={$$snapshot.get('testResults')}/>
 
     return (
-      <div className="container text-center" style={{marginBottom: '50px'}}>
-        <div style={{background:'white', padding: '20px 20px 1px 20px', marginBottom: '20px', textAlign: 'center'}}>
-          <RaisedButton label='Choose Network Design'/>
-          <div style={{marginTop: '10px'}}>
-            Epochs: 6, Total Accuracy, Hidden Layers = 30, ETA = 3.0, Sigmoid
-          </div>
-
-          Epoch: {this.props.snapshotIndex}
-          <div style={{width: '400px', display: 'inline-block'}}>
-            <Slider
-              ref='snapshot-slider'
-              style={{marginBottom: '20px'}}
-              step={1}
-              value={this.props.snapshotIndex}
-              max={max}
-              onDragStop={this._onSliderChange}/>
-          </div>
-        </div>
-
+      <div className="container text-center" style={{ marginBottom: '50px' }}>
+        <NetworkToolbar
+          snapshotIndex={this.props.snapshotIndex}
+          onSliderChange={this._onSliderChange}
+          totalEpochs={totalEpochs}/>
         <TrainingImage
           trainingDataPoint={trainingDataPoint}/>
 
-        <div style={{textAlign: 'center'}}>
+        <div style={{ textAlign: 'center' }}>
           <NetworkGraph
             isAnyModalOpen={isAnyModalOpen}
             onLayerModalOpen={this.onLayerModalOpen}
@@ -83,7 +69,7 @@ export class Main extends React.Component {
         </div>
 
         <RaisedButton
-          style={{marginLeft: '530px', marginTop: '10px'}}
+          style={{ marginLeft: '530px', marginTop: '10px' }}
           label="Layer 2 Bias History"
           onClick={_.partial(this.onLayerModalOpen, 1)}/>
 

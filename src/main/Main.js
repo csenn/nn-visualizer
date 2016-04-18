@@ -2,6 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Main from '../neuralNetwork/Main';
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import IconButton from 'material-ui/lib/icon-button';
+import ActionHome from 'material-ui/lib/svg-icons/action/home';
+
 import './main.scss'
 /**
  * It is common practice to have a 'Root' container/component require our main App (this one).
@@ -15,8 +18,11 @@ export default class App extends Component {
     return (
       <div >
         <div className='app-header'>
-          MNIST Neural Network
+          <div>
+            <IconButton style={{marginRight: '20px'}} iconClassName="icon-github-nn" />
+            MNIST Neural Network
           </div>
+        </div>
         <Main/>
       </div>
     );
