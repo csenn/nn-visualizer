@@ -13,9 +13,11 @@ export default class App extends Component {
     // we can use ES6's object destructuring to effectively 'unpack' our props
     const { counter, actions } = this.props;
     return (
-      <div className="main-app-container">
-        <div className="main-app-nav">MNIST Neural Network</div>
-          <Main/>
+      <div >
+        <div className='app-header'>
+          MNIST Neural Network
+          </div>
+        <Main/>
       </div>
     );
   }

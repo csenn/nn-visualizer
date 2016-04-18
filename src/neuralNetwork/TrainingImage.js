@@ -2,6 +2,9 @@ import React from 'react';
 import d3 from 'd3';
 
 
+const WIDTH = 50;
+const HEIGHT = 50;
+
 export default class TrainingImage extends React.Component {
   componentDidMount() {
     this.buildTrainingImage(this.props.trainingDataPoint);
@@ -35,7 +38,7 @@ export default class TrainingImage extends React.Component {
 
     const squareScale = d3.scale.linear()
       .domain([0, 28])
-      .range([0, 100]);
+      .range([0, WIDTH]);
 
     const colorFunc = point => {
       const num = point[0];
@@ -46,8 +49,8 @@ export default class TrainingImage extends React.Component {
     }
 
     const svg = d3.select(domNode).append('svg')
-      .attr('width', '100')
-      .attr('height', '100');
+      .attr('width', WIDTH)
+      .attr('height', WIDTH);
 
     svg.selectAll('g')
       .data(partitionedData)

@@ -17,19 +17,28 @@ export default function (svg, edges, start, end, numberNodes1, numberNodes2, has
     .append('line')
     .attr('stroke-width', d => {
       if (hasTrainingData) {
-        return d.isOn ? '.07' : '.03';
+        const zScore = Math.abs(d.zScore);
+        if (thicken) {
+          // return zScore * .7
+
+          return d.isOn ? '1.5' : '.6';
+        } else {
+          return zScore * .08 ;
+          // return d.isOn ? '.07' : '.03';
+        }
       } else {
         const zScore = Math.abs(d.zScore);
         if (thicken) {
-          return zScore * .7;
+            // return '.7'
+          return zScore * .6;
         } else {
-          return zScore * .1;
+          return zScore * .09;
         }
       }
     })
     .attr('x1', start)
     .attr('x2', `${end}`)
-    .attr('y1', d => yScale1(d.source.index))
+    .attr('y1', d => yScale1(d.source.index) + yScale1(1)/2)
     .attr('y2', d => yScale2(d.target.index) + yScale2(1)/2)
     .style('stroke', d => {
       if (hasTrainingData) {

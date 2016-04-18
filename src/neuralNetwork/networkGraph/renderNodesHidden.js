@@ -1,7 +1,7 @@
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
 
-export default function (svg, nodes, hasTrainingPoint) {
+export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
   const yScale = d3.scale.linear()
     .domain([0, nodes.length])
     .range([0, graphConstants.HEIGHT]);
@@ -62,9 +62,8 @@ export default function (svg, nodes, hasTrainingPoint) {
       return d.activation || d.bias;
     });
 
-  biasLabel.on('click', function () {
-    debugger;
-    console.log('rect');
+  biasLabel.on('click', (d, index) => {
+    onLayerModalOpen(index);
     d3.event.stopPropagation();
   });
 }

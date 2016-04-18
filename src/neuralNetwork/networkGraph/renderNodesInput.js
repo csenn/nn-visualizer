@@ -11,7 +11,7 @@ export default function (svg, nodes, hasTrainingPoint) {
     .data(nodes)
     .enter()
     .append('rect')
-    .attr('width', '10')
+    .attr('width', graphConstants.INPUT_LAYER_NODE_WIDTH)
     .attr('height', yScale(1))
     .attr('stroke-width', '.1')
     .attr('stroke', d => {

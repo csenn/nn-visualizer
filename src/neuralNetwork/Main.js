@@ -4,28 +4,37 @@ import { connect } from 'react-redux';
 import NetworkGraph from './networkGraph/NetworkGraph';
 import NetworkSummary from './NetworkSummary';
 import { getNetwork, setSnapshotIndex } from './data/neuralNetworkActions';
-// import { runNeuralNetwork } from './network/neuralNetwork.new';
 import json from './network/data.json';
-// import networkJson from './network/network.json'
 import TrainingImage from './TrainingImage';
-
-import RaisedButton from 'material-ui/lib/raised-button';
-
-
+import LayerModal from './networkModals/LayerModal';
 import Slider from 'material-ui/lib/slider';
+import FlatButton from 'material-ui/lib/flat-button';
+import RaisedButton from 'material-ui/lib/raised-button';
 
 export class Main extends React.Component {
   constructor(props) {
     super(props);
     props.dispatch(getNetwork(null));
     this._onSliderChange = this._onSliderChange.bind(this);
+    this.state = {
+      layerModalIndex: null,
+      // biasModal
+    };
+    this.onLayerModalOpen = this.onLayerModalOpen.bind(this);
+    this.onLayerModalClose = this.onLayerModalClose.bind(this);
+  }
+  onLayerModalOpen(index) {
+    this.setState({ layerModalIndex: index });
+  }
+  onLayerModalClose() {
+    this.setState({ layerModalIndex: null });
   }
   _onSliderChange() {
     const val = this.refs['snapshot-slider'].getValue();
     this.props.dispatch(setSnapshotIndex(val));
   }
   render() {
-    // const trainingDataPoint = json[0];
+      // const trainingDataPoint = json[0];
     const trainingDataPoint = null;
 
     const $$snapshot = this.props.$$network.get(
@@ -37,25 +46,52 @@ export class Main extends React.Component {
 
     const max = Number(_.max(this.props.$$network.keySeq().toJS()));
 
+    const isAnyModalOpen = _.isNumber(this.state.layerModalIndex)
+
+        // <NetworkSummary $$testResults={$$snapshot.get('testResults')}/>
+
     return (
-      <div className="container text-center">
-        EPOCH: {this.props.snapshotIndex}
-        <div>
-          TOTAL ACCURACY
+      <div className="container text-center" style={{marginBottom: '50px'}}>
+        <div style={{background:'white', padding: '20px 20px 1px 20px', marginBottom: '20px', textAlign: 'center'}}>
+          <RaisedButton label='Choose Network Design'/>
+          <div style={{marginTop: '10px'}}>
+            Epochs: 6, Total Accuracy, Hidden Layers = 30, ETA = 3.0, Sigmoid
+          </div>
+
+          Epoch: {this.props.snapshotIndex}
+          <div style={{width: '400px', display: 'inline-block'}}>
+            <Slider
+              ref='snapshot-slider'
+              style={{marginBottom: '20px'}}
+              step={1}
+              value={this.props.snapshotIndex}
+              max={max}
+              onDragStop={this._onSliderChange}/>
+          </div>
         </div>
-        <Slider
-          ref='snapshot-slider'
-          step={1}
-          value={this.props.snapshotIndex}
-          max={max}
-          onDragStop={this._onSliderChange}/>
-        <NetworkGraph
-          $$snapshot={$$snapshot}
-          testResultsSummary={this.props.testResultsSummary}
-          trainingDataPoint={trainingDataPoint}/>
-        <NetworkSummary $$testResults={$$snapshot.get('testResults')}/>
+
         <TrainingImage
           trainingDataPoint={trainingDataPoint}/>
+
+        <div style={{textAlign: 'center'}}>
+          <NetworkGraph
+            isAnyModalOpen={isAnyModalOpen}
+            onLayerModalOpen={this.onLayerModalOpen}
+            $$snapshot={$$snapshot}
+            testResultsSummary={this.props.testResultsSummary}
+            trainingDataPoint={trainingDataPoint}/>
+        </div>
+
+        <RaisedButton
+          style={{marginLeft: '530px', marginTop: '10px'}}
+          label="Layer 2 Bias History"
+          onClick={_.partial(this.onLayerModalOpen, 1)}/>
+
+
+        <LayerModal
+          $$network={this.props.$$network}
+          onClose={this.onLayerModalClose}
+          layerModalIndex={this.state.layerModalIndex}/>
       </div>
     );
   }

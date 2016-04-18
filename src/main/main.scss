@@ -8,19 +8,32 @@ $accent-orange: #ec6b2d;
 $accent-red: #dd6464;
 
 body {
-  // background-color: $main-bg-color;
-  background-color: white;
+  background-color: $main-bg-color;
+  // background-color: white;
   color: $accent-black;
-  display: flex;
+  // display: flex;
   justify-content: center;
   font-family: 'Raleway', sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
-.main-app-container {
-  padding-top: 2em;
-}
+.app-header {
+    background: #4FC3F7;
 
-.main-app-nav {
-  font-size: 2em;
-  text-align: center;
+    // background: #FFC400;
+    color: #37474F;
+
+    padding: 105px 0;
+    text-align: center;
+    font-size: 36px;
 }
+//
+// .main-app-container {
+//   padding-top: 2em;
+// }
+//
+// .main-app-nav {
+//   font-size: 2em;
+//   text-align: center;
+// }
