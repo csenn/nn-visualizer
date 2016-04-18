@@ -1,0 +1,26 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:100,400);
+
+$main-bg-color: #f1f2f0;
+$accent-blue: #37bbe4;
+$accent-gray: #e1e0dd;
+$accent-black: #35342f;
+$accent-orange: #ec6b2d;
+$accent-red: #dd6464;
+
+body {
+  // background-color: $main-bg-color;
+  background-color: white;
+  color: $accent-black;
+  display: flex;
+  justify-content: center;
+  font-family: 'Raleway', sans-serif;
+}
+
+.main-app-container {
+  padding-top: 2em;
+}
+
+.main-app-nav {
+  font-size: 2em;
+  text-align: center;
+}
