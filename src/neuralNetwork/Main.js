@@ -7,9 +7,11 @@ import { getNetwork, setSnapshotIndex } from './data/neuralNetworkActions';
 import json from './network/data.json';
 import TrainingImage from './TrainingImage';
 import LayerModal from './networkModals/LayerModal';
+import DrawingChooserModal from './networkModals/DrawingChooserModal';
 import NetworkToolbar from './NetworkToolbar';
 import RaisedButton from 'material-ui/lib/raised-button';
-
+import DrawingSlider from './DrawingSlider';
+import './neuralNetwork.scss';
 
 export class Main extends React.Component {
   constructor(props) {
@@ -18,10 +20,13 @@ export class Main extends React.Component {
     this._onSliderChange = this._onSliderChange.bind(this);
     this.state = {
       layerModalIndex: null,
+      drawingChooserModalOpen: false
       // biasModal
     };
     this.onLayerModalOpen = this.onLayerModalOpen.bind(this);
     this.onLayerModalClose = this.onLayerModalClose.bind(this);
+    this._onDrawingChooserModalOpen = this._onDrawingChooserModalOpen.bind(this);
+    this._onDrawingChooserModalClose = this._onDrawingChooserModalClose.bind(this);
   }
   onLayerModalOpen(index) {
     this.setState({ layerModalIndex: index });
@@ -29,17 +34,20 @@ export class Main extends React.Component {
   onLayerModalClose() {
     this.setState({ layerModalIndex: null });
   }
-  _onSliderChange() {
-    const val = this.refs['snapshot-slider'].getValue();
-    this.props.dispatch(setSnapshotIndex(val));
+  _onDrawingChooserModalOpen() {
+    this.setState({ drawingChooserModalOpen: true });
+  }
+  _onDrawingChooserModalClose() {
+    this.setState({ drawingChooserModalOpen: false });
+  }
+  _onSliderChange(index) {
+    this.props.dispatch(setSnapshotIndex(index));
   }
   render() {
-      const trainingDataPoint = json[0];
+      const trainingDataPoint = json[3];
     // const trainingDataPoint = null;
 
-    const $$snapshot = this.props.$$network.get(
-      String(this.props.snapshotIndex)
-    );
+    const $$snapshot = this.props.$$network.get(String(this.props.snapshotIndex));
     if (!$$snapshot) {
       return false;
     }
@@ -56,10 +64,12 @@ export class Main extends React.Component {
           snapshotIndex={this.props.snapshotIndex}
           onSliderChange={this._onSliderChange}
           totalEpochs={totalEpochs}/>
-        <TrainingImage
-          trainingDataPoint={trainingDataPoint}/>
 
         <div style={{ textAlign: 'center' }}>
+          <div style={{ display: 'inline-block', width: '1000px', marginTop: '20px' }}>
+            <DrawingSlider trainingDataPoint={trainingDataPoint}/>
+          </div>
+
           <NetworkGraph
             isAnyModalOpen={isAnyModalOpen}
             onLayerModalOpen={this.onLayerModalOpen}
@@ -67,13 +77,14 @@ export class Main extends React.Component {
             testResultsSummary={this.props.testResultsSummary}
             trainingDataPoint={trainingDataPoint}/>
         </div>
-
         <RaisedButton
           style={{ marginLeft: '530px', marginTop: '10px' }}
           label="Layer 2 Bias History"
           onClick={_.partial(this.onLayerModalOpen, 1)}/>
-
-
+        <DrawingChooserModal
+          $$network={this.props.$$network}
+          onClose={this._onDrawingChooserModalClose}
+          isOpen={this.state.drawingChooserModalOpen}/>
         <LayerModal
           $$network={this.props.$$network}
           onClose={this.onLayerModalClose}

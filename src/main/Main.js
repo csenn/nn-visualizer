@@ -20,7 +20,7 @@ export default class App extends Component {
         <div className='app-header'>
           <div>
             <IconButton style={{marginRight: '20px'}} iconClassName="icon-github-nn" />
-            MNIST Neural Network
+            MNIST Neural Network Visualizer
           </div>
         </div>
         <Main/>
