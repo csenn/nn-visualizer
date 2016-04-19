@@ -4,8 +4,8 @@ var jsonfile = require('jsonfile');
 var neuralNetwork = require('../../../../neural-network-js');
 var mnist = require('mnist-data');
 
-var training_data = mnist.training(0, 1000);
-var testing_data = mnist.testing(0, 500);
+var training_data = mnist.training(0, 10000);
+var testing_data = mnist.testing(0, 1000);
 
 function makeArrayFromIndex(index) {
   var result = [];
@@ -45,7 +45,7 @@ function clean(data, isTest) {
 
 var snapshots = {};
 
-var epochCount = 6;
+var epochCount = 10;
 
 neuralNetwork.runNeuralNetwork({
   sizes: [784, 30, 10],

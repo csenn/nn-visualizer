@@ -53,7 +53,9 @@ export class Main extends React.Component {
       return false;
     }
 
-    const totalEpochs = Number(_.max(this.props.$$network.keySeq().toJS()));
+    const totalEpochs = _.max(
+      this.props.$$network.keySeq().toJS().map(n => Number(n))
+    );
 
     const isAnyModalOpen = _.isNumber(this.state.layerModalIndex);
 
@@ -69,6 +71,7 @@ export class Main extends React.Component {
           dispatch={this.props.dispatch}
           snapshotIndex={this.props.snapshotIndex}
           onSliderChange={this._onSliderChange}
+          testResultsSummary={this.props.testResultsSummary}
           totalEpochs={totalEpochs}/>
 
         <div style={{ textAlign: 'center'}}>

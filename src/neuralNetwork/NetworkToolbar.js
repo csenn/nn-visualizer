@@ -6,7 +6,7 @@ import DrawingSlider from './DrawingSlider';
 const Item = props => {
   const style = {
     display: 'inline-block',
-    marginLeft: '25px',
+    marginLeft: '18px',
     fontSize: '15px'
     //color: 'rgb(100,100,100)'
   }
@@ -28,18 +28,28 @@ export default class extends React.Component {
     this.props.onSliderChange(val)
   }
   render() {
+
+    const count = {correct: 0, total: 0}
+    Object.keys(this.props.testResultsSummary).forEach(k => {
+      const item = this.props.testResultsSummary[k];
+      count.correct += item.correctCount;
+      count.total += item.correctCount + item.wrongCount;
+    })
+
+    const accuracy = Math.round(count.correct/count.total * 100);
+
     return (
-      <div style={{ background:'white', padding: '45px 20px 1px 20px', marginBottom: '40px', textAlign: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
-        <RaisedButton label='Choose Network Design' />
+      <div style={{ background:'white', padding: '15px 20px 1px 20px', marginBottom: '40px', textAlign: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
         <div style={{ marginTop: '20px', marginBottom: '25px' }}>
-          <Item label='Accuracy' value='85%'/>
-          <Item label='Epochs' value='6'/>
+          <Item label='Model Accuracy' value={`${accuracy}%`}/>
+          <Item label='Epochs' value={this.props.totalEpochs}/>
           <Item label='Hidden Layers' value='30'/>
           <Item label='Activation' value='Sigmoid'/>
         </div>
+        <RaisedButton label='Choose Network Design' secondary={true} />
 
         <div style={{ marginTop: '55px', position: 'relative', top: '5px', fontSize: '18px' }}>
-          <strong>Epoch {this.props.snapshotIndex}</strong> - Scroll through "learning phases"
+          <strong>Epoch {this.props.snapshotIndex} of {this.props.totalEpochs}</strong> - Scroll through "learning phases"
         </div>
         <div style={{ width: '400px', display: 'inline-block' }}>
           <Slider
