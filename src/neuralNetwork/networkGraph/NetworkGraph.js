@@ -21,6 +21,9 @@ export default class Network extends React.Component {
     if (nextProps.$$snapshot !== this.props.$$snapshot) {
       return true;
     }
+    if (nextProps.$$selectedDrawing !== this.props.$$selectedDrawing) {
+      return true;
+    }
     return false;
   }
   componentDidUpdate() {
@@ -30,10 +33,12 @@ export default class Network extends React.Component {
   // debugger
   // }
   buildNetwork() {
-    const { $$snapshot, trainingDataPoint, testResultsSummary, onLayerModalOpen } = this.props;
+    const { $$snapshot, $$selectedDrawing, testResultsSummary, onLayerModalOpen } = this.props;
     if (!$$snapshot || $$snapshot.isEmpty()) {
       return false;
     }
+
+    const trainingDataPoint = $$selectedDrawing && $$selectedDrawing.toJS();
 
     const { nodes, edges, activations } = convertToGraph($$snapshot, trainingDataPoint);
     const domNode = this.refs['chart-container'];

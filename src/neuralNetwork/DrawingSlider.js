@@ -1,67 +1,74 @@
 import React from 'react';
 import Slider from 'react-slick';
-import TrainingImage from './TrainingImage'
+import TrainingImage from './TrainingImage';
 import Toggle from 'material-ui/lib/toggle';
+import { setSelectedDrawing } from './data/neuralNetworkActions';
+import json from './network/data.json';
 
 export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isDrawingSelected: false
-    }
+    };
     this._renderSlider = this._renderSlider.bind(this);
     this._onToggle = this._onToggle.bind(this);
+    this._afterChange = this._afterChange.bind(this);
   }
   _afterChange(i) {
-    console.log(i)
+    this.props.dispatch(setSelectedDrawing(json[i]));
   }
   _onToggle() {
+    const nextSelected = !this.state.isDrawingSelected;
+    if (nextSelected) {
+      this._afterChange(0);
+    } else {
+      this.props.dispatch(setSelectedDrawing(null));
+    }
     this.setState({
-      isDrawingSelected: !this.state.isDrawingSelected
-    })
+      isDrawingSelected: nextSelected
+    });
   }
   _renderSlider() {
     if (this.state.isDrawingSelected) {
-      const items = []
-      for (let i=0; i< 10; i++) {
-        items.push((
-            <div style={{display: 'inline-block'}}>
-              <TrainingImage trainingDataPoint={this.props.trainingDataPoint}/>
+      const items = json.map(i=> {
+        return (
+            <div style={{ display: 'inline-block' }}>
+              <TrainingImage trainingDataPoint={i}/>
             </div>
-        ))
-      }
-
+        )
+      })
       return (
         <Slider
-          style={{margin: '20px'}}
-          centerMode={true}
-          arrows={true}
+          style={{ margin: '20px' }}
+          centerMode
+          arrows
           className="center-pic"
-          infinite={true}
+          infinite
           speed={500}
           afterChange={this._afterChange}
           slidesToShow={5}>
           {items}
         </Slider>
-      )
+      );
     }
   }
   render() {
 
     return (
-      <div style={{display: 'inline-block', width: '400px'}}>
-        <div>
-          <div style={{display: 'inline-block', marginBottom: '50px'}}>
-            <Toggle
-              labelStyle={{fontFamily: 'Raleway', fontWeight: 'bold', fontSize: '18px'}}
-              onToggle={this._onToggle}
-              label="View MNIST drawings"
-              labelPosition="right"
-            />
-          </div>
+      <div style={{ display: 'inline-block', width: '400px' }}>
+
+        <div style={{ display: 'inline-block', marginBottom: '10px' }}>
+          <Toggle
+            labelStyle={{ fontFamily: 'Raleway', fontSize: '18px' }}
+            onToggle={this._onToggle}
+            label="Feed network with MNIST drawings"
+            labelPosition="right"
+          />
         </div>
+
         {this._renderSlider()}
       </div>
-    )
+    );
   }
 }

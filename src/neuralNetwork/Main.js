@@ -44,7 +44,8 @@ export class Main extends React.Component {
     this.props.dispatch(setSnapshotIndex(index));
   }
   render() {
-      const trainingDataPoint = json[3];
+    // const trainingDataPoint = this.props.selectedDrawing;
+      //json[3];
     // const trainingDataPoint = null;
 
     const $$snapshot = this.props.$$network.get(String(this.props.snapshotIndex));
@@ -58,24 +59,27 @@ export class Main extends React.Component {
 
         // <NetworkSummary $$testResults={$$snapshot.get('testResults')}/>
 
+
+        // <div style={{ marginTop: '20px',  background: 'white' }}>
+        //   <DrawingSlider dispatch={this.props.dispatch}/>
+        // </div>
     return (
       <div className="container text-center" style={{ marginBottom: '50px' }}>
         <NetworkToolbar
+          dispatch={this.props.dispatch}
           snapshotIndex={this.props.snapshotIndex}
           onSliderChange={this._onSliderChange}
           totalEpochs={totalEpochs}/>
 
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ display: 'inline-block', width: '1000px', marginTop: '20px' }}>
-            <DrawingSlider trainingDataPoint={trainingDataPoint}/>
-          </div>
+        <div style={{ textAlign: 'center'}}>
+
 
           <NetworkGraph
             isAnyModalOpen={isAnyModalOpen}
             onLayerModalOpen={this.onLayerModalOpen}
             $$snapshot={$$snapshot}
             testResultsSummary={this.props.testResultsSummary}
-            trainingDataPoint={trainingDataPoint}/>
+            $$selectedDrawing={this.props.$$selectedDrawing}/>
         </div>
         <RaisedButton
           style={{ marginLeft: '530px', marginTop: '10px' }}
@@ -98,6 +102,7 @@ const mapStateToProps = ($$state) => {
   const snapshotIndex = $$state.getIn(['neuralNetwork', 'snapshotIndex']);
   const $$network = $$state.getIn(['neuralNetwork', 'network']);
   const $$testResults = $$network.getIn([String(snapshotIndex), 'testResults']);
+  const $$selectedDrawing = $$state.getIn(['neuralNetwork', 'selectedDrawing']);
 
   let testResultsSummary;
   if ($$testResults) {
@@ -114,7 +119,7 @@ const mapStateToProps = ($$state) => {
     }, {});
   }
 
-  return { $$network, snapshotIndex, testResultsSummary };
+  return { $$network, snapshotIndex, testResultsSummary, $$selectedDrawing };
 };
 
 export default connect(mapStateToProps)(Main);

@@ -4,7 +4,8 @@ import * as neuralNetworkActions from './neuralNetworkActions';
 
 const initialState = {
   network: {},
-  snapshotIndex: null
+  snapshotIndex: null,
+  selectedDrawing: null
 };
 
 export default createReducer(initialState, {
@@ -12,5 +13,8 @@ export default createReducer(initialState, {
     state.set('network', fromJS(action.payload)),
 
   [neuralNetworkActions.SET_SNAPSHOT_INDEX]: (state, action) =>
-    state.set('snapshotIndex', action.payload)
+    state.set('snapshotIndex', action.payload),
+
+  [neuralNetworkActions.SET_SELECTED_DRAWING]: (state, action) =>
+    state.set('selectedDrawing', fromJS(action.payload))
 });

@@ -13,11 +13,15 @@ import './main.scss'
  */
 export default class App extends Component {
   render() {
-    // we can use ES6's object destructuring to effectively 'unpack' our props
-    const { counter, actions } = this.props;
+
+    let classes = 'app-header ';
+    if (this.props.hasSelectedDrawing) {
+      classes += 'has-selected-drawing';
+    }
+
     return (
       <div >
-        <div className='app-header'>
+        <div className={classes}>
           <div>
             <IconButton style={{marginRight: '20px'}} iconClassName="icon-github-nn" />
             MNIST Neural Network Visualizer
@@ -39,9 +43,9 @@ App.propTypes = {
  * state in this Redux application. 'counter' is a property within our store/state
  * object. By mapping it to props, we can pass it to the child component Counter.
  */
-function mapStateToProps(state) {
+function mapStateToProps($$state) {
   return {
-    counter: state.counter
+    hasSelectedDrawing: !!$$state.getIn(['neuralNetwork', 'selectedDrawing'])
   };
 }
 

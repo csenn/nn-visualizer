@@ -19,8 +19,10 @@ body {
 }
 
 .app-header {
-    // background: #4FC3F7;
-    background: #FFC400;
+    background: #4FC3F7;
+    &.has-selected-drawing {
+      background: #FFC400;
+    }
     color: #37474F;
     color: black;
     padding: 45px 0;

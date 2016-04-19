@@ -4,11 +4,20 @@ import { batchActions } from 'redux-batched-actions';
 
 export const GET_NEURAL_NETWORK = 'GET_NEURAL_NETWORK';
 export const SET_SNAPSHOT_INDEX = 'SET_SNAPSHOT_INDEX';
+export const SET_SELECTED_DRAWING = 'SET_SELECTED_DRAWING';
+
 
 export function setSnapshotIndex(index) {
   return {
     type: SET_SNAPSHOT_INDEX,
     payload: index
+  };
+}
+
+export function setSelectedDrawing(drawing) {
+  return {
+    type: SET_SELECTED_DRAWING,
+    payload: drawing
   };
 }
 
