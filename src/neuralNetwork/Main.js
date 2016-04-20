@@ -69,6 +69,7 @@ export class Main extends React.Component {
       <div className="container text-center" style={{ marginBottom: '50px' }}>
         <NetworkToolbar
           dispatch={this.props.dispatch}
+          isDrawingSelected={!!this.props.$$selectedDrawing}
           snapshotIndex={this.props.snapshotIndex}
           onSliderChange={this._onSliderChange}
           testResultsSummary={this.props.testResultsSummary}

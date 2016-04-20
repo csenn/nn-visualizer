@@ -20,28 +20,32 @@ export default class extends React.Component {
   }
   _onToggle() {
     const nextSelected = !this.state.isDrawingSelected;
-    if (nextSelected) {
-      this._afterChange(0);
-    } else {
-      this.props.dispatch(setSelectedDrawing(null));
-    }
     this.setState({
       isDrawingSelected: nextSelected
     });
+    setTimeout(() => {
+      if (nextSelected) {
+        this._afterChange(0);
+      } else {
+        this.props.dispatch(setSelectedDrawing(null));
+      }
+    }, 10);
+
   }
   _renderSlider() {
-    if (this.state.isDrawingSelected) {
-      const items = json.map(i=> {
+    if (this.props.isDrawingSelected) {
+          const items = json.map(i => {
         return (
             <div style={{ display: 'inline-block' }}>
               <TrainingImage trainingDataPoint={i}/>
             </div>
-        )
-      })
-      return (
+        );
+      });
+          return (
         <Slider
           style={{ margin: '20px' }}
           centerMode
+          dots
           arrows
           className="center-pic"
           infinite
@@ -51,7 +55,7 @@ export default class extends React.Component {
           {items}
         </Slider>
       );
-    }
+        }
   }
   render() {
 
