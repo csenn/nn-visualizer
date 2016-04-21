@@ -36,7 +36,7 @@ export const WIDTH = 1000;
 export const INPUT_LAYER_NODE_WIDTH = 25;
 
 //const HIDDEN_LAYER_NODE_WIDTH = 30;
-export const HIDDEN_LAYER_NODE_WIDTH = 0;
+export const HIDDEN_LAYER_NODE_WIDTH = 30;
 
 export const OUTPUT_LAYER_NODE_WIDTH = 65;
 export const OUTPUT_LAYER_LABEL = 35;

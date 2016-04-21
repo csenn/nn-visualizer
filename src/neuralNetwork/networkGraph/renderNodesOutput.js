@@ -12,7 +12,7 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
 
   const yScale = d3.scale.linear()
     .domain([0, nodes.length])
-    .range([0, graphConstants.HEIGHT]);
+    .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
   const elemEnter = svg
     .append('g')

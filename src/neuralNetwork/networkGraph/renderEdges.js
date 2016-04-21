@@ -4,11 +4,11 @@ import * as graphConstants from './graphConstants';
 export default function (svg, edges, start, end, numberNodes1, numberNodes2, hasTrainingData, thicken) {
   const yScale1 = d3.scale.linear()
     .domain([0, numberNodes1])
-    .range([0, graphConstants.HEIGHT]);
+    .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
   const yScale2 = d3.scale.linear()
     .domain([0, numberNodes2])
-    .range([0, graphConstants.HEIGHT]);
+    .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
   svg.append('g')
     .selectAll('line')

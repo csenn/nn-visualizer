@@ -4,7 +4,7 @@ import * as graphConstants from './graphConstants';
 export default function (svg, nodes, hasTrainingPoint) {
   const yScale = d3.scale.linear()
     .domain([0, nodes.length])
-    .range([0, graphConstants.HEIGHT]);
+    .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
   svg.append('g')
     .selectAll('rect')

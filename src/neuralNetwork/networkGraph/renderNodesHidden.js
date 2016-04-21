@@ -4,7 +4,7 @@ import * as graphConstants from './graphConstants';
 export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
   const yScale = d3.scale.linear()
     .domain([0, nodes.length])
-    .range([0, graphConstants.HEIGHT]);
+    .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
   const elemEnter = svg.append('g')
     .selectAll('g')
@@ -25,26 +25,33 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
       .attr('rx', 3)
       .attr('ry', 3)
       .attr('stroke', d => {
-        if (hasTrainingPoint) {
-          return d.activation > .5
-            ? graphConstants.WITH_TRAINING_ON
-            : graphConstants.WITH_TRAINING_OFF;
-        }
-        return 'rgb(190, 190, 190)';
+        return d.activation > 0.5
+          ? graphConstants.WITH_TRAINING_ON
+          : graphConstants.WITH_TRAINING_OFF;
       })
       .attr('fill', d => {
-        if (hasTrainingPoint) {
-          return d.activation > .5
-            ? graphConstants.WITH_TRAINING_ON
-            : graphConstants.WITH_TRAINING_OFF;
-        }
-        return 'rgb(230, 230, 230)';
+        return d.activation > .5
+          ? graphConstants.WITH_TRAINING_ON
+          : graphConstants.WITH_TRAINING_OFF;
       });
+
+      elemEnter.append('text')
+        .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
+        .attr('font-size', 10)
+        .attr('dy', d => 11)
+        .attr('text-anchor', 'middle')
+        .attr('stroke-width', '.5')
+        .attr('stroke', d => d.activation > .5 ? 'black' : 'white')
+        .text(d => d.activation);
   }
 
   // Bias Label
   const biasLabel = elemEnter.append('text')
-    .attr('dx', - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2)
+    .attr('dx', () => {
+      return hasTrainingPoint
+        ? - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2
+        : - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
+    })
     .attr('font-size', 11)
     .attr('dy', d => 11)
     .attr('text-anchor', 'middle')
@@ -59,7 +66,7 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
         : graphConstants.NO_TRAINING_NEGATIVE;
     })
     .text(d => {
-      return d.activation || d.bias;
+      return d.bias;
     });
 
   biasLabel.on('click', (d, index) => {

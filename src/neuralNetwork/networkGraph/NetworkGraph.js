@@ -54,7 +54,6 @@ export default class Network extends React.Component {
     const graphBody = svg.append('g')
       .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`)
 
-
     renderHeaderLayer(svg);
 
     // Render Nodes. Each Layer is pretty different, so split up
@@ -65,8 +64,13 @@ export default class Network extends React.Component {
 
     // Render Edges
     const start1 = graphConstants.INPUT_LAYER_NODE_WIDTH;
-    const end1 = graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
-    const start2 = graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5;
+    const end1 = hasTrainingPoint
+      ? graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
+      : graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2  
+
+    const start2 = hasTrainingPoint
+      ? graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5
+      : graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5 - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
     const end2 = graphConstants.WIDTH - graphConstants.BIAS_LABEL_WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL;
 
     const edges1 = [];
