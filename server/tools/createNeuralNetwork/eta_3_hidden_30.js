@@ -43,22 +43,70 @@ function clean(data, isTest) {
 }
 
 
-var snapshots = {};
+var compressImage = function(imageData) {
+  var compressed = {}
+  for (var j=0; j<imageData.length; j++) {
+    var num = imageData[j][0];
+    if (num !== 0) {
+      compressed[j] = num;
+    }
+  }
+  return compressed;
+}
+
+var compressResult = function(resultData) {
+  return _.indexOf(_.flattenDeep(resultData), 1);
+}
+
+var cleanTrainingData = clean(training_data);
+
+// Ensure there are no duplicates
+var idsTaken = {};
+function addSamples(drawingSample, ids, num) {
+  var found = 0;
+  for (var i=0; i<ids.length; i++) {
+    if (!idsTaken[ids[i]]) {
+      var trainingImage = cleanTrainingData[ids[i]];
+      drawingSample.push({
+        x: compressImage(trainingImage.x),
+        yIndex: compressResult(trainingImage.y)
+      })
+      idsTaken[ids[i]] = true;
+      found ++;
+    }
+    if (found === num) {
+      break;
+    }
+  }
+}
+
 
 var epochCount = 10;
-
+var network = {
+  snapshots: {},
+  drawingSamples: []
+};
 neuralNetwork.runNeuralNetwork({
   sizes: [784, 30, 10],
-  trainingData: clean(training_data),
+  trainingData: cleanTrainingData,
   epochs: epochCount,
   miniBatchSize: 10,
   eta: 3,
   testData: clean(testing_data, true),
   onStateUpdate: (networkState, epoch) => {
-    snapshots[epoch] = networkState;
+
+    network.snapshots[epoch] = networkState;
+
     if (epoch === epochCount) {
+
+      for (key in network.snapshots[epoch].testResults) {
+        var result = network.snapshots[epoch].testResults[key];
+        addSamples(network.drawingSamples, result.correct, 2);
+        addSamples(network.drawingSamples, _.shuffle(_.flatten(_.values(result.wrong))), 1);
+      }
+
       var filePath = path.join(__dirname, '../', '../', 'json', 'networks', 'eta_hidden_30.json');
-      jsonfile.writeFile(filePath, snapshots, function(err) {
+      jsonfile.writeFile(filePath, network, function(err) {
         if (err) {
           console.error(err);
         } else {
@@ -68,12 +116,3 @@ neuralNetwork.runNeuralNetwork({
     }
   }
 });
-
-
-
-// var file = 'data.json'
-// var obj = {name: 'JP'}
-//
-// jsonfile.writeFile(file, done, function (err) {
-//   console.error(err)
-// })

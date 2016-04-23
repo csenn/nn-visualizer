@@ -2,22 +2,32 @@ import _ from 'lodash';
 import simpleStats from 'simple-statistics';
 import { crossProduct, addMatrix, applyFunctionOverMatrix } from './network/matrixUtils';
 
+export function uncompressImage(compressedImage) {
+  const image = [];
+  for (let i = 0; i < 784; i++) {
+    if (compressedImage[i]) {
+      image.push([compressedImage[i]]);
+    } else {
+      image.push([0]);
+    }
+  }
+  return image;
+}
+
 function calculateSigmoid(num) {
   return 1 / (1 + Math.pow(Math.E, -num));
 }
 
 function roundThousandth(num) {
-  return Math.round(num * 1000) / 1000
+  return Math.round(num * 1000) / 1000;
 }
 
-export function calculateActivations(xInit, biases, weights) {
-  let x = applyFunctionOverMatrix(xInit , val => val / 255 );
+export function calculateActivations(x, biases, weights) {
   let activation = x;
   const activations = [x];
   for (let i = 0; i < biases.length; i++) {
     const cross = crossProduct(weights[i], activation);
     const z = addMatrix(cross, biases[i]);
-    const thing =   _.max(_.flattenDeep(x))
     activation = applyFunctionOverMatrix(z, calculateSigmoid);
     activations.push(activation);
   }
@@ -27,7 +37,6 @@ export function calculateActivations(xInit, biases, weights) {
 export function convertToGraph($$snapshot, dataPoint) {
   const nodes = [[]];
   let edges = [];
-
 
   const biases = $$snapshot.get('biases').toJS();
   const weights = $$snapshot.get('weights').toJS();
@@ -52,7 +61,7 @@ export function convertToGraph($$snapshot, dataPoint) {
     nodes.push([]);
     nodes[layerIndex + 1] = [];
     biasLayer.forEach((bias, biasIndex) => {
-      const node = { bias: roundThousandth(bias[0])};
+      const node = { bias: roundThousandth(bias[0]) };
       if (activations) {
         node.activation = roundThousandth(activations[layerIndex + 1][biasIndex]);
       }

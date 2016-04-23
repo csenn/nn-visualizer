@@ -1,11 +1,14 @@
+import _ from 'lodash';
 import React from 'react';
 import Slider from 'react-slick';
+import { connect } from 'react-redux';
 import TrainingImage from './TrainingImage';
 import Toggle from 'material-ui/lib/toggle';
 import { setSelectedDrawing } from './data/neuralNetworkActions';
-import json from './network/data.json';
+import { uncompressImage } from './networkUtils';
+import json from './network/data.json'
 
-export default class extends React.Component {
+class DrawingSlider extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +19,7 @@ export default class extends React.Component {
     this._afterChange = this._afterChange.bind(this);
   }
   _afterChange(i) {
-    this.props.dispatch(setSelectedDrawing(json[i]));
+    this.props.dispatch(setSelectedDrawing(this.props.drawingSamples[i]));
   }
   _onToggle() {
     const nextSelected = !this.state.isDrawingSelected;
@@ -34,7 +37,7 @@ export default class extends React.Component {
   }
   _renderSlider() {
     if (this.props.isDrawingSelected) {
-      const items = json.map(i => {
+      const items = this.props.drawingSamples.map(i => {
         return (
             <div style={{ display: 'inline-block', margin: '7px 0' }}>
               <TrainingImage trainingDataPoint={i}/>
@@ -45,7 +48,6 @@ export default class extends React.Component {
         <Slider
           style={{ margin: '20px' }}
           centerMode
-          dots
           arrows
           className="center-pic"
           infinite
@@ -76,3 +78,17 @@ export default class extends React.Component {
     );
   }
 }
+
+function mapStateToProps($$state) {
+  const drawingSamples = [];
+  const $$samples = $$state.getIn(['neuralNetwork', 'network', 'drawingSamples']);
+  $$samples.forEach($$sample => {
+    drawingSamples.push({
+      x: uncompressImage($$sample.get('x').toJS()),
+      yIndex: $$sample.get('yIndex')
+    });
+  });
+  return { drawingSamples: _.sortBy(drawingSamples, d => d.yIndex) };
+}
+
+export default connect(mapStateToProps)(DrawingSlider);

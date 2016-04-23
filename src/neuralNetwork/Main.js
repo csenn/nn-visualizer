@@ -12,7 +12,7 @@ import './neuralNetwork.scss';
 import * as graphConstants from './networkGraph/graphConstants';
 import InfoButtons from './infoButtons/InfoButtons';
 
-export class Main extends React.Component {
+class Main extends React.Component {
   constructor(props) {
     super(props);
     props.dispatch(getNetwork(null));
@@ -47,13 +47,13 @@ export class Main extends React.Component {
       //json[3];
     // const trainingDataPoint = null;
 
-    const $$snapshot = this.props.$$network.get(String(this.props.snapshotIndex));
+    const $$snapshot = this.props.$$network.getIn(['snapshots', String(this.props.snapshotIndex)]);
     if (!$$snapshot) {
       return false;
     }
 
     const totalEpochs = _.max(
-      this.props.$$network.keySeq().toJS().map(n => Number(n))
+      this.props.$$network.get('snapshots').keySeq().toJS().map(n => Number(n))
     );
 
     const isAnyModalOpen = _.isNumber(this.state.layerModalIndex);
@@ -64,6 +64,8 @@ export class Main extends React.Component {
         // <div style={{ marginTop: '20px',  background: 'white' }}>
         //   <DrawingSlider dispatch={this.props.dispatch}/>
         // </div>
+
+
     return (
       <div className="container text-center" style={{ marginBottom: '50px' }}>
         <NetworkToolbar
@@ -84,9 +86,8 @@ export class Main extends React.Component {
           />
           <InfoButtons
             $$selectedDrawing={this.props.$$selectedDrawing}
-            $$network={this.props.$$network}
+            $$network={this.props.$$network.get('snapshots')}
           />
-
           <div style={{ display: 'inline-block', marginTop: '150px', maxWidth: graphConstants.WIDTH }}>
             You can see just how difficult it is to make intuitive sense of even a small neural network. The relationships between the movement
             of biases, weights, and number of hidden nodes is very difficult to intuitvely grasp. As you switch from drawing to drawing, you can
@@ -95,12 +96,12 @@ export class Main extends React.Component {
           </div>
         </div>
         <DrawingChooserModal
-          $$network={this.props.$$network}
+          $$network={this.props.$$network.get('snapshots')}
           onClose={this._onDrawingChooserModalClose}
           isOpen={this.state.drawingChooserModalOpen}
         />
         <LayerModal
-          $$network={this.props.$$network}
+          $$network={this.props.$$network.get('snapshots')}
           onClose={this.onLayerModalClose}
           layerModalIndex={this.state.layerModalIndex}
         />
@@ -112,7 +113,7 @@ export class Main extends React.Component {
 const mapStateToProps = ($$state) => {
   const snapshotIndex = $$state.getIn(['neuralNetwork', 'snapshotIndex']);
   const $$network = $$state.getIn(['neuralNetwork', 'network']);
-  const $$testResults = $$network.getIn([String(snapshotIndex), 'testResults']);
+  const $$testResults = $$network.getIn(['snapshots', String(snapshotIndex), 'testResults']);
   const $$selectedDrawing = $$state.getIn(['neuralNetwork', 'selectedDrawing']);
 
   let testResultsSummary;

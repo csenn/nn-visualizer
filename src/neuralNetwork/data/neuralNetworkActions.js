@@ -29,7 +29,7 @@ export function getNetwork(snapshot) {
           type: GET_NEURAL_NETWORK,
           payload: response.data
         },
-        setSnapshotIndex(_.max(Object.keys(response.data)))
+        setSnapshotIndex(_.max(Object.keys(response.data.snapshots)))
       ]));
     });
   };
