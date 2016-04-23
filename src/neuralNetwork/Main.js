@@ -2,16 +2,15 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import NetworkGraph from './networkGraph/NetworkGraph';
-import NetworkSummary from './NetworkSummary';
 import { getNetwork, setSnapshotIndex } from './data/neuralNetworkActions';
-import json from './network/data.json';
-import TrainingImage from './TrainingImage';
+// import json from './network/data.json';
 import LayerModal from './networkModals/LayerModal';
 import DrawingChooserModal from './networkModals/DrawingChooserModal';
 import NetworkToolbar from './NetworkToolbar';
 import RaisedButton from 'material-ui/lib/raised-button';
-import DrawingSlider from './DrawingSlider';
 import './neuralNetwork.scss';
+import * as graphConstants from './networkGraph/graphConstants';
+import InfoButtons from './infoButtons/InfoButtons';
 
 export class Main extends React.Component {
   constructor(props) {
@@ -73,22 +72,21 @@ export class Main extends React.Component {
           snapshotIndex={this.props.snapshotIndex}
           onSliderChange={this._onSliderChange}
           testResultsSummary={this.props.testResultsSummary}
-          totalEpochs={totalEpochs}/>
-
+          totalEpochs={totalEpochs}
+        />
         <div style={{ textAlign: 'center'}}>
-
-
           <NetworkGraph
             isAnyModalOpen={isAnyModalOpen}
             onLayerModalOpen={this.onLayerModalOpen}
             $$snapshot={$$snapshot}
             testResultsSummary={this.props.testResultsSummary}
             $$selectedDrawing={this.props.$$selectedDrawing}/>
+            <InfoButtons/>
         </div>
-        <RaisedButton
-          style={{ marginLeft: '530px', marginTop: '10px' }}
-          label="Layer 2 Bias History"
-          onClick={_.partial(this.onLayerModalOpen, 1)}/>
+
+        <div style={{marginTop: '100px'}}>
+          Text
+        </div>
         <DrawingChooserModal
           $$network={this.props.$$network}
           onClose={this._onDrawingChooserModalClose}

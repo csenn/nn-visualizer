@@ -34,14 +34,14 @@ export default class extends React.Component {
   }
   _renderSlider() {
     if (this.props.isDrawingSelected) {
-          const items = json.map(i => {
+      const items = json.map(i => {
         return (
-            <div style={{ display: 'inline-block' }}>
+            <div style={{ display: 'inline-block', margin: '7px 0' }}>
               <TrainingImage trainingDataPoint={i}/>
             </div>
         );
       });
-          return (
+      return (
         <Slider
           style={{ margin: '20px' }}
           centerMode
@@ -55,7 +55,7 @@ export default class extends React.Component {
           {items}
         </Slider>
       );
-        }
+    }
   }
   render() {
 

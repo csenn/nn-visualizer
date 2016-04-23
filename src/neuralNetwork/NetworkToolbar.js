@@ -48,7 +48,15 @@ export default class extends React.Component {
         </div>
         <RaisedButton label="Choose Network Design" secondary />
 
-        <div style={{ marginTop: '55px', position: 'relative', top: '5px', fontSize: '18px' }}>
+
+        <div style={{ marginTop: '65px', marginBottom: '0px' }}>
+          <DrawingSlider
+            dispatch={this.props.dispatch}
+            isDrawingSelected={this.props.isDrawingSelected}
+          />
+        </div>
+
+        <div style={{ marginTop: '45px', position: 'relative', top: '5px', fontSize: '18px' }}>
           <strong>Epoch {this.props.snapshotIndex} of {this.props.totalEpochs }</strong>
           - Scroll through "learning phases"
         </div>
@@ -57,16 +65,10 @@ export default class extends React.Component {
             ref="snapshot-slider"
             style={{ marginBottom: '20px' }}
             step={1}
+            primary={true}
             value={this.props.snapshotIndex}
             max={this.props.totalEpochs}
             onDragStop={this._onSliderChange}
-          />
-        </div>
-
-        <div style={{ marginTop: '40px', marginBottom: '20px' }}>
-          <DrawingSlider
-            dispatch={this.props.dispatch}
-            isDrawingSelected={this.props.isDrawingSelected}
           />
         </div>
       </div>
