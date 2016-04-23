@@ -74,27 +74,32 @@ export class Main extends React.Component {
           testResultsSummary={this.props.testResultsSummary}
           totalEpochs={totalEpochs}
         />
-        <div style={{ textAlign: 'center'}}>
+        <div style={{ textAlign: 'center' }}>
           <NetworkGraph
             isAnyModalOpen={isAnyModalOpen}
             onLayerModalOpen={this.onLayerModalOpen}
             $$snapshot={$$snapshot}
             testResultsSummary={this.props.testResultsSummary}
-            $$selectedDrawing={this.props.$$selectedDrawing}/>
-            <InfoButtons/>
+            $$selectedDrawing={this.props.$$selectedDrawing}
+          />
+          <InfoButtons
+            $$selectedDrawing={this.props.$$selectedDrawing}
+            $$network={this.props.$$network}
+          />
         </div>
-
-        <div style={{marginTop: '100px'}}>
+        <div style={{ marginTop: '100px' }}>
           Text
         </div>
         <DrawingChooserModal
           $$network={this.props.$$network}
           onClose={this._onDrawingChooserModalClose}
-          isOpen={this.state.drawingChooserModalOpen}/>
+          isOpen={this.state.drawingChooserModalOpen}
+        />
         <LayerModal
           $$network={this.props.$$network}
           onClose={this.onLayerModalClose}
-          layerModalIndex={this.state.layerModalIndex}/>
+          layerModalIndex={this.state.layerModalIndex}
+        />
       </div>
     );
   }

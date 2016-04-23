@@ -10,7 +10,7 @@ function roundThousandth(num) {
   return Math.round(num * 1000) / 1000
 }
 
-function calculateActivations(x, biases, weights) {
+export function calculateActivations(x, biases, weights) {
   let activation = x;
   const activations = [x];
   for (let i = 0; i < biases.length; i++) {

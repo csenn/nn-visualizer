@@ -15,14 +15,14 @@ export default class LineChart extends React.Component {
     this._renderChart();
   }
   componentWillUmount() {
-    debugger;
+    d3.select(domNode).selectAll('*').remove();
+    d3.selectAll('.line-chart-tooltip').remove();
   }
   _renderChart() {
+    debugger
     const labels = this.props.labels;
     const series = this.props.series;
     const domNode = this.refs['chart-box'];
-
-    d3.select(domNode).selectAll('*').remove();
 
     const margin = { top: 0, right: 20, bottom: 50, left: 60 };
     const width = 700 - margin.left - margin.right;
@@ -54,13 +54,11 @@ export default class LineChart extends React.Component {
       .tickPadding(10);
 
     const line = d3.svg.line()
-      .interpolate('cardinal')
+      .interpolate(this.props.interpolation || 'cardinal')
       .x((d, i) => xScale(i))
       .y(d => y(d));
 
-
     // Define the div for the tooltip. Make sure none already exist.
-    d3.selectAll('.line-chart-tooltip').remove();
     const div = d3.select(domNode)
       .append('div')
       .attr('class', 'line-chart-tooltip')
@@ -79,7 +77,7 @@ export default class LineChart extends React.Component {
       .attr('transform', `translate(0, ${height})`)
       .call(xAxis)
       .append('text')
-      .attr('y', 45)
+      .attr('y', 40)
       .attr('x', width/2 + 100)
       .style('text-anchor', 'end')
       .text('Epochs - (Learning Phases)');
@@ -105,7 +103,7 @@ export default class LineChart extends React.Component {
         .attr('fill', 'none')
         .style('stroke', colorFunc);
 
-        // Add the scatterplot
+    // Add the scatterplot
     svg.selectAll('dot')
         .data(series)
         .enter()
@@ -121,10 +119,16 @@ export default class LineChart extends React.Component {
         .attr('fill', (d, i, i2) => colorFunc(i2))
         .on('mouseover', (d, i, i2) => {
           const coord = d3.mouse(domNode);
+          const tooltipHtml = `
+            <div>
+              <div style="padding-bottom:3px;">Bias ${i2 + 1}</div>
+              <strong>${Math.round(d * 10000) / 10000}</strong>
+            </div>
+          `
           div.transition()
             .duration(200)
             .style('opacity', .9);
-          div.html(`<div>Bias ${i2 + 1}: <strong>${Math.round(d * 10000) / 10000}</strong></div>`)
+          div.html(tooltipHtml)
             .style('left', (coord[0] - 50) + 'px')
             .style('top', (coord[1] - 40) + 'px');
         })

@@ -20,7 +20,7 @@ export default class InfoButtons extends React.Component {
   render() {
     const styles = Object.assign({
       position: 'absolute'
-    }, this.props.styles);
+    }, this.props.style);
 
     const actions = [
       <RaisedButton
@@ -30,10 +30,20 @@ export default class InfoButtons extends React.Component {
       />
     ];
 
+    let content = false;
+    if (this.state.isOpen) {
+      content = (
+        <div style={{ lineHeight: '1.5' }}>
+          {this.props.children}
+        </div>
+      );
+    }
+
     return (
       <span style={styles}>
         <RaisedButton
-          style={{width: '175px'}}
+          style={{ width: '160px'}}
+          labelStyle={{ fontSize: '12px' }}
           label={this.props.buttonLabel}
           onClick={this._openModal}
         />
@@ -44,9 +54,7 @@ export default class InfoButtons extends React.Component {
           open={this.state.isOpen}
           onRequestClose={this._closeModal}
         >
-          <div style={{lineHeight: '1.5'}}>
-            {this.props.children}
-          </div>
+          {content}
         </Dialog>
       </span>
     );
