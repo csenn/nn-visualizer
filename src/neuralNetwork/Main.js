@@ -86,9 +86,13 @@ export class Main extends React.Component {
             $$selectedDrawing={this.props.$$selectedDrawing}
             $$network={this.props.$$network}
           />
-        </div>
-        <div style={{ marginTop: '100px' }}>
-          Text
+
+          <div style={{ display: 'inline-block', marginTop: '150px', maxWidth: graphConstants.WIDTH }}>
+            You can see just how difficult it is to make intuitive sense of even a small neural network. The relationships between the movement
+            of biases, weights, and number of hidden nodes is very difficult to intuitvely grasp. As you switch from drawing to drawing, you can
+            clearly see the network "turn on"  different input nodes for a given "number", yet it is still able to categorize the drawings correctly.
+            The network's ability to learn relationships between datapoints is astouding.
+          </div>
         </div>
         <DrawingChooserModal
           $$network={this.props.$$network}

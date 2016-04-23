@@ -32,7 +32,7 @@ export default function (svg, edges, start, end, numberNodes1, numberNodes2, has
             // return '.7'
           return zScore * .6;
         } else {
-          return zScore * .09;
+          return zScore * .07;
         }
       }
     })

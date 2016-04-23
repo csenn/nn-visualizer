@@ -19,7 +19,6 @@ export default class LineChart extends React.Component {
     d3.selectAll('.line-chart-tooltip').remove();
   }
   _renderChart() {
-    debugger
     const labels = this.props.labels;
     const series = this.props.series;
     const domNode = this.refs['chart-box'];

@@ -10,12 +10,14 @@ function roundThousandth(num) {
   return Math.round(num * 1000) / 1000
 }
 
-export function calculateActivations(x, biases, weights) {
+export function calculateActivations(xInit, biases, weights) {
+  let x = applyFunctionOverMatrix(xInit , val => val / 255 );
   let activation = x;
   const activations = [x];
   for (let i = 0; i < biases.length; i++) {
     const cross = crossProduct(weights[i], activation);
     const z = addMatrix(cross, biases[i]);
+    const thing =   _.max(_.flattenDeep(x))
     activation = applyFunctionOverMatrix(z, calculateSigmoid);
     activations.push(activation);
   }

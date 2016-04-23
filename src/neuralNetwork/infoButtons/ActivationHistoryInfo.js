@@ -27,8 +27,6 @@ export default class InfoButtons extends React.Component {
       activations.push(epochActivations[this.props.layer]);
     });
 
-    debugger;
-
     for (let i = 0; i < activations.length; i++) {
       for (let j = 0; j < activations[i].length; j++) {
         if (!series[j]) {
@@ -44,11 +42,15 @@ export default class InfoButtons extends React.Component {
     if (!this.props.$$selectedDrawing) {
       return false;
     }
+    const modalTitle = this.props.layer === 2
+      ? 'Network Predictions For Current Drawing'
+      : 'Activation History';
+
     return (
       <InfoButtonTemplate
         {...this.props}
         buttonLabel="Activation History"
-        modalTitle="Activation History"
+        modalTitle={modalTitle}
       >
         {this._renderContent()}
       </InfoButtonTemplate>
