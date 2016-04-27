@@ -6,11 +6,16 @@ export default function (svg, nodes, hasTrainingPoint) {
     .domain([0, nodes.length])
     .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
-  svg.append('g')
-    .selectAll('rect')
-    .data(nodes)
+  const elems = svg
+    .selectAll('.input-nodes')
+    .data(nodes);
+
+  const enteringElems = elems
     .enter()
     .append('rect')
+    .attr('class', 'input-nodes')
+
+  elems
     .attr('width', graphConstants.INPUT_LAYER_NODE_WIDTH)
     .attr('height', yScale(1))
     .attr('stroke-width', '.1')

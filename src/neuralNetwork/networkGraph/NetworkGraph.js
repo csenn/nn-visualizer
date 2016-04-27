@@ -14,10 +14,6 @@ export default class Network extends React.Component {
     this.buildNetwork();
   }
   shouldComponentUpdate(nextProps) {
-    // if (nextProps.isAnyModalOpen) {
-    //   d3.select(this.refs['chart-container']).selectAll('*').remove();
-    //   return false;
-    // }
     if (nextProps.$$snapshot !== this.props.$$snapshot) {
       return true;
     }
@@ -44,17 +40,17 @@ export default class Network extends React.Component {
     const domNode = this.refs['chart-container'];
     const hasTrainingPoint = !!trainingDataPoint;
 
-    // Clear SVG, is there an update instead?
-    d3.select(domNode).selectAll('*').remove();
 
-    const svg = d3.select(domNode).append('svg')
+    const svg = d3.select(this.refs['chart-svg'])
       .attr('width', graphConstants.WIDTH + 2)
       .attr('height', graphConstants.HEIGHT);
 
-    const graphBody = svg.append('g')
-      .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`)
+    // const graphBody = svg.append('g')
+    //   .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`)
 
-    renderHeaderLayer(svg);
+    const graphBody = svg;
+
+    // renderHeaderLayer(svg);
 
     // Render Nodes. Each Layer is pretty different, so split up
     renderNodesInput(graphBody, nodes[0], hasTrainingPoint);
@@ -85,14 +81,16 @@ export default class Network extends React.Component {
     }
 
     renderEdges(graphBody, edges1, start1, end1, nodes[0].length, nodes[1].length,
-      hasTrainingPoint);
+      hasTrainingPoint, false, 0);
     renderEdges(graphBody, edges2, start2, end2, nodes[1].length, nodes[2].length,
-      hasTrainingPoint, true);
+      hasTrainingPoint, true, 1);
   }
 
   render() {
     return (
-      <div ref="chart-container"/>
+      <div ref="chart-container">
+          <svg ref="chart-svg"/>
+      </div>
     );
   }
 }

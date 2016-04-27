@@ -5,6 +5,7 @@ import * as graphConstants from './graphConstants';
 export default function (svg, nodes, lastActivations, hasTrainingPoint, testResultsSummary) {
 
   let maxIndex = null;
+
   if (lastActivations) {
     const activations = _.flatten(lastActivations);
     maxIndex = _.findIndex(activations, a => a === _.max(activations));
@@ -14,18 +15,36 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
     .domain([0, nodes.length])
     .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
-  const elemEnter = svg
-    .append('g')
-    .selectAll('g')
-    .data(nodes)
+  const elems = svg
+    .selectAll('.output-nodes')
+    .data(nodes);
+
+  const enteringElems = elems
     .enter()
     .append('g')
+    .attr('class', 'output-nodes')
     .attr('transform', (d, nodeIndex) => {
+      const x = graphConstants.WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL;
       const y = yScale(nodeIndex) + 2;
-      return `translate(${graphConstants.WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL}, ${y})`;
+      return `translate(${x}, ${y})`;
     });
 
-  elemEnter.append('rect')
+  enteringElems.append('rect')
+    .attr('class', 'output-rect');
+
+  enteringElems.append('rect')
+    .attr('class', 'overlapping-rect');
+
+  enteringElems.append('text')
+    .attr('class', 'bias');
+
+  enteringElems.append('text')
+    .attr('class', 'output-number-label');
+
+  enteringElems.append('text')
+    .attr('class', 'percentage-label');
+
+  elems.select('.output-rect')
     .attr('width', graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL)
     .attr('height', yScale(1) - 4)
     .attr('ry', 3)
@@ -38,12 +57,15 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
       return graphConstants.NO_TRAINING_POSITIVE;
     });
 
-  /* No Training point */
-  if (!hasTrainingPoint) {
-    elemEnter.append('rect')
+  /* Rectangle below for color */
+  elems.select('.overlapping-rect')
     .attr('width', graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL)
     .attr('ry', 3)
+    .attr('fill', graphConstants.NO_TRAINING_NEGATIVE)
     .attr('height', (d, i) => {
+      if (hasTrainingPoint) {
+        return 0;
+      }
       const { correctCount, wrongCount } = testResultsSummary[i];
       const fraction = correctCount / (wrongCount + correctCount);
       let height = (1 - fraction) * yScale(1);
@@ -51,29 +73,11 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
         height = yScale(1) - 4;
       }
       return height;
-    })
-    .attr('fill', d => {
-      return graphConstants.NO_TRAINING_NEGATIVE;
-      return '#f44336'
-      return graphConstants.WITH_TRAINING_OFF;
-      if (hasTrainingPoint) {
-        return d.activation > .5 ? graphConstants.WITH_TRAINING_ON : graphConstants.WITH_TRAINING_OFF;
-      }
-      return 'rgb(230, 230, 230)';
     });
 
 
-  }
-
-  // Has a traning point
-  else {
-
-  }
-
-  // Percentage correct
-  elemEnter.append('text')
+  elems.select('.percentage-label')
     .attr('dx', (graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL) / 2)
-    //.attr('dy', d => yScale(1) / 2)
     .attr('dy', yScale(1) / 2)
     .attr('font-size', 10)
     .attr('text-anchor', 'middle')
@@ -90,7 +94,7 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
     });
 
   // Number Label
-  elemEnter.append('text')
+  elems.select('.output-number-label')
     .attr('dx', graphConstants.OUTPUT_LAYER_NODE_WIDTH)
     .attr('dy', yScale(1) / 2)
     .attr('stroke-width', '2')
@@ -100,27 +104,18 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
     .text((d, i) => i);
 
   // Bias
-  elemEnter.append('text')
-    // .attr('dx', OUTPUT_LAYER_NODE_WIDTH / 2)
+  elems.select('.bias')
     .attr('dx', - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2)
-    .attr('dy', d => yScale(1) - yScale(1) / 2)
+    .attr('dy', yScale(1) - yScale(1) / 2)
     .attr('font-size', 10)
     .attr('text-anchor', 'middle')
     .attr('stroke-width', '.5')
-    .attr('stroke', d => {
-      return 'black';
-
-      if (hasTrainingPoint) {
-        return 'black';
-      }
-      return d.bias > 0 ? graphConstants.NO_TRAINING_POSITIVE : graphConstants.NO_TRAINING_NEGATIVE;
-    })
-    .text((d, i) => d.activation || d.bias);
-
+    .attr('stroke', 'black')
+    .text(d => d.bias);
 
 
       // Accuracy text
-  // elemEnter.append('text')
+  // enteringElems.append('text')
   //   .attr('dx', (graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL) / 2)
   //   .attr('dy', yScale(1) / 2 + 7)
   //   //.attr('dy', yScale(1) - 7)

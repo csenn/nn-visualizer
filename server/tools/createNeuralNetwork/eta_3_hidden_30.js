@@ -4,8 +4,8 @@ var jsonfile = require('jsonfile');
 var neuralNetwork = require('../../../../neural-network-js');
 var mnist = require('mnist-data');
 
-var training_data = mnist.training(0, 10000);
-var testing_data = mnist.testing(0, 1000);
+var training_data = mnist.training(0, 50000);
+var testing_data = mnist.testing(0, 10000);
 
 function makeArrayFromIndex(index) {
   var result = [];
@@ -86,6 +86,9 @@ var network = {
   snapshots: {},
   drawingSamples: []
 };
+
+var t1 = new Date().getTime();
+
 neuralNetwork.runNeuralNetwork({
   sizes: [784, 30, 10],
   trainingData: cleanTrainingData,
@@ -111,6 +114,7 @@ neuralNetwork.runNeuralNetwork({
           console.error(err);
         } else {
           console.log('\nNetwork saved with epochs run: ' + epochCount);
+          console.log('Total time: ' + ((new Date().getTime() - t1) / 1000) + ' seconds')
         }
       });
     }

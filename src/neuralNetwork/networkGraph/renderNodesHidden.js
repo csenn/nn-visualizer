@@ -6,54 +6,63 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
     .domain([0, nodes.length])
     .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
 
-  const elemEnter = svg.append('g')
-    .selectAll('g')
-    .append('g')
-    .data(nodes)
+  const elems = svg
+    .selectAll('.hidden-nodes')
+    .data(nodes);
+
+  const enteringElems = elems
     .enter()
     .append('g')
+    .attr('class', 'hidden-nodes')
     .attr('transform', (d, nodeIndex) => {
       const y = yScale(nodeIndex) + 0;
       const x = graphConstants.WIDTH / 2 - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
       return `translate(${x}, ${y})`;
     });
 
-  if (hasTrainingPoint) {
-    elemEnter.append('rect')
-      .attr('width', graphConstants.HIDDEN_LAYER_NODE_WIDTH)
-      .attr('height', yScale(1) - 4)
-      .attr('rx', 3)
-      .attr('ry', 3)
-      .attr('stroke', d => {
-        return d.activation > 0.5
-          ? graphConstants.WITH_TRAINING_ON
-          : graphConstants.WITH_TRAINING_OFF;
-      })
-      .attr('fill', d => {
-        return d.activation > .5
-          ? graphConstants.WITH_TRAINING_ON
-          : graphConstants.WITH_TRAINING_OFF;
-      });
+  // if (hasTrainingPoint) {
+  //   elems.append('rect')
+  //     .attr('width', graphConstants.HIDDEN_LAYER_NODE_WIDTH)
+  //     .attr('height', yScale(1) - 4)
+  //     .attr('rx', 3)
+  //     .attr('ry', 3)
+  //     .attr('stroke', d => {
+  //       return d.activation > 0.5
+  //         ? graphConstants.WITH_TRAINING_ON
+  //         : graphConstants.WITH_TRAINING_OFF;
+  //     })
+  //     .attr('fill', d => {
+  //       return d.activation > .5
+  //         ? graphConstants.WITH_TRAINING_ON
+  //         : graphConstants.WITH_TRAINING_OFF;
+  //     });
+  //
+  //   elems.append('text')
+  //       .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
+  //       .attr('font-size', 10)
+  //       .attr('dy', d => 11)
+  //       .attr('text-anchor', 'middle')
+  //       .attr('stroke-width', '.5')
+  //       .attr('stroke', d => d.activation > .5 ? 'black' : 'white')
+  //       .text(d => d.activation);
+  // }
 
-      elemEnter.append('text')
-        .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
-        .attr('font-size', 10)
-        .attr('dy', d => 11)
-        .attr('text-anchor', 'middle')
-        .attr('stroke-width', '.5')
-        .attr('stroke', d => d.activation > .5 ? 'black' : 'white')
-        .text(d => d.activation);
-  }
+  // Bias Label Entering
+  enteringElems
+    .append('text')
+    .attr('class', 'bias');
 
-  // Bias Label
-  const biasLabel = elemEnter.append('text')
+  // Bias Label Updating
+  elems
+    .select('.bias')
     .attr('dx', () => {
+      const { BIAS_LABEL_WIDTH, HIDDEN_LAYER_NODE_WIDTH } = graphConstants;
       return hasTrainingPoint
-        ? - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2
-        : - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
+        ? - BIAS_LABEL_WIDTH + BIAS_LABEL_WIDTH / 2
+        : - BIAS_LABEL_WIDTH + BIAS_LABEL_WIDTH / 2 + HIDDEN_LAYER_NODE_WIDTH / 2;
     })
     .attr('font-size', 11)
-    .attr('dy', d => 11)
+    .attr('dy', 11)
     .attr('text-anchor', 'middle')
     .attr('stroke-width', '.5')
     .attr('stroke', d => {
@@ -65,12 +74,12 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
         ? graphConstants.NO_TRAINING_POSITIVE
         : graphConstants.NO_TRAINING_NEGATIVE;
     })
-    .text(d => {
-      return d.bias;
-    });
+    .text(d => d.bias);
 
-  biasLabel.on('click', (d, index) => {
-    onLayerModalOpen(index);
-    d3.event.stopPropagation();
-  });
+  // elems.exit().remove();
+
+  // biasLabel.on('click', (d, index) => {
+  //   onLayerModalOpen(index);
+  //   d3.event.stopPropagation();
+  // });
 }

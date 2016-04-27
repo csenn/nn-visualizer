@@ -7,6 +7,7 @@ const HEIGHT = 50;
 
 export default class TrainingImage extends React.Component {
   componentDidMount() {
+    // debugger
     this.buildTrainingImage(this.props.trainingDataPoint);
   }
   componentDidUpdate() {
@@ -17,18 +18,23 @@ export default class TrainingImage extends React.Component {
   }
   partitionData(trainingDataPoint) {
     const result = [];
+    let row = -1;
     for (let i = 0; i < trainingDataPoint.x.length; i++) {
       if (i % 28 === 0) {
-        result.push([]);
+        row += 1;
       }
-      result[result.length - 1].push(trainingDataPoint.x[i]);
+      result.push({
+        row,
+        col: i - row * 28,
+        value: trainingDataPoint.x[i][0]
+      })
     }
     return result;
   }
   buildTrainingImage(trainingDataPoint) {
 
-    const domNode = this.refs['training-image'];
-    d3.select(domNode).selectAll('*').remove();
+    //const domNode = this.refs['training-image'];
+    //d3.select(domNode).selectAll('*').remove();
 
     if (!trainingDataPoint) {
       return
@@ -41,24 +47,20 @@ export default class TrainingImage extends React.Component {
       .range([0, WIDTH]);
 
     const colorFunc = point => {
-      const num = point[0];
+      const num = point.value;
       // Will need this soon
       //const rgb = num * 255;
       const rgb = 255 - num;
       return `rgb(${rgb}, ${rgb}, ${rgb})`
     }
 
-    const svg = d3.select(domNode).append('svg')
+    // const svg = d3.select(domNode).append('svg')
+    const svg = d3.select(this.refs['training-svg'])
       .attr('width', WIDTH)
       .attr('height', WIDTH);
 
-    svg.selectAll('g')
+    const rect = svg.selectAll('rect')
       .data(partitionedData)
-      .enter()
-      .append('g')
-      .attr('transform', (d, i) => `translate(0, ${squareScale(i)})`)
-      .selectAll('rect')
-      .data(d => d)
       .enter()
       .append('rect')
       .attr('width', () => squareScale(1))
@@ -66,13 +68,19 @@ export default class TrainingImage extends React.Component {
       .attr('fill', colorFunc)
       .attr('stroke', colorFunc)
       .attr('transform', (d, xIndex) => {
-        const x = squareScale(xIndex);
-        return `translate(${x}, 0)`;
+        const x = squareScale(d.col);
+        const y = squareScale(d.row)
+        return `translate(${x}, ${y})`;
       });
+
+    // rect.exit().remove();
   }
 
   render() {
-    return <div ref='training-image'/>;
-
+    return(
+      <div ref='training-image'>
+        <svg ref='training-svg'/>
+      </div>
+    );
   }
 }

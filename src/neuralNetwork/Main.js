@@ -43,13 +43,16 @@ class Main extends React.Component {
     this.props.dispatch(setSnapshotIndex(index));
   }
   render() {
-    // const trainingDataPoint = this.props.selectedDrawing;
-      //json[3];
-    // const trainingDataPoint = null;
 
-    const $$snapshot = this.props.$$network.getIn(['snapshots', String(this.props.snapshotIndex)]);
+    const $$snapshot = this.props.$$network.getIn(
+      ['snapshots', String(this.props.snapshotIndex)]
+    );
     if (!$$snapshot) {
-      return false;
+      return (
+        <div style={{textAlign: 'center', marginTop: '20px'}}>
+          Loading...
+        </div>
+      )
     }
 
     const totalEpochs = _.max(
@@ -84,10 +87,8 @@ class Main extends React.Component {
             testResultsSummary={this.props.testResultsSummary}
             $$selectedDrawing={this.props.$$selectedDrawing}
           />
-          <InfoButtons
-            $$selectedDrawing={this.props.$$selectedDrawing}
-            $$network={this.props.$$network.get('snapshots')}
-          />
+
+
           <div style={{ display: 'inline-block', marginTop: '150px', maxWidth: graphConstants.WIDTH }}>
             You can see just how difficult it is to make intuitive sense of even a small neural network. The relationships between the movement
             of biases, weights, and number of hidden nodes is very difficult to intuitvely grasp. As you switch from drawing to drawing, you can
