@@ -20,32 +20,42 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
       return `translate(${x}, ${y})`;
     });
 
-  // if (hasTrainingPoint) {
-  //   elems.append('rect')
-  //     .attr('width', graphConstants.HIDDEN_LAYER_NODE_WIDTH)
-  //     .attr('height', yScale(1) - 4)
-  //     .attr('rx', 3)
-  //     .attr('ry', 3)
-  //     .attr('stroke', d => {
-  //       return d.activation > 0.5
-  //         ? graphConstants.WITH_TRAINING_ON
-  //         : graphConstants.WITH_TRAINING_OFF;
-  //     })
-  //     .attr('fill', d => {
-  //       return d.activation > .5
-  //         ? graphConstants.WITH_TRAINING_ON
-  //         : graphConstants.WITH_TRAINING_OFF;
-  //     });
-  //
-  //   elems.append('text')
-  //       .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
-  //       .attr('font-size', 10)
-  //       .attr('dy', d => 11)
-  //       .attr('text-anchor', 'middle')
-  //       .attr('stroke-width', '.5')
-  //       .attr('stroke', d => d.activation > .5 ? 'black' : 'white')
-  //       .text(d => d.activation);
-  // }
+    // Rectangle Node
+    enteringElems
+      .append('rect')
+      .attr('class', 'hidden-node-rect')
+
+    elems.select('.hidden-node-rect')
+      .attr('width', graphConstants.HIDDEN_LAYER_NODE_WIDTH)
+      .attr('height', yScale(1) - 4)
+      .attr('rx', 3)
+      .attr('ry', 3)
+      .attr('display', hasTrainingPoint ? 'inherit' : 'none')
+      .attr('stroke', d => {
+        return d.activation > 0.5
+          ? graphConstants.WITH_TRAINING_ON
+          : graphConstants.WITH_TRAINING_OFF;
+      })
+      .attr('fill', d => {
+        return d.activation > .5
+          ? graphConstants.WITH_TRAINING_ON
+          : graphConstants.WITH_TRAINING_OFF;
+      });
+
+    // Rectangle Node Label
+    enteringElems
+      .append('text')
+      .attr('class', 'hidden-node-text')
+
+    elems.select('.hidden-node-text')
+        .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
+        .attr('font-size', 10)
+        .attr('dy', d => 11)
+        .attr('text-anchor', 'middle')
+        .attr('stroke-width', '.5')
+        .attr('display', hasTrainingPoint ? 'inherit' : 'none')
+        .attr('stroke', d => d.activation > .5 ? 'black' : 'white')
+        .text(d => d.activation);
 
   // Bias Label Entering
   enteringElems
