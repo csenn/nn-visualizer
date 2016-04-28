@@ -88,6 +88,10 @@ class Main extends React.Component {
             $$selectedDrawing={this.props.$$selectedDrawing}
           />
 
+          <InfoButtons
+            $$network={this.props.$$network}
+            $$selectedDrawing={this.props.$$selectedDrawing}
+          />
 
           <div style={{ display: 'inline-block', marginTop: '150px', maxWidth: graphConstants.WIDTH }}>
             You can see just how difficult it is to make intuitive sense of even a small neural network. The relationships between the movement

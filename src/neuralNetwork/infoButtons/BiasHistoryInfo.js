@@ -15,9 +15,9 @@ export default class InfoButtons extends React.Component {
     const biases = [];
     const series = [];
 
-    Object.keys(network).map(epochIndex => {
+    Object.keys(network.snapshots).map(epochIndex => {
       labels.push(`Epoch ${epochIndex}`);
-      biases.push(_.flatten(network[epochIndex].biases[this.props.layer]));
+      biases.push(_.flatten(network.snapshots[epochIndex].biases[this.props.layer]));
     });
 
     for (let i = 0; i < biases.length; i++) {

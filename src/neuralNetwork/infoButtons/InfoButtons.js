@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import * as graphConstants from '../networkGraph/graphConstants';
@@ -19,12 +18,12 @@ export default class InfoButtons extends React.Component {
     };
     return (
       <div style={style}>
-        <span style={{fontSize: '13px', fontStyle: 'italic'}}>Click buttons for more info</span>
+        <span style={{ fontSize: '13px', fontStyle: 'italic' }}>Click buttons for more info</span>
 
         <InputLayerInfo style={{ top: '25px', left: 0 }}/>
 
         <HiddenLayerInfo
-          style={{top: '25px', left:`${graphConstants.WIDTH / 2 - 90}px` }}
+          style={{ top: '25px', left:`${graphConstants.WIDTH / 2 - 90}px` }}
         />
 
         <BiasHistoryInfo
@@ -40,12 +39,12 @@ export default class InfoButtons extends React.Component {
           style={{ top: '110px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
         />
 
-        <OutputLayerInfo style={{ top: '25px', right:'25px' }}/>
+        <OutputLayerInfo style={{ top: '25px', right: '25px' }}/>
 
         <BiasHistoryInfo
           layer={1}
           $$network={this.props.$$network}
-          style={{ top: '67px', right:'25px' }}
+          style={{ top: '67px', right: '25px' }}
         />
 
         <ActivationHistoryInfo

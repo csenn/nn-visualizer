@@ -46,11 +46,12 @@ export default class Network extends React.Component {
       .attr('height', graphConstants.HEIGHT);
 
     // const graphBody = svg.append('g')
-    //   .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`)
+    const graphBody = svg.select('.chart-svg-body')
+      .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`)
 
-    const graphBody = svg;
+    // const graphBody = svg;
 
-    // renderHeaderLayer(svg);
+    renderHeaderLayer(svg);
 
     // Render Nodes. Each Layer is pretty different, so split up
     renderNodesInput(graphBody, nodes[0], hasTrainingPoint);
@@ -89,7 +90,9 @@ export default class Network extends React.Component {
   render() {
     return (
       <div ref="chart-container">
-          <svg ref="chart-svg"/>
+        <svg ref="chart-svg">
+          <g className="chart-svg-body"/>
+        </svg>
       </div>
     );
   }

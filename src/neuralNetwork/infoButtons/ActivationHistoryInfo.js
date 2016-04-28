@@ -10,7 +10,7 @@ export default class InfoButtons extends React.Component {
     this._renderContent = this._renderContent.bind(this);
   }
   _renderContent() {
-    const network = this.props.$$network.toJS();
+    const network = this.props.$$network.get('snapshots').toJS();
     const selectedDrawing = this.props.$$selectedDrawing.toJS();
 
     const labels = [];
