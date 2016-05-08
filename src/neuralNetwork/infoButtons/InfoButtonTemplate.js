@@ -33,7 +33,7 @@ export default class InfoButtons extends React.Component {
     let content = false;
     if (this.state.isOpen) {
       content = (
-        <div style={{ lineHeight: '1.5' }}>
+        <div style={{ lineHeight: '1.7', fontFamily: 'Raleway' }}>
           {this.props.children}
         </div>
       );

@@ -3,12 +3,6 @@ import * as graphConstants from './graphConstants';
 
 
 export default function (svg, edgeLayers, nodes, hasTrainingData) {
-
-// export default function (svg, edges, start, end, numberNodes1, numberNodes2,
-//   hasTrainingData, thicken, layer) {
-
-  const thicken = false;
-
   const xScale = d3.scale.linear()
     .domain([0, nodes.length - 1])
     .range([
@@ -69,20 +63,19 @@ export default function (svg, edgeLayers, nodes, hasTrainingData) {
     .attr('y2', (d, i, layerIndex) => {
       return getYScale(layerIndex + 1)(d.target.index) + getYScale(layerIndex + 1)(1) / 2;
     })
-    .attr('stroke-width', d => {
+    .attr('stroke-width', (d, i, layerIndex) => {
+      const thicken = edgeLayers[layerIndex].length < 1000;
       const zScore = Math.abs(d.zScore);
       if (hasTrainingData) {
         if (thicken) {
           return d.isOn ? '1.5' : '.6';
-        } else {
-          return zScore * 0.08;
         }
+        return zScore * 0.08;
       } else {
         if (thicken) {
           return zScore * 0.6;
-        } else {
-          return zScore * 0.07;
         }
+        return zScore * 0.07;
       }
     })
     .style('stroke', d => {

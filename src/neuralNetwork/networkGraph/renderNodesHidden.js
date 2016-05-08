@@ -26,9 +26,9 @@ export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) 
     .attr('class', 'hidden-node-layers')
     .attr('transform', (d, layerIndex) => {
       const y = 0;
-      const x = xScale(layerIndex + 1)
+      const x = xScale(layerIndex + 1);
       return `translate(${x}, ${y})`;
-    })
+    });
 
   const elems = layers
     .selectAll('.hidden-nodes')
@@ -44,11 +44,11 @@ export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) 
     });
 
     // Rectangle Node
-    enteringElems
+  enteringElems
       .append('rect')
-      .attr('class', 'hidden-node-rect')
+      .attr('class', 'hidden-node-rect');
 
-    elems.select('.hidden-node-rect')
+  elems.select('.hidden-node-rect')
       .attr('width', graphConstants.HIDDEN_LAYER_NODE_WIDTH)
       .attr('height', (d, nodeIndex, layerIndex) => getYScale(layerIndex)(1) - 4)
       .attr('rx', 3)
@@ -66,11 +66,11 @@ export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) 
       });
 
     // Rectangle Node Label
-    enteringElems
+  enteringElems
       .append('text')
-      .attr('class', 'hidden-node-text')
+      .attr('class', 'hidden-node-text');
 
-    elems.select('.hidden-node-text')
+  elems.select('.hidden-node-text')
         .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
         .attr('font-size', 10)
         .attr('dy', (d, nodeIndex, layerIndex) => getYScale(layerIndex)(1) / 2)
