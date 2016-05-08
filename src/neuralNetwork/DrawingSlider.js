@@ -64,7 +64,7 @@ class DrawingSlider extends React.Component {
           </div>
       );
     });
-    
+
     return (
       <Slider
         style={{ margin: '20px' }}
@@ -82,11 +82,11 @@ class DrawingSlider extends React.Component {
   render() {
 
     return (
-      <div style={{ display: 'inline-block', width: '400px' }}>
+      <div style={{ display: 'inline-block', width: '500px' }}>
 
-        <div style={{ display: 'inline-block', marginBottom: '10px' }}>
+        <div style={{ display: 'inline-block', marginTop: '15px', marginBottom: '25px' }}>
           <Toggle
-            labelStyle={{ fontFamily: 'Raleway', fontSize: '18px' }}
+            labelStyle={{ fontFamily: 'Raleway', fontSize: '26px'}}
             onToggle={this._onToggle}
             label="Feed network with MNIST drawings"
             labelPosition="right"

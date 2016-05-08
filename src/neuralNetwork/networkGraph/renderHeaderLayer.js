@@ -1,7 +1,7 @@
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
 
-export default function (svg) {
+export default function (svg, hiddenCount) {
 
   const LENGTH = graphConstants.WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH;
 
@@ -23,7 +23,7 @@ export default function (svg) {
     .attr('text-anchor', 'left')
     .attr('stroke-width', '1')
     .attr('stroke', 'rgb(60,60,60)')
-    .text('784 x 30 = 23,520 edges');
+    .text(`784 x ${hiddenCount} = ${hiddenCount * 784} edges`);
 
   elemEnter.append('text')
     .attr('dx', LENGTH / 2 - 30)
@@ -32,7 +32,7 @@ export default function (svg) {
     .attr('text-anchor', 'left')
     .attr('stroke-width', '1')
     .attr('stroke', 'rgb(60,60,60)')
-    .text('30 Hidden Nodes');
+    .text(`${hiddenCount} Hidden Nodes`);
 
     elemEnter.append('text')
       .attr('dx', LENGTH / 4 * 3 - 55)
@@ -41,7 +41,7 @@ export default function (svg) {
       .attr('text-anchor', 'left')
       .attr('stroke-width', '1')
       .attr('stroke', 'rgb(60,60,60)')
-      .text('30 x 10 = 300 edges');
+      .text(`${hiddenCount} x 10 = ${hiddenCount * 10} edges`);
 
     elemEnter.append('text')
       .attr('dx', graphConstants.WIDTH - 130)

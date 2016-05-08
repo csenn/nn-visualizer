@@ -51,9 +51,9 @@ export default class Network extends React.Component {
 
     // const graphBody = svg;
 
-    renderHeaderLayer(svg);
+    renderHeaderLayer(svg, nodes[1].length);
 
-    // Render Nodes. Each Layer is pretty different, so split up
+    // Render Nodes. Each Layer is different enough that it makes sense to split up
     renderNodesInput(graphBody, nodes[0], hasTrainingPoint);
     renderNodesHidden(graphBody, nodes[1], hasTrainingPoint, onLayerModalOpen);
     renderNodesOutput(graphBody, nodes[2], hasTrainingPoint && activations[2],

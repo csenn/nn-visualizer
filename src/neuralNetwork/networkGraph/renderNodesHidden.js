@@ -50,7 +50,7 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
     elems.select('.hidden-node-text')
         .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
         .attr('font-size', 10)
-        .attr('dy', d => 11)
+        .attr('dy', d => yScale(1) / 2)
         .attr('text-anchor', 'middle')
         .attr('stroke-width', '.5')
         .attr('display', hasTrainingPoint ? 'inherit' : 'none')
@@ -72,7 +72,7 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
         : - BIAS_LABEL_WIDTH + BIAS_LABEL_WIDTH / 2 + HIDDEN_LAYER_NODE_WIDTH / 2;
     })
     .attr('font-size', 11)
-    .attr('dy', 11)
+    .attr('dy', yScale(1) / 2 + 2)
     .attr('text-anchor', 'middle')
     .attr('stroke-width', '.5')
     .attr('stroke', d => {

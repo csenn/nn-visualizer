@@ -4,6 +4,13 @@ import InfoButtonTemplate from './InfoButtonTemplate';
 import LineChart from '../networkModals/LineChart';
 import { calculateActivations } from '../networkUtils';
 
+
+/*
+    Note: It would be interesting to add a graph for the change in biases,
+    but also use the length of the vector as a smoother and simpler way
+    of looking at (http://chortle.ccsu.edu/vectorlessons/vch04/vch04_4.html)
+*/
+
 export default class InfoButtons extends React.Component {
   constructor(props) {
     super(props);

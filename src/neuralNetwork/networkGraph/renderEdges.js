@@ -21,7 +21,7 @@ export default function (svg, edges, start, end, numberNodes1, numberNodes2,
 
   lines
     .attr('x1', start)
-    .attr('x2', `${end}`)
+    .attr('x2', end)
     .attr('y1', d => yScale1(d.source.index) + yScale1(1) / 2)
     .attr('y2', d => yScale2(d.target.index) + yScale2(1) / 2)
     .attr('stroke-width', d => {
