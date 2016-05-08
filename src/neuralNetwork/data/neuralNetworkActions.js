@@ -43,6 +43,7 @@ export function getNetwork(networkId) {
     })
     return axios.get(`/network/${networkId}`).then(response => {
       dispatch(batchActions([
+        setSelectedDrawing(null),
         {
           type: SET_LOADING,
           payload: false

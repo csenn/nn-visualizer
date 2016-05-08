@@ -6,6 +6,8 @@ import TrainingImage from './TrainingImage';
 import Toggle from 'material-ui/lib/toggle';
 import { setSelectedDrawing } from './data/neuralNetworkActions';
 import { uncompressImage } from './networkUtils';
+import LeftArrow from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-left';
+import RightArrow from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
 
 function isInRange(index, nextIndex) {
   if (index === nextIndex) {
@@ -65,6 +67,14 @@ class DrawingSlider extends React.Component {
       );
     });
 
+    const iconStyle = {
+      width: '60px',
+      height: '60px',
+      fill: '#00bcd4',
+      // position: 'relative',
+      top: '15px'
+    };
+
     return (
       <Slider
         style={{ margin: '20px' }}
@@ -74,7 +84,20 @@ class DrawingSlider extends React.Component {
         infinite
         speed={200}
         afterChange={this._afterChange}
-        slidesToShow={5}>
+        slidesToShow={5}
+        prevArrow = {function (options) {
+          const style = Object.assign({left: '-45px'}, iconStyle)
+          return (
+            <LeftArrow onClick={options.onClick} className='slick-prev' style={style}/>
+          )
+        }}
+        nextArrow={function (options) {
+          const style = Object.assign({right: '-45px'}, iconStyle)
+          return (
+            <RightArrow onClick={options.onClick}  className='slick-next' style={style}/>
+          )
+        }}
+      >
         {items}
       </Slider>
     );
@@ -83,7 +106,6 @@ class DrawingSlider extends React.Component {
 
     return (
       <div style={{ display: 'inline-block', width: '500px' }}>
-
         <div style={{ display: 'inline-block', marginTop: '15px', marginBottom: '25px' }}>
           <Toggle
             labelStyle={{ fontFamily: 'Raleway', fontSize: '26px'}}

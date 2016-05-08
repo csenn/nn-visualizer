@@ -17,7 +17,8 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     props.dispatch(getNetworks())
-    props.dispatch(getNetwork('eta_3_hidden_30.json'));
+    props.dispatch(getNetwork('eta_3_hidden_20_15.json'));
+    //  props.dispatch(getNetwork('eta_3_hidden_20.json'));
     this._onSliderChange = this._onSliderChange.bind(this);
     this.state = {
       layerModalIndex: null,
@@ -45,17 +46,17 @@ class Main extends React.Component {
     this.props.dispatch(setSnapshotIndex(index));
   }
   render() {
-    if (this.props.isLoading) {
+    const $$snapshot = this.props.$$network.getIn(
+      ['snapshots', String(this.props.snapshotIndex)]
+    );
+
+    if (this.props.isLoading || !$$snapshot) {
       return (
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           Loading...
         </div>
       );
     }
-
-    const $$snapshot = this.props.$$network.getIn(
-      ['snapshots', String(this.props.snapshotIndex)]
-    );
 
     const totalEpochs = _.max(
       this.props.$$network.get('snapshots').keySeq().toJS().map(n => Number(n))

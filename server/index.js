@@ -24,12 +24,33 @@ const networks = [
     accuracy: '90%'
   },
   {
+    path: 'eta_3_hidden_20.json',
+    hiddenNodes: 20,
+    eta: 3.0,
+    activation: 'Sigmoid',
+    accuracy: '93%'
+  },
+  {
     path: 'eta_3_hidden_30.json',
     hiddenNodes: 30,
     eta: 3.0,
     activation: 'Sigmoid',
     accuracy: '94%'
-  }
+  },
+  {
+    path: 'eta_.3_hidden_30.json',
+    hiddenNodes: 30,
+    eta: 0.3,
+    activation: 'Sigmoid',
+    accuracy: '82%'
+  },
+  {
+    path: 'eta_3_hidden_20_15.json',
+    hiddenNodes: '20, 15',
+    eta: 3,
+    activation: 'Sigmoid',
+    accuracy: '93%'
+  },
 ];
 
 app.use(require('webpack-dev-middleware')(compiler, {

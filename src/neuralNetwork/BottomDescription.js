@@ -8,15 +8,18 @@ export default class BottomDescription extends React.Component {
 
         <div style={{ display: 'inline-block', marginTop: '30px', maxWidth: graphConstants.WIDTH, textAlign: 'left' }}>
           <h2>
-            What are Neural Networks and the MNIST dataset?
+            What are Neural Networks and the MNIST datasets?
           </h2>
-
-          Neural networks are an exciting subset of machine learning algorithms that have gained considerable traction
-          in the technical community in recent years. A version of neural networks, called deep neural networks, are being used
-          to create self driving cars, tag objects in complex images, and power novel voice recognition systems.
-
           <p>
-            The purpose of this visualization is to view a <strong>basic single layer neural network</strong> in action.
+            Neural networks are an exciting subset of machine learning algorithms. Although theorized about for more then half a century,
+            recent advancements in computer processing power and easier access to large datasets have
+            allowed neural networks to make a comeback as a premier machine learning solution.
+            Versions of neural networks, <strong>called deep neural networks</strong>,
+            are being applied to many ground breaking technologies including use in self driving cars, recognizing objects in images
+            and videos, and powering novel voice recognition systems.
+          </p>
+          <p>
+            The purpose of this visualization is to view a <strong>basic feed forward neural network</strong> in action.
             We use the MNIST dataset as it is well known by students and researchers in the machine learning community and because it makes
             a nice vizualization possible.
             The MNIST dataset contains 60,000 handwritten numbers collected from Census Bureau employees and highschool students.
@@ -25,7 +28,7 @@ export default class BottomDescription extends React.Component {
           <p>
             The goal of this project is <strong>not to create the most accurate neural network
             possible</strong>. In fact, some researchers have had categorization accuracies over 99% while we are
-            working in the 85% - 95% range. We simply want to enforce the intuition of how a "function" is built that maps inputs
+            working in the 80% - 95% range. We simply want to enforce the intuition of how a "function" is built that maps inputs
             to outputs using network weights and biases.
           </p>
 
@@ -34,17 +37,26 @@ export default class BottomDescription extends React.Component {
           </h2>
 
           <p>
-            The visualization has 2 main states.
-            <strong> The first (blue and grey color)</strong> is a trained network with weights
-            and biases. Blue are positive, grey are negative. Thicker edges (the lines connecting layers)
-            represent a larger absoulte value of the weight. Biases are the numbers between the edges.
-            <strong> The second (yellow and grey color)</strong> is a trained network being fed an MNIST image.
-            Yellow lines represent edges exiting active nodes. <span style={{fontStyle:"italic"}}>Note: Edges are thicker and thinner relative to edges in their layer.
+            The visualization has 2 states.
+            <ul>
+              <li>
+                <strong> The first (blue and grey color)</strong> is a trained network with weights
+                and biases. Blue edges are positive, grey edges are negative. Thicker edges (the lines connecting layers)
+                represent a larger absolute value of the weight. Biases are the black numbers between the edges.
+              </li>
+              <li>
+                <strong> The second (yellow and grey color)</strong> is a trained network being fed an MNIST image.
+                Yellow lines represent edges exiting active nodes. Like a flashlight illuminating certain paths through the network.
+              </li>
+            </ul>
+            <span style={{fontStyle:"italic"}}>Note: Edges are thicker and thinner relative to edges in their layer.
             Edge thickness should not be compared between layers.</span>
+
+
           </p>
 
           <p>
-            When the network is initially run, we save a snapshot, equivalent to an epoch, of the network at different points in time.
+            When the network is initially run, we save a snapshot (equivalent to an epoch) of the network at different points in time.
             Use the slider to see how the network weights and biases change over time.
           </p>
 

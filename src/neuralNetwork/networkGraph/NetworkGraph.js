@@ -40,51 +40,74 @@ export default class Network extends React.Component {
     const domNode = this.refs['chart-container'];
     const hasTrainingPoint = !!trainingDataPoint;
 
-
     const svg = d3.select(this.refs['chart-svg'])
       .attr('width', graphConstants.WIDTH + 2)
       .attr('height', graphConstants.HEIGHT);
 
-    // const graphBody = svg.append('g')
-    const graphBody = svg.select('.chart-svg-body')
-      .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`)
+    const graphBody = svg
+      .select('.chart-svg-body')
+      .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`);
 
-    // const graphBody = svg;
+    // Render header layer
+    renderHeaderLayer(svg, nodes[1].length, hasTrainingPoint);
 
-    renderHeaderLayer(svg, nodes[1].length);
-
-    // Render Nodes. Each Layer is different enough that it makes sense to split up
-    renderNodesInput(graphBody, nodes[0], hasTrainingPoint);
-    renderNodesHidden(graphBody, nodes[1], hasTrainingPoint, onLayerModalOpen);
-    renderNodesOutput(graphBody, nodes[2], hasTrainingPoint && activations[2],
-      hasTrainingPoint, testResultsSummary, onLayerModalOpen);
+    // Render Nodes. Each Layer is different enough that it makes sense to split
+    renderNodesInput(
+      graphBody,
+      nodes[0],
+      hasTrainingPoint
+    );
+    renderNodesHidden(
+      graphBody,
+      nodes.slice(1, nodes.length - 1),
+      hasTrainingPoint,
+      onLayerModalOpen
+    );
+    renderNodesOutput(
+      graphBody,
+      nodes[nodes.length - 1],
+      hasTrainingPoint && activations[activations.length - 1],
+      hasTrainingPoint,
+      testResultsSummary,
+      onLayerModalOpen
+    );
 
     // Render Edges
-    const start1 = graphConstants.INPUT_LAYER_NODE_WIDTH;
-    const end1 = hasTrainingPoint
-      ? graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
-      : graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
-
-    const start2 = hasTrainingPoint
-      ? graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5
-      : graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5 - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
-    const end2 = graphConstants.WIDTH - graphConstants.BIAS_LABEL_WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL;
-
-    const edges1 = [];
-    const edges2 = [];
+    // const start1 = graphConstants.INPUT_LAYER_NODE_WIDTH;
+    // const end1 = hasTrainingPoint
+    //   ? graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
+    //   : graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
+    //
+    // const start2 = hasTrainingPoint
+    //   ? graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5
+    //   : graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5 - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
+    // const end2 = graphConstants.WIDTH - graphConstants.BIAS_LABEL_WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL;
+    //
+    // const edges1 = [];
+    // const edges2 = [];
+    const edgeLayers = [];
     const numEdges = edges.length;
     for (let i = 0; i < numEdges; i++) {
-      if (edges[i].source.layer === 0) {
-        edges1.push(edges[i]);
-      } else {
-        edges2.push(edges[i]);
+      const layer = edges[i].source.layer;
+      if (!edgeLayers[layer]) {
+        edgeLayers[layer] = [];
       }
+      edgeLayers[layer].push(edges[i])
     }
 
-    renderEdges(graphBody, edges1, start1, end1, nodes[0].length, nodes[1].length,
-      hasTrainingPoint, false, 0);
-    renderEdges(graphBody, edges2, start2, end2, nodes[1].length, nodes[2].length,
-      hasTrainingPoint, true, 1);
+    renderEdges(
+      graphBody,
+      edgeLayers,
+      nodes,
+      hasTrainingPoint
+    )
+
+    // debugger
+    //
+    // renderEdges(graphBody, edges1, start1, end1, nodes[0].length, nodes[1].length,
+    //   hasTrainingPoint, false, 0);
+    // renderEdges(graphBody, edges2, start2, end2, nodes[1].length, nodes[2].length,
+    //   hasTrainingPoint, true, 1);
   }
 
   render() {

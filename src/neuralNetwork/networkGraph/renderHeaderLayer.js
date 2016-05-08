@@ -1,11 +1,17 @@
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
 
-export default function (svg, hiddenCount) {
+export default function (svg, hiddenCount, hasTrainingPoint) {
 
   const LENGTH = graphConstants.WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH;
+  // debugger
+  svg
+    .selectAll(".svg-header")
+    .remove();
 
-  const elemEnter = svg.append('g');
+  const elemEnter = svg
+    .append('g')
+    .attr('class', 'svg-header');
 
   elemEnter.append('text')
     .attr('dx', 0)
@@ -50,7 +56,12 @@ export default function (svg, hiddenCount) {
       .attr('text-anchor', 'left')
       .attr('stroke-width', '1')
       .attr('stroke', 'rgb(60,60,60)')
-      .text('10 output nodes');
+      .text(() => {
+        return '10 output nodes';
+        // return hasTrainingPoint
+        //   ? '10 output nodes'
+        //   : 'Percentage Correct';
+      });
 
 
 }

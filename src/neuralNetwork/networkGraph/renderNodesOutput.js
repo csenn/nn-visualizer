@@ -24,7 +24,8 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
     .append('g')
     .attr('class', 'output-nodes')
     .attr('transform', (d, nodeIndex) => {
-      const x = graphConstants.WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL;
+      const { WIDTH, OUTPUT_LAYER_NODE_WIDTH, OUTPUT_LAYER_LABEL } = graphConstants;
+      const x = WIDTH - OUTPUT_LAYER_NODE_WIDTH - OUTPUT_LAYER_LABEL;
       const y = yScale(nodeIndex) + 2;
       return `translate(${x}, ${y})`;
     });
@@ -75,7 +76,7 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
       return height;
     });
 
-
+  // Accuracy text
   elems.select('.percentage-label')
     .attr('dx', (graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL) / 2)
     .attr('dy', yScale(1) / 2)
@@ -112,22 +113,4 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
     .attr('stroke-width', '.5')
     .attr('stroke', 'black')
     .text(d => d.bias);
-
-
-      // Accuracy text
-  // enteringElems.append('text')
-  //   .attr('dx', (graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL) / 2)
-  //   .attr('dy', yScale(1) / 2 + 7)
-  //   //.attr('dy', yScale(1) - 7)
-  //   .attr('font-size', 8)
-  //   .attr('text-anchor', 'middle')
-  //   .attr('stroke-width', '.4')
-  //   .attr('stroke', d => {
-  //     if (hasTrainingPoint) {
-  //       return 'black';
-  //     }
-  //     return 'white';
-  //     // return d.bias > 0 ? NO_TRAINING_POSITIVE : NO_TRAINING_NEGATIVE;
-  //   })
-  //   .text('accuracy');
 }

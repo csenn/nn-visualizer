@@ -1,23 +1,46 @@
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
 
-export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
-  const yScale = d3.scale.linear()
-    .domain([0, nodes.length])
-    .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
+export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) {
 
-  const elems = svg
+  const xScale = d3.scale.linear()
+    .domain([0, hiddenLayers.length + 1])
+    .range([
+      graphConstants.INPUT_LAYER_NODE_WIDTH,
+      graphConstants.WIDTH - graphConstants.OUTPUT_LAYER_LABEL
+    ]);
+
+  function getYScale(index) {
+    return d3.scale.linear()
+      .domain([0, hiddenLayers[index].length])
+      .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
+  }
+
+  const layers = svg
+    .selectAll('.hidden-node-layers')
+    .data(hiddenLayers);
+
+  layers
+    .enter()
+    .append('g')
+    .attr('class', 'hidden-node-layers')
+    .attr('transform', (d, layerIndex) => {
+      const y = 0;
+      const x = xScale(layerIndex + 1)
+      return `translate(${x}, ${y})`;
+    })
+
+  const elems = layers
     .selectAll('.hidden-nodes')
-    .data(nodes);
+    .data(d => d);
 
   const enteringElems = elems
     .enter()
     .append('g')
     .attr('class', 'hidden-nodes')
-    .attr('transform', (d, nodeIndex) => {
-      const y = yScale(nodeIndex) + 0;
-      const x = graphConstants.WIDTH / 2 - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
-      return `translate(${x}, ${y})`;
+    .attr('transform', (d, nodeIndex, layerIndex) => {
+      const y = getYScale(layerIndex)(nodeIndex) + 0;
+      return `translate(${0}, ${y})`;
     });
 
     // Rectangle Node
@@ -27,7 +50,7 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
 
     elems.select('.hidden-node-rect')
       .attr('width', graphConstants.HIDDEN_LAYER_NODE_WIDTH)
-      .attr('height', yScale(1) - 4)
+      .attr('height', (d, nodeIndex, layerIndex) => getYScale(layerIndex)(1) - 4)
       .attr('rx', 3)
       .attr('ry', 3)
       .attr('display', hasTrainingPoint ? 'inherit' : 'none')
@@ -50,7 +73,7 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
     elems.select('.hidden-node-text')
         .attr('dx', graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2)
         .attr('font-size', 10)
-        .attr('dy', d => yScale(1) / 2)
+        .attr('dy', (d, nodeIndex, layerIndex) => getYScale(layerIndex)(1) / 2)
         .attr('text-anchor', 'middle')
         .attr('stroke-width', '.5')
         .attr('display', hasTrainingPoint ? 'inherit' : 'none')
@@ -72,7 +95,7 @@ export default function (svg, nodes, hasTrainingPoint, onLayerModalOpen) {
         : - BIAS_LABEL_WIDTH + BIAS_LABEL_WIDTH / 2 + HIDDEN_LAYER_NODE_WIDTH / 2;
     })
     .attr('font-size', 11)
-    .attr('dy', yScale(1) / 2 + 2)
+    .attr('dy', (d, nodeIndex, layerIndex) => getYScale(layerIndex)(1) / 2)
     .attr('text-anchor', 'middle')
     .attr('stroke-width', '.5')
     .attr('stroke', d => {
