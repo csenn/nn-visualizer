@@ -80,7 +80,8 @@ export default class Network extends React.Component {
       hasTrainingPoint && activations[activations.length - 1],
       hasTrainingPoint,
       testResultsSummary,
-      dispatch
+      dispatch,
+      nodes.length - 1
     );
 
     const sortedEdges = hasTrainingPoint

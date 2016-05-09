@@ -101,8 +101,8 @@ export function convertToGraph(selectedSnapshot, dataPoint) {
           }
         }
         edges.push({
+          weight,
           isOn: edgeOn,
-          weight: weight,
           zScore: simpleStats.zScore(weight, weightAverage, weightStdDev),
           source: {
             layer: layerIndex,

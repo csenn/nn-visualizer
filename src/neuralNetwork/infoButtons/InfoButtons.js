@@ -54,11 +54,7 @@ export default class InfoButtons extends React.Component {
           selectedDrawing={this.props.selectedDrawing}
           style={{ top: '110px', right: '25px' }}
         />
-
-        <RaisedButton
-          style={{ width: '175px', position: 'absolute', top: '25px', left:`${graphConstants.WIDTH / 4 - 65}px` }}
-          label="Weight Info"/>
-
+        
       </div>
     );
   }

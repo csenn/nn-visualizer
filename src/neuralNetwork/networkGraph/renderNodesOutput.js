@@ -1,9 +1,10 @@
 import _ from 'lodash';
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
+import { setLayerModal } from '../data/neuralNetworkActions';
 
-export default function (svg, nodes, lastActivations, hasTrainingPoint, testResultsSummary) {
-
+export default function (svg, nodes, lastActivations,
+  hasTrainingPoint, testResultsSummary, dispatch, layer) {
   let maxIndex = null;
 
   if (lastActivations) {
@@ -105,12 +106,18 @@ export default function (svg, nodes, lastActivations, hasTrainingPoint, testResu
     .text((d, i) => i);
 
   // Bias
-  elems.select('.bias')
+  const biasLabels = elems.select('.bias')
     .attr('dx', - graphConstants.BIAS_LABEL_WIDTH + graphConstants.BIAS_LABEL_WIDTH / 2)
     .attr('dy', yScale(1) - yScale(1) / 2)
     .attr('font-size', 10)
     .attr('text-anchor', 'middle')
     .attr('stroke-width', '.5')
     .attr('stroke', 'black')
+    .attr('cursor', 'pointer')
     .text(d => d.bias);
+
+  biasLabels.on('click', (d, nodeIndex) => {
+    dispatch(setLayerModal({ nodeIndex, layerIndex: layer - 1 }));
+    d3.event.stopPropagation();
+  });
 }

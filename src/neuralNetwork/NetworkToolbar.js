@@ -1,9 +1,11 @@
 import React from 'react';
 import Slider from 'material-ui/lib/slider';
-import RaisedButton from 'material-ui/lib/raised-button';
+// import RaisedButton from 'material-ui/lib/raised-button';
 import DrawingSlider from './DrawingSlider';
 import NetworkChooser from './networkChooser/NetworkChooser';
 import { setSnapshotIndex } from './data/neuralNetworkActions';
+import IconButton from 'material-ui/lib/icon-button';
+import TrendingUp  from 'material-ui/lib/svg-icons/action/trending-up';
 
 const Item = props => {
   const style = {
@@ -36,8 +38,12 @@ export default class extends React.Component {
 
     return (
       <div style={{ background:'white', padding: '15px 20px 1px 20px', marginBottom: '40px', textAlign: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
-        <div style={{ marginTop: '20px', marginBottom: '25px' }}>
+        <div style={{ marginTop: '5px', marginBottom: '25px' }}>
+
           <Item label="Model Accuracy" value={`${summary.accuracy}`}/>
+          <IconButton style={{position: 'relative', top: '7px'}}>
+            <TrendingUp  color='#00bcd4'/>
+          </IconButton>
           <Item label="Hidden Nodes" value={summary.hiddenNodes}/>
           <Item label="Learning Rate" value={summary.eta}/>
           <Item label="Activation" value={summary.activation}/>
