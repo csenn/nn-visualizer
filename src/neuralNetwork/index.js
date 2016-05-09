@@ -2,17 +2,13 @@ import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
 import NetworkGraph from './networkGraph/NetworkGraph';
-import { getNetworks, getNetwork, setSnapshotIndex } from './data/neuralNetworkActions';
-// import json from './network/data.json';
+import { getNetworks, getNetwork } from './data/neuralNetworkActions';
 import LayerModal from './networkModals/LayerModal';
-// import DrawingChooserModal from './networkModals/DrawingChooserModal';
-import NetworkToolbar from './NetworkToolbar';
-import RaisedButton from 'material-ui/lib/raised-button';
-import './neuralNetwork.scss';
-import * as graphConstants from './networkGraph/graphConstants';
+import NetworkToolbar from './networkToolbar/NetworkToolbar';
 import InfoButtons from './infoButtons/InfoButtons';
-import BottomDescription from './BottomDescription';
+import BottomDescription from './bottomDescription/BottomDescription';
 import { feedDrawingThroughNetwork } from './networkUtils';
+import './neuralNetwork.scss';
 
 class Main extends React.Component {
   constructor(props) {

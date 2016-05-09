@@ -1,5 +1,5 @@
 import React from 'react';
-import * as graphConstants from './networkGraph/graphConstants';
+import * as graphConstants from '../networkGraph/graphConstants';
 
 export default class BottomDescription extends React.Component {
   render() {

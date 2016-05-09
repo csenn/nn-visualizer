@@ -1,9 +1,9 @@
 import React from 'react';
 import Slider from 'material-ui/lib/slider';
 // import RaisedButton from 'material-ui/lib/raised-button';
-import DrawingSlider from './DrawingSlider';
-import NetworkChooser from './networkChooser/NetworkChooser';
-import { setSnapshotIndex } from './data/neuralNetworkActions';
+import DrawingSlider from '../components/DrawingSlider';
+import NetworkChooser from '../networkChooser/NetworkChooser';
+import { setSnapshotIndex } from '../data/neuralNetworkActions';
 import IconButton from 'material-ui/lib/icon-button';
 import TrendingUp  from 'material-ui/lib/svg-icons/action/trending-up';
 

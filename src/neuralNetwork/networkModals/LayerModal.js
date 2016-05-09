@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';
 import { setLayerModal } from '../data/neuralNetworkActions';
 import { calculateActivations, calculateSigmoid } from '../networkUtils';
-import LatexRenderer from '../LatexRenderer';
+import LatexRenderer from '../components/LatexRenderer';
 
 class LayerModal extends React.Component {
   constructor(props) {

@@ -4,8 +4,8 @@ import Slider from 'react-slick';
 import { connect } from 'react-redux';
 import TrainingImage from './TrainingImage';
 import Toggle from 'material-ui/lib/toggle';
-import { setSelectedDrawing } from './data/neuralNetworkActions';
-import { uncompressImage } from './networkUtils';
+import { setSelectedDrawing } from '../data/neuralNetworkActions';
+import { uncompressImage } from '../networkUtils';
 import LeftArrow from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-left';
 import RightArrow from 'material-ui/lib/svg-icons/hardware/keyboard-arrow-right';
 

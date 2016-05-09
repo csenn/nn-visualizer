@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import InfoButtonTemplate from './InfoButtonTemplate';
-import LineChart from '../networkModals/LineChart';
+import LineChart from '../components/LineChart';
 
 export default class InfoButtons extends React.Component {
   constructor(props) {
