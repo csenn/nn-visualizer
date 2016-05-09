@@ -9,15 +9,28 @@ import renderNodesOutput from './renderNodesOutput';
 import renderEdges from './renderEdges';
 import * as graphConstants from './graphConstants';
 
+// Should be a decently fast and safe way to create a unique hash
+// from the drawing
+function calcDrawingHash(drawing) {
+  return drawing.reduce((prev, curr) => {
+    if (!curr) return prev;
+    return prev + curr;
+  }, '');
+}
+
 export default class Network extends React.Component {
   componentDidMount() {
     this.buildNetwork();
   }
   shouldComponentUpdate(nextProps) {
-    if (nextProps.$$snapshot !== this.props.$$snapshot) {
+    if (nextProps.snapshotIndex !== this.props.snapshotIndex) {
       return true;
     }
-    if (nextProps.$$selectedDrawing !== this.props.$$selectedDrawing) {
+    if (!!nextProps.selectedDrawing !== !!this.props.selectedDrawing) {
+      return true;
+    }
+    if (nextProps.selectedDrawing && calcDrawingHash(nextProps.selectedDrawing.x)
+      !== calcDrawingHash(this.props.selectedDrawing.x)) {
       return true;
     }
     return false;
@@ -25,20 +38,18 @@ export default class Network extends React.Component {
   componentDidUpdate() {
     this.buildNetwork();
   }
+  // Need cleanup?
   //componentWillUnmount() {
   // debugger
   // }
   buildNetwork() {
-    const { $$snapshot, $$selectedDrawing, testResultsSummary, onLayerModalOpen } = this.props;
-    if (!$$snapshot || $$snapshot.isEmpty()) {
+    const { selectedSnapshot, selectedDrawing, testResultsSummary, dispatch } = this.props;
+    if (!selectedSnapshot) {
       return false;
     }
 
-    const trainingDataPoint = $$selectedDrawing && $$selectedDrawing.toJS();
-
-    const { nodes, edges, activations } = convertToGraph($$snapshot, trainingDataPoint);
-    const domNode = this.refs['chart-container'];
-    const hasTrainingPoint = !!trainingDataPoint;
+    const { nodes, edges, activations } = convertToGraph(selectedSnapshot, selectedDrawing);
+    const hasTrainingPoint = !!selectedDrawing;
 
     const svg = d3.select(this.refs['chart-svg'])
       .attr('width', graphConstants.WIDTH + 2)
@@ -61,7 +72,7 @@ export default class Network extends React.Component {
       graphBody,
       nodes.slice(1, nodes.length - 1),
       hasTrainingPoint,
-      onLayerModalOpen
+      dispatch
     );
     renderNodesOutput(
       graphBody,
@@ -69,30 +80,21 @@ export default class Network extends React.Component {
       hasTrainingPoint && activations[activations.length - 1],
       hasTrainingPoint,
       testResultsSummary,
-      onLayerModalOpen
+      dispatch
     );
 
-    // Render Edges
-    // const start1 = graphConstants.INPUT_LAYER_NODE_WIDTH;
-    // const end1 = hasTrainingPoint
-    //   ? graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
-    //   : graphConstants.WIDTH / 2 - graphConstants.BIAS_LABEL_WIDTH - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2
-    //
-    // const start2 = hasTrainingPoint
-    //   ? graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5
-    //   : graphConstants.WIDTH / 2 + graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2 + 5 - graphConstants.HIDDEN_LAYER_NODE_WIDTH / 2;
-    // const end2 = graphConstants.WIDTH - graphConstants.BIAS_LABEL_WIDTH - graphConstants.OUTPUT_LAYER_NODE_WIDTH - graphConstants.OUTPUT_LAYER_LABEL;
-    //
-    // const edges1 = [];
-    // const edges2 = [];
+    const sortedEdges = hasTrainingPoint
+      ? _.sortBy(edges, (e) => e.isOn)
+      : _.sortBy(edges, (e) => Math.abs(e.zScore));
+
     const edgeLayers = [];
     const numEdges = edges.length;
     for (let i = 0; i < numEdges; i++) {
-      const layer = edges[i].source.layer;
+      const layer = sortedEdges[i].source.layer;
       if (!edgeLayers[layer]) {
         edgeLayers[layer] = [];
       }
-      edgeLayers[layer].push(edges[i])
+      edgeLayers[layer].push(sortedEdges[i]);
     }
 
     renderEdges(
@@ -100,14 +102,7 @@ export default class Network extends React.Component {
       edgeLayers,
       nodes,
       hasTrainingPoint
-    )
-
-    // debugger
-    //
-    // renderEdges(graphBody, edges1, start1, end1, nodes[0].length, nodes[1].length,
-    //   hasTrainingPoint, false, 0);
-    // renderEdges(graphBody, edges2, start2, end2, nodes[1].length, nodes[2].length,
-    //   hasTrainingPoint, true, 1);
+    );
   }
 
   render() {

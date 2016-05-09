@@ -30,11 +30,13 @@ export default class InfoButtons extends React.Component {
       />
     ];
 
+    /* Make sure content is not rendered until Modal is actually opened,
+    some of the charts are data/ calulation intensive. */
     let content = false;
     if (this.state.isOpen) {
       content = (
         <div style={{ lineHeight: '1.7', fontFamily: 'Raleway' }}>
-          {this.props.children}
+          {this.props.renderContent()}
         </div>
       );
     }

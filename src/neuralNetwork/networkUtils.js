@@ -14,7 +14,7 @@ export function uncompressImage(compressedImage) {
   return image;
 }
 
-function calculateSigmoid(num) {
+export function calculateSigmoid(num) {
   return 1 / (1 + Math.pow(Math.E, -num));
 }
 
@@ -22,32 +22,36 @@ function roundThousandth(num) {
   return Math.round(num * 1000) / 1000;
 }
 
-export function calculateActivations(x, biases, weights) {
+export function feedDrawingThroughNetwork(x, biases, weights) {
   let activation = x;
   const activations = [x];
+  const zs = [];
   for (let i = 0; i < biases.length; i++) {
     const cross = crossProduct(weights[i], activation);
     const z = addMatrix(cross, biases[i]);
     activation = applyFunctionOverMatrix(z, calculateSigmoid);
+    zs.push(z);
     activations.push(activation);
   }
-  return activations;
+  return [activations, zs];
 }
 
-export function convertToGraph($$snapshot, dataPoint) {
+export function convertToGraph(selectedSnapshot, dataPoint) {
   const nodes = [[]];
   let edges = [];
 
-  const biases = $$snapshot.get('biases').toJS();
-  const weights = $$snapshot.get('weights').toJS();
+  const biases = selectedSnapshot.biases;
+  const weights = selectedSnapshot.weights;
 
   let activations = null;
   if (dataPoint) {
-    activations = calculateActivations(dataPoint.x, biases, weights);
+    activations = dataPoint.activations;
+    // activations = calculateActivations(dataPoint.x, biases, weights);
   }
 
   // Use weights to get first layer count
-  const firstLayerCount = $$snapshot.getIn(['weights', 0, 0]).size;
+  // const firstLayerCount = $$snapshot.getIn(['weights', 0, 0]).size;
+  const firstLayerCount = selectedSnapshot.weights[0][0].length;
 
   for (let i = 0; i < firstLayerCount; i++) {
     const node = { index: i };
@@ -91,7 +95,11 @@ export function convertToGraph($$snapshot, dataPoint) {
             edgeOn = true;
           }
         }
-
+        if (layerIndex === 2 && activations) {
+          if (activations[2][weightIndex][0] > 0.5) {
+            edgeOn = true;
+          }
+        }
         edges.push({
           isOn: edgeOn,
           weight: weight,
@@ -109,11 +117,11 @@ export function convertToGraph($$snapshot, dataPoint) {
     });
   });
 
-  if (activations) {
-    edges = _.sortBy(edges, (e) => e.isOn);
-  } else {
-    edges = _.sortBy(edges, (e) => Math.abs(e.zScore));
-  }
+  // if (activations) {
+  //   edges = _.sortBy(edges, (e) => e.isOn);
+  // } else {
+  //   edges = _.sortBy(edges, (e) => Math.abs(e.zScore));
+  // }
 
   return { nodes, edges, activations };
 }

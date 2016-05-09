@@ -38,21 +38,23 @@ export default class BottomDescription extends React.Component {
 
           <p>
             The visualization has 2 states.
-            <ul>
-              <li>
-                <strong> The first (blue and grey color)</strong> is a trained network with weights
-                and biases. Blue edges are positive, grey edges are negative. Thicker edges (the lines connecting layers)
-                represent a larger absolute value of the weight. Biases are the black numbers between the edges.
-              </li>
-              <li>
-                <strong> The second (yellow and grey color)</strong> is a trained network being fed an MNIST image.
-                Yellow lines represent edges exiting active nodes. Like a flashlight illuminating certain paths through the network.
-              </li>
-            </ul>
-            <span style={{fontStyle:"italic"}}>Note: Edges are thicker and thinner relative to edges in their layer.
-            Edge thickness should not be compared between layers.</span>
+          </p>
 
+          <ul>
+            <li>
+              <strong> The first (blue and grey color)</strong> is a trained network with weights
+              and biases. Blue edges are positive, grey edges are negative. Thicker edges (the lines connecting layers)
+              represent a larger absolute value of the weight. Biases are the black numbers between the edges.
+            </li>
+            <li>
+              <strong> The second (yellow and grey color)</strong> is a trained network with weight, biases, and activations being fed an MNIST image.
+              Yellow lines represent <strong>edges exiting active nodes</strong>. Like a flashlight illuminating certain paths through the network.
+            </li>
+          </ul>
 
+          <p style={{fontStyle:"italic"}}>
+            Note: Edges are thicker and thinner relative to edges in their layer.
+            Edge thickness should not be compared between layers.
           </p>
 
           <p>

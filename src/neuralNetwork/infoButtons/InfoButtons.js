@@ -16,27 +16,28 @@ export default class InfoButtons extends React.Component {
       textAlign: 'left',
       marginTop: '10px'
     };
+    // <HiddenLayerInfo
+    //   style={{ top: '25px', left:`${graphConstants.WIDTH / 2 - 90}px` }}
+    // />
+
+
     return (
       <div style={style}>
         <span style={{ fontSize: '13px', fontStyle: 'italic' }}>Click buttons for more info</span>
 
         <InputLayerInfo style={{ top: '25px', left: 0 }}/>
 
-        <HiddenLayerInfo
-          style={{ top: '25px', left:`${graphConstants.WIDTH / 2 - 90}px` }}
-        />
-
         <BiasHistoryInfo
           layer={0}
-          $$network={this.props.$$network}
-          style={{ top: '67px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
+          selectedNetwork={this.props.selectedNetwork}
+          style={{ top: '25px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
         />
 
         <ActivationHistoryInfo
           layer={1}
-          $$network={this.props.$$network}
-          $$selectedDrawing={this.props.$$selectedDrawing}
-          style={{ top: '110px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
+          selectedNetwork={this.props.selectedNetwork}
+          selectedDrawing={this.props.selectedDrawing}
+          style={{ top: '67px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
         />
 
         <OutputLayerInfo style={{ top: '25px', right: '25px' }}/>
@@ -49,8 +50,8 @@ export default class InfoButtons extends React.Component {
 
         <ActivationHistoryInfo
           layer={2}
-          $$network={this.props.$$network}
-          $$selectedDrawing={this.props.$$selectedDrawing}
+          selectedNetwork={this.props.selectedNetwork}
+          selectedDrawing={this.props.selectedDrawing}
           style={{ top: '110px', right: '25px' }}
         />
 

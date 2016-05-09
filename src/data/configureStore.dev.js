@@ -14,7 +14,7 @@ import { enableBatching } from 'redux-batched-actions';
  */
 const logger = createLogger({
   collapsed: true,
-  stateTransformer: (state) => state.toJS()
+  // stateTransformer: (state) => state.toJS()
 });
 
 const finalCreateStore = compose(

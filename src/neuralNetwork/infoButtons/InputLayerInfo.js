@@ -3,19 +3,15 @@ import InfoButtonTemplate from './InfoButtonTemplate';
 import ArrowForward from 'material-ui/lib/svg-icons/navigation/arrow-forward';
 
 export default class InfoButtons extends React.Component {
-  render() {
+  _renderContent() {
     return (
-      <InfoButtonTemplate
-        {...this.props}
-        buttonLabel="Input Layer"
-        modalTitle="The Input Layer"
-      >
+      <div>
         <p>
           The <strong>input layer</strong> feeds data into the network. For this MNIST example, a 28x28 grid
           of handwritten digits are the inputs into the network. For each image,
           the grid of pixels are flattened into <strong>784 input nodes</strong> (28x28=784).
         </p>
-          <p>
+        <p>
           Let's look
           at a 3x3 grid for an example of this transformation. Here we use a variety of colors,
           but each color could just as easily be shades of grey and black as in the
@@ -59,9 +55,19 @@ export default class InfoButtons extends React.Component {
               </tr>
             </table>
           </div>
-          </div>
+        </div>
+      </div>
+    )
+  }
+  render() {
+    return (
+      <InfoButtonTemplate
+        {...this.props}
+        buttonLabel="Input Layer"
+        modalTitle="The Input Layer"
+        renderContent={this._renderContent}
+      />
 
-      </InfoButtonTemplate>
     );
   }
 }

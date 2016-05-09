@@ -9,7 +9,7 @@ export default class InfoButtons extends React.Component {
     this._renderContent = this._renderContent.bind(this);
   }
   _renderContent() {
-    const network = this.props.$$network.toJS();
+    const network = this.props.selectedNetwork;
 
     const labels = [];
     const biases = [];
@@ -37,9 +37,8 @@ export default class InfoButtons extends React.Component {
         {...this.props}
         buttonLabel="Bias History"
         modalTitle="Bias History"
-      >
-        {this._renderContent()}
-      </InfoButtonTemplate>
+        renderContent={this._renderContent}
+      />
     );
   }
 }

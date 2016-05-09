@@ -3,6 +3,7 @@ import Slider from 'material-ui/lib/slider';
 import RaisedButton from 'material-ui/lib/raised-button';
 import DrawingSlider from './DrawingSlider';
 import NetworkChooser from './networkChooser/NetworkChooser';
+import { setSnapshotIndex } from './data/neuralNetworkActions';
 
 const Item = props => {
   const style = {
@@ -26,26 +27,20 @@ export default class extends React.Component {
   }
   _onSliderChange() {
     const val = this.refs['snapshot-slider'].getValue();
-    this.props.onSliderChange(val);
+    this.props.dispatch(setSnapshotIndex(val));
   }
   render() {
-    const count = { correct: 0, total: 0 };
-    Object.keys(this.props.testResultsSummary).forEach(k => {
-      const item = this.props.testResultsSummary[k];
-      count.correct += item.correctCount;
-      count.total += item.correctCount + item.wrongCount;
-    });
+    const summary = this.props.selectedNetworkSummary;
 
-    const accuracy = Math.round(count.correct / count.total * 100);
     const snapshotIndex = parseInt(this.props.snapshotIndex);
 
     return (
       <div style={{ background:'white', padding: '15px 20px 1px 20px', marginBottom: '40px', textAlign: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.08)' }}>
         <div style={{ marginTop: '20px', marginBottom: '25px' }}>
-          <Item label="Model Accuracy" value={`${accuracy}%`}/>
-          <Item label="Epochs" value={this.props.totalEpochs}/>
-          <Item label="Hidden Layers" value="30"/>
-          <Item label="Activation" value="Sigmoid"/>
+          <Item label="Model Accuracy" value={`${summary.accuracy}`}/>
+          <Item label="Hidden Nodes" value={summary.hiddenNodes}/>
+          <Item label="Learning Rate" value={summary.eta}/>
+          <Item label="Activation" value={summary.activation}/>
         </div>
 
         <NetworkChooser/>
@@ -66,7 +61,7 @@ export default class extends React.Component {
             ref="snapshot-slider"
             style={{ marginBottom: '20px' }}
             step={1}
-            primary={true}
+            primary
             value={snapshotIndex}
             max={this.props.totalEpochs}
             onDragStop={this._onSliderChange}

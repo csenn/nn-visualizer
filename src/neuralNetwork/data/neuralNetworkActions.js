@@ -4,9 +4,11 @@ import { batchActions } from 'redux-batched-actions';
 
 export const SET_LOADING = 'SET_LOADING';
 export const SET_NEURAL_NETWORKS = 'SET_NEURAL_NETWORKS';
-export const GET_NEURAL_NETWORK = 'GET_NEURAL_NETWORK';
+export const SET_SELECTED_NEURAL_NETWORK = 'SET_SELECTED_NEURAL_NETWORK';
 export const SET_SNAPSHOT_INDEX = 'SET_SNAPSHOT_INDEX';
 export const SET_SELECTED_DRAWING = 'SET_SELECTED_DRAWING';
+export const SET_LAYER_MODAL = 'SET_LAYER_MODAL';
+export const SET_SELECTED_NETWORK_SUMMARY_ID = 'SET_SELECTED_NETWORK_SUMMARY_ID';
 
 export function setSnapshotIndex(index) {
   return {
@@ -49,11 +51,22 @@ export function getNetwork(networkId) {
           payload: false
         },
         {
-          type: GET_NEURAL_NETWORK,
+          type: SET_SELECTED_NETWORK_SUMMARY_ID,
+          payload: networkId
+        },
+        {
+          type: SET_SELECTED_NEURAL_NETWORK,
           payload: response.data
         },
         setSnapshotIndex(_.max(Object.keys(response.data.snapshots).map(num => parseInt(num))))
       ]));
     });
   };
+}
+
+export function setLayerModal(indexMap) {
+  return {
+    type: SET_LAYER_MODAL,
+    payload: indexMap
+  }
 }

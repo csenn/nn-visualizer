@@ -36,21 +36,21 @@ class NetworkChooser extends React.Component {
     this.setState({ selectedRowIndex: vals[0] });
   }
   _selectNetwork(index) {
-    const path = this.props.$$networks.getIn([index, 'path']);
+    const path = this.props.networkSummaries[index].path;
     this.props.dispatch(getNetwork(path));
     this.setState({ isOpen: false });
   }
   _renderContent() {
-    if (!this.props.$$networks) {
+    if (!this.props.networkSummaries) {
       return false;
     }
-    const rows = this.props.$$networks.map(($$network, index) => {
+    const rows = this.props.networkSummaries.map((summary, index) => {
       return (
-        <TableRow key={$$network.get('path')} selected={this.state.selectedRowIndex === index}>
-          <TableRowColumn>{$$network.get('accuracy')}</TableRowColumn>
-          <TableRowColumn>{$$network.get('hiddenNodes')}</TableRowColumn>
-          <TableRowColumn>{$$network.get('eta')}</TableRowColumn>
-          <TableRowColumn>{$$network.get('activation')}</TableRowColumn>
+        <TableRow key={summary.path} selected={this.state.selectedRowIndex === index}>
+          <TableRowColumn>{summary.accuracy}</TableRowColumn>
+          <TableRowColumn>{summary.hiddenNodes}</TableRowColumn>
+          <TableRowColumn>{summary.eta}</TableRowColumn>
+          <TableRowColumn>{summary.activation}</TableRowColumn>
         </TableRow>
       );
     });
@@ -110,9 +110,9 @@ class NetworkChooser extends React.Component {
   }
 }
 
-function mapStateToProps($$state) {
+function mapStateToProps(state) {
   return {
-    $$networks: $$state.getIn(['neuralNetwork', 'networks'])
+    networkSummaries: state.neuralNetwork.networkSummaries
   };
 }
 

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import InfoButtonTemplate from './InfoButtonTemplate';
 import LineChart from '../networkModals/LineChart';
-import { calculateActivations } from '../networkUtils';
+import { feedDrawingThroughNetwork } from '../networkUtils';
 
 
 /*
@@ -17,8 +17,8 @@ export default class InfoButtons extends React.Component {
     this._renderContent = this._renderContent.bind(this);
   }
   _renderContent() {
-    const network = this.props.$$network.get('snapshots').toJS();
-    const selectedDrawing = this.props.$$selectedDrawing.toJS();
+    const network = this.props.selectedNetwork.snapshots;
+    const selectedDrawing = this.props.selectedDrawing;
 
     const labels = [];
     const activations = [];
@@ -26,7 +26,7 @@ export default class InfoButtons extends React.Component {
 
     Object.keys(network).map(epochIndex => {
       labels.push(`Epoch ${epochIndex}`);
-      const epochActivations = calculateActivations(
+      const [epochActivations, s] = feedDrawingThroughNetwork(
         selectedDrawing.x,
         network[epochIndex].biases,
         network[epochIndex].weights
@@ -46,7 +46,7 @@ export default class InfoButtons extends React.Component {
     return <LineChart labels={labels} series={series} interpolation="monotone"/>;
   }
   render() {
-    if (!this.props.$$selectedDrawing) {
+    if (!this.props.selectedDrawing) {
       return false;
     }
     const modalTitle = this.props.layer === 2
@@ -58,9 +58,8 @@ export default class InfoButtons extends React.Component {
         {...this.props}
         buttonLabel="Activation History"
         modalTitle={modalTitle}
-      >
-        {this._renderContent()}
-      </InfoButtonTemplate>
+        renderContent={this._renderContent}
+      />
     );
   }
 }

@@ -15,11 +15,10 @@ function isInRange(index, nextIndex) {
   }
   if (index < nextIndex) {
     return Math.abs(index - nextIndex) < 4
-      ||  Math.abs(30 + index - nextIndex) < 4
-  } else {
-    return Math.abs(nextIndex - index) < 4
-      ||  Math.abs(30 + nextIndex - index) < 4
+      || Math.abs(30 + index - nextIndex) < 4;
   }
+  return Math.abs(nextIndex - index) < 4
+    || Math.abs(30 + nextIndex - index) < 4;
 }
 
 class DrawingSlider extends React.Component {
@@ -34,7 +33,7 @@ class DrawingSlider extends React.Component {
     this._afterChange = this._afterChange.bind(this);
   }
   _afterChange(i) {
-    this.setState({selectedIndex: i});
+    this.setState({ selectedIndex: i });
     this.props.dispatch(setSelectedDrawing(this.props.drawingSamples[i]));
   }
   _onToggle() {
@@ -43,14 +42,11 @@ class DrawingSlider extends React.Component {
       isDrawingSelected: nextSelected
     });
 
-    // setTimeout(() => {
     if (nextSelected) {
       this._afterChange(0);
     } else {
       this.props.dispatch(setSelectedDrawing(null));
     }
-    // }, 10);
-
   }
   _renderSlider() {
     if (!this.props.isDrawingSelected) {
@@ -71,7 +67,6 @@ class DrawingSlider extends React.Component {
       width: '60px',
       height: '60px',
       fill: '#00bcd4',
-      // position: 'relative',
       top: '15px'
     };
 
@@ -85,17 +80,17 @@ class DrawingSlider extends React.Component {
         speed={200}
         afterChange={this._afterChange}
         slidesToShow={5}
-        prevArrow = {function (options) {
-          const style = Object.assign({left: '-45px'}, iconStyle)
+        prevArrow = {function prev(options) {
+          const style = Object.assign({ left: '-45px' }, iconStyle);
           return (
-            <LeftArrow onClick={options.onClick} className='slick-prev' style={style}/>
-          )
+            <LeftArrow onClick={options.onClick} className="slick-prev" style={style}/>
+          );
         }}
-        nextArrow={function (options) {
-          const style = Object.assign({right: '-45px'}, iconStyle)
+        nextArrow={function next(options) {
+          const style = Object.assign({ right: '-45px' }, iconStyle);
           return (
-            <RightArrow onClick={options.onClick}  className='slick-next' style={style}/>
-          )
+            <RightArrow onClick={options.onClick} className="slick-next" style={style}/>
+          );
         }}
       >
         {items}
@@ -103,29 +98,27 @@ class DrawingSlider extends React.Component {
     );
   }
   render() {
-
     return (
       <div style={{ display: 'inline-block', width: '500px' }}>
         <div style={{ display: 'inline-block', marginTop: '15px', marginBottom: '25px' }}>
           <Toggle
-            labelStyle={{ fontFamily: 'Raleway', fontSize: '26px'}}
+            labelStyle={{ fontFamily: 'Raleway', fontSize: '26px' }}
             onToggle={this._onToggle}
             label="Feed network with MNIST drawings"
             labelPosition="right"
           />
         </div>
-
         {this._renderSlider()}
       </div>
     );
   }
 }
 
-function mapStateToProps($$state) {
+function mapStateToProps(state) {
   const drawingSamples = [];
-  const $$samples = $$state.getIn(['neuralNetwork', 'network', 'drawingSamples']);
-  $$samples.forEach($$sample => {
-    const uncompressedImage = uncompressImage($$sample.get('x').toJS())
+  const samples = state.neuralNetwork.selectedNetwork.drawingSamples;
+  samples.forEach(sample => {
+    const uncompressedImage = uncompressImage(sample.x);
     // uncompressedImage.unshift([0]);
     // uncompressedImage.unshift([0]);
     // uncompressedImage.unshift([0]);
@@ -144,7 +137,7 @@ function mapStateToProps($$state) {
 
     drawingSamples.push({
       x: uncompressedImage,
-      yIndex: $$sample.get('yIndex')
+      yIndex: sample.yIndex
     });
   });
   return { drawingSamples: _.sortBy(drawingSamples, d => d.yIndex) };

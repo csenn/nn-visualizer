@@ -1,7 +1,8 @@
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
+import { setLayerModal } from '../data/neuralNetworkActions';
 
-export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) {
+export default function (svg, hiddenLayers, hasTrainingPoint, dispatch) {
 
   const xScale = d3.scale.linear()
     .domain([0, hiddenLayers.length + 1])
@@ -65,7 +66,7 @@ export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) 
           : graphConstants.WITH_TRAINING_OFF;
       });
 
-    // Rectangle Node Label
+  // Rectangle Node Label
   enteringElems
       .append('text')
       .attr('class', 'hidden-node-text');
@@ -86,7 +87,7 @@ export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) 
     .attr('class', 'bias');
 
   // Bias Label Updating
-  elems
+  const biasLabels = elems
     .select('.bias')
     .attr('dx', () => {
       const { BIAS_LABEL_WIDTH, HIDDEN_LAYER_NODE_WIDTH } = graphConstants;
@@ -98,21 +99,14 @@ export default function (svg, hiddenLayers, hasTrainingPoint, onLayerModalOpen) 
     .attr('dy', (d, nodeIndex, layerIndex) => getYScale(layerIndex)(1) / 2)
     .attr('text-anchor', 'middle')
     .attr('stroke-width', '.5')
-    .attr('stroke', d => {
-      return 'black';
-      if (hasTrainingPoint) {
-        return 'black';
-      }
-      return d.bias > 0
-        ? graphConstants.NO_TRAINING_POSITIVE
-        : graphConstants.NO_TRAINING_NEGATIVE;
-    })
+    .attr('stroke', 'black')
+    .attr('cursor', 'pointer')
     .text(d => d.bias);
 
   // elems.exit().remove();
 
-  // biasLabel.on('click', (d, index) => {
-  //   onLayerModalOpen(index);
-  //   d3.event.stopPropagation();
-  // });
+  biasLabels.on('click', (d, nodeIndex, layerIndex) => {
+    dispatch(setLayerModal({ nodeIndex, layerIndex }));
+    d3.event.stopPropagation();
+  });
 }

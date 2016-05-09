@@ -52,7 +52,7 @@ module.exports = {
         loader: 'json-loader'
       },
       	{ test: /\.woff(2)?/,               loader: "url-loader?limit=10000&minetype=application/font-woff" },
-      			{ test: /\.(jpg|gif|ttf|eot|svg)/,  loader: "file-loader" }
+      			{ test: /\.(jpg|gif|ttf|eot|svg|png)/,  loader: "file-loader" }
     ]
   }
 };

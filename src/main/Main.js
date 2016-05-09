@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Main from '../neuralNetwork/Main';
+import NeuralNetwork from '../neuralNetwork';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import IconButton from 'material-ui/lib/icon-button';
 import ActionHome from 'material-ui/lib/svg-icons/action/home';
@@ -27,7 +27,7 @@ export default class App extends Component {
             MNIST Neural Network Visualizer
           </div>
         </div>
-        <Main/>
+        <NeuralNetwork/>
       </div>
     );
   }
@@ -43,9 +43,9 @@ App.propTypes = {
  * state in this Redux application. 'counter' is a property within our store/state
  * object. By mapping it to props, we can pass it to the child component Counter.
  */
-function mapStateToProps($$state) {
+function mapStateToProps(state) {
   return {
-    hasSelectedDrawing: !!$$state.getIn(['neuralNetwork', 'selectedDrawing'])
+    hasSelectedDrawing: !!state.neuralNetwork.selectedDrawing // !!$$state.getIn(['neuralNetwork', 'selectedDrawing'])
   };
 }
 
