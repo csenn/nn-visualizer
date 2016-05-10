@@ -6,7 +6,7 @@ export default class BottomDescription extends React.Component {
     return (
       <div style={{textAlign: 'center', marginTop: '150px',  lineHeight: '1.4', background: 'white'}}>
 
-        <div style={{ display: 'inline-block', marginTop: '30px', maxWidth: graphConstants.WIDTH, textAlign: 'left' }}>
+        <div style={{ display: 'inline-block', marginTop: '30px', marginBottom: '30px', maxWidth: graphConstants.WIDTH, textAlign: 'left' }}>
           <h2>
             What are Neural Networks and the MNIST datasets?
           </h2>
@@ -44,19 +44,20 @@ export default class BottomDescription extends React.Component {
             <li>
               <strong> The first (blue and grey color)</strong> is a trained network with weights
               and biases. Blue edges are positive, grey edges are negative. Thicker edges (the lines connecting layers)
-              represent a larger absolute value of the weight. Biases are the black numbers between the edges.
+              represent a larger absolute value of the weight. Biases are the black numbers between
+              the edges. <span style={{fontStyle:"italic"}}>
+                Note: Edges are thicker and thinner relative to edges in their layer.
+                Edge thickness should not be compared between layers.
+              </span>
             </li>
-            <li>
+            <li style={{marginTop: '10px'}}>
               <strong> The second (yellow and grey color)</strong> is a trained network with weight, biases, and activations being fed an MNIST image.
               Yellow lines represent <strong>edges exiting active nodes</strong>. Yellow nodes have an activation above 0.5.
               It's meant to look like a flashlight illuminating certain paths through the network.
             </li>
           </ul>
 
-          <p style={{fontStyle:"italic"}}>
-            Note: Edges are thicker and thinner relative to edges in their layer.
-            Edge thickness should not be compared between layers.
-          </p>
+
 
           <p>
             <strong>Click the biases or the output digits directly on the visualization
@@ -72,49 +73,48 @@ export default class BottomDescription extends React.Component {
             Some Intuitions Gained
           </h2>
           <p>
-            784 x 30 edges (the maximum connections between layers in this visualization)
-            is considered a small number of edges.
-            Yet the more you stare at and analyze these edges and their calculations, the more you grasp
-            the scope and complexity of interactions in large modern networks. And the
-            human brain has levels of magnitude more connections then this visualization.
+            Use the visualization to confirm these.
           </p>
-
-          <p>
-            Networks with a learning rate of 3.0 gained a high percentage of their accuracy bumps in just the first epoch. The final
-            epochs offered smaller improvements.
-          </p>
-
-          <p>
-            A network with only 5 hidden nodes has a perfomance of 87%. These results were considerably better
-            then expected, and when feeding in digits it's a great visualization to play with to see how
-            the activations in the hidden layer effect those in the output layer.
-          </p>
-
-          <p>
-            The network with a learning rate of 0.3 is nice to look at because it
-            learns slower over all epochs. It is likely given more
-            epochs to learn from it would have continued to improve to a higher final performance.
-          </p>
-
-          <p>
-            Not shown, but tested. Shifting test images more then a few pixels can
-            do havoc to the network's accuracy. Convolutional neural
-            networks and manufacturing new training data with image
-            transformations are techniques that can help.
-          </p>
-
+          <ul>
+            <li>
+              784 x 30 edges (the maximum connections between layers in this visualization)
+              is considered a small number of edges.
+              Yet the more you stare at and analyze these edges and their calculations, the more you grasp
+              the scope and complexity of interactions in large modern networks. For comparison, the
+              human brain has levels of magnitude more connections then this visualization.
+            </li>
+            <li style={{marginTop: '10px'}}>
+              A network with only 5 hidden nodes has a perfomance of 87%. These results were considerably better
+              then expected, and when feeding in digits it's a great visualization to play with to see how
+              the activations in the hidden layer effect those in the output layer.
+            </li>
+            <li style={{marginTop: '10px'}}>
+              Networks with a learning rate of 3.0 gained a high percentage of their accuracy bumps in just the first epoch. The final
+              epochs offered smaller improvements.
+            </li>
+            <li style={{marginTop: '10px'}}>
+              The network with a learning rate of 0.3 is nice to look at because it
+              learns slower over all epochs. Given more epochs to learn from,
+              it is likely performance would have continued to improve.
+            </li>
+            <li style={{marginTop: '10px'}}>
+              Not shown, but tested. Shifting test images more then a few pixels can
+              do havoc to the network's accuracy. Convolutional neural
+              networks and manufacturing new training data with image
+              transformations are techniques that can help.
+            </li>
+          </ul>
           <h2>
             Credits
           </h2>
 
           <p>
-            An awesome resource for an introduction to machine learning is Michael Nielsen's <a href="http://neuralnetworksanddeeplearning.com/">Neural Networks and Deep Learning</a>
-            <span> The</span> network and charts were built using D3. View logic and data management were handled with ReactJS and Redux. View our package.json for all of our dependencies.
+            An awesome resource for an introduction to nerual networks is
+            Michael Nielsen's <a href="http://neuralnetworksanddeeplearning.com/">Neural Networks and Deep Learning</a>
+            <span> The</span> network and charts were built using D3.
+            View logic and data management were handled with ReactJS and Redux.
+            View our package.json for all of our dependencies.
           </p>
-
-        </div>
-
-        <div style={{ display: 'inline-block', marginTop: '150px', maxWidth: graphConstants.WIDTH }}>
 
         </div>
       </div>
