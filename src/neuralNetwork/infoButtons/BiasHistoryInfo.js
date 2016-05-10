@@ -29,7 +29,14 @@ export default class InfoButtons extends React.Component {
       }
     }
 
-    return <LineChart labels={labels} series={series}/>;
+    return (
+      <LineChart
+        yAxisLabel="Biases"
+        labels={labels}
+        series={series}
+        getSeriesLabel={function (i) {return `Bias ${i}`;}}
+      />
+    )
   }
   render() {
     return (

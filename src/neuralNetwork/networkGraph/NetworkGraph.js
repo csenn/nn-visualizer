@@ -39,9 +39,9 @@ export default class Network extends React.Component {
     this.buildNetwork();
   }
   // Need cleanup?
-  //componentWillUnmount() {
-  // debugger
-  // }
+  componentWillUnmount() {
+    d3.select(this.refs['chart-svg']).selectAll('*').remove();
+  }
   buildNetwork() {
     const { selectedSnapshot, selectedDrawing, testResultsSummary, dispatch } = this.props;
     if (!selectedSnapshot) {

@@ -44,7 +44,7 @@ export default class InfoButtons extends React.Component {
 
         <BiasHistoryInfo
           layer={1}
-          $$network={this.props.$$network}
+          selectedNetwork={this.props.selectedNetwork}
           style={{ top: '67px', right: '25px' }}
         />
 
@@ -54,7 +54,7 @@ export default class InfoButtons extends React.Component {
           selectedDrawing={this.props.selectedDrawing}
           style={{ top: '110px', right: '25px' }}
         />
-        
+
       </div>
     );
   }

@@ -15,6 +15,7 @@ export default class LineChart extends React.Component {
     this._renderChart();
   }
   componentWillUmount() {
+    const domNode = this.refs['chart-box'];
     d3.select(domNode).selectAll('*').remove();
     d3.selectAll('.line-chart-tooltip').remove();
   }
@@ -36,7 +37,10 @@ export default class LineChart extends React.Component {
     const max = _.max(vals);
     const y = d3.scale.linear()
       .range([height, 0])
-      .domain([min + .05 * min, max + .05 * max]); // wont work in some cases
+      .domain([
+        !_.isUndefined(this.props.minY) ? this.props.minY : min + 0.05 * min,
+        !_.isUndefined(this.props.maxY) ? this.props.maxY : max + 0.05 * max
+      ]); // wont work in some cases
 
     const colorFunc = d3.scale.category10()
       .domain(labels);
@@ -77,7 +81,7 @@ export default class LineChart extends React.Component {
       .call(xAxis)
       .append('text')
       .attr('y', 40)
-      .attr('x', width/2 + 100)
+      .attr('x', width / 2 + 100)
       .style('text-anchor', 'end')
       .text('Epochs - (Learning Phases)');
 
@@ -89,7 +93,7 @@ export default class LineChart extends React.Component {
       .attr('y', -45)
       .attr('x', -height / 2 + 30)
       .style('text-anchor', 'end')
-      .text('Biases');
+      .text(this.props.yAxisLabel);
 
     const lineSvg = svg.selectAll('.line')
         .data(series)
@@ -118,12 +122,13 @@ export default class LineChart extends React.Component {
         .attr('fill', (d, i, i2) => colorFunc(i2))
         .on('mouseover', (d, i, i2) => {
           const coord = d3.mouse(domNode);
+          const seriesLabel = this.props.getSeriesLabel(i2 + 1);
           const tooltipHtml = `
             <div>
-              <div style="padding-bottom:3px;">Bias ${i2 + 1}</div>
+              <div style="padding-bottom:3px;">${seriesLabel}</div>
               <strong>${Math.round(d * 10000) / 10000}</strong>
             </div>
-          `
+          `;
           div.transition()
             .duration(200)
             .style('opacity', .9);
@@ -136,7 +141,6 @@ export default class LineChart extends React.Component {
             .duration(500)
             .style('opacity', 0);
         });
-
   }
 
   render() {

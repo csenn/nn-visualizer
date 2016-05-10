@@ -48,7 +48,8 @@ export default class BottomDescription extends React.Component {
             </li>
             <li>
               <strong> The second (yellow and grey color)</strong> is a trained network with weight, biases, and activations being fed an MNIST image.
-              Yellow lines represent <strong>edges exiting active nodes</strong>. Like a flashlight illuminating certain paths through the network.
+              Yellow lines represent <strong>edges exiting active nodes</strong>. Yellow nodes have an activation above 0.5.
+              Imagine a flashlight illuminating certain paths through the network.
             </li>
           </ul>
 

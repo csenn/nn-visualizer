@@ -43,7 +43,15 @@ export default class InfoButtons extends React.Component {
       }
     }
 
-    return <LineChart labels={labels} series={series} interpolation="monotone"/>;
+    return (
+      <LineChart
+        yAxisLabel="Activations"
+        labels={labels}
+        series={series}
+        interpolation="monotone"
+        getSeriesLabel={function (i) {return `Activation in node ${i}`;}}
+      />
+    );
   }
   render() {
     if (!this.props.selectedDrawing) {

@@ -98,7 +98,7 @@ export default function (svg, nodes, lastActivations,
   // Number Label
   elems.select('.output-number-label')
     .attr('dx', graphConstants.OUTPUT_LAYER_NODE_WIDTH)
-    .attr('dy', yScale(1) / 2)
+    .attr('dy', yScale(1) / 2 + 4)
     .attr('stroke-width', '2')
     .attr('font-size', 28)
     .attr('text-anchor', 'middle')

@@ -9,6 +9,7 @@ import InfoButtons from './infoButtons/InfoButtons';
 import BottomDescription from './bottomDescription/BottomDescription';
 import { feedDrawingThroughNetwork } from './networkUtils';
 import './neuralNetwork.scss';
+import CircularProgress from 'material-ui/lib/circular-progress';
 
 class Main extends React.Component {
   constructor(props) {
@@ -18,10 +19,11 @@ class Main extends React.Component {
   }
 
   render() {
-    if (this.props.isLoading || !this.props.selectedSnapshot) {
+   if (this.props.isLoading || !this.props.selectedSnapshot) {
       return (
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
-          Loading...
+        <div style={{ textAlign: 'center', marginTop: '100px' }}>
+          <div style={{ marginBottom: '15px' }}>Loading</div>
+          <CircularProgress size={3} />
         </div>
       );
     }

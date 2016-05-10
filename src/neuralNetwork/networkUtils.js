@@ -125,3 +125,14 @@ export function convertToGraph(selectedSnapshot, dataPoint) {
 
   return { nodes, edges, activations };
 }
+
+export function calulatePerfFromTestResults(testResults) {
+  let correct = 0;
+  let wrong = 0;
+  Object.keys(testResults).forEach(key => {
+    const result = testResults[key];
+    correct += result.correct.length;
+    wrong += _.flattenDeep(_.values(result.wrong)).length;
+  });
+  return correct / (correct + wrong);
+}
