@@ -49,7 +49,7 @@ export default class BottomDescription extends React.Component {
             <li>
               <strong> The second (yellow and grey color)</strong> is a trained network with weight, biases, and activations being fed an MNIST image.
               Yellow lines represent <strong>edges exiting active nodes</strong>. Yellow nodes have an activation above 0.5.
-              Imagine a flashlight illuminating certain paths through the network.
+              It's meant to look like a flashlight illuminating certain paths through the network.
             </li>
           </ul>
 
@@ -66,7 +66,42 @@ export default class BottomDescription extends React.Component {
           <p>
             When the network is initially run, we save a snapshot (equivalent to an epoch) of the network at different points in time.
             <strong> Use the slider to see how the network weights and biases change over time.</strong>
-            </p>
+          </p>
+
+          <h2>
+            Some Intuitions Gained
+          </h2>
+          <p>
+            784 x 30 edges (the maximum connections between layers in this visualization)
+            is considered a small number of edges.
+            Yet the more you stare at and analyze these edges and their calculations, the more you grasp
+            the scope and complexity of interactions in large modern networks. And the
+            human brain has levels of magnitude more connections then this visualization.
+          </p>
+
+          <p>
+            Networks with a learning rate of 3.0 gained a high percentage of their accuracy bumps in just the first epoch. The final
+            epochs offered smaller improvements.
+          </p>
+
+          <p>
+            A network with only 5 hidden nodes has a perfomance of 87%. These results were considerably better
+            then expected, and when feeding in digits it's a great visualization to play with to see how
+            the activations in the hidden layer effect those in the output layer.
+          </p>
+
+          <p>
+            The network with a learning rate of 0.3 is nice to look at because it
+            learns slower over all epochs. It is likely given more
+            epochs to learn from it would have continued to improve to a higher final performance.
+          </p>
+
+          <p>
+            Not shown, but tested. Shifting test images more then a few pixels can
+            do havoc to the network's accuracy. Convolutional neural
+            networks and manufacturing new training data with image
+            transformations are techniques that can help.
+          </p>
 
           <h2>
             Credits
@@ -78,9 +113,6 @@ export default class BottomDescription extends React.Component {
           </p>
 
         </div>
-
-
-
 
         <div style={{ display: 'inline-block', marginTop: '150px', maxWidth: graphConstants.WIDTH }}>
 
