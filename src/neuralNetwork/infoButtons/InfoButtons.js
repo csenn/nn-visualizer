@@ -23,7 +23,7 @@ export default class InfoButtons extends React.Component {
 
     return (
       <div style={style}>
-        <span style={{ fontSize: '13px', fontStyle: 'italic' }}>Click buttons for more info</span>
+        <span style={{ fontSize: '13px', fontStyle: 'italic' }}>Click buttons for more info and charts</span>
 
         <InputLayerInfo style={{ top: '25px', left: 0 }}/>
 

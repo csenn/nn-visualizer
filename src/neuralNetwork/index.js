@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import NetworkGraph from './networkGraph/NetworkGraph';
 import { getNetworks, getNetwork } from './data/neuralNetworkActions';
 import LayerModal from './networkModals/LayerModal';
+import DigitModal from './networkModals/DigitModal';
 import NetworkToolbar from './networkToolbar/NetworkToolbar';
 import InfoButtons from './infoButtons/InfoButtons';
 import BottomDescription from './bottomDescription/BottomDescription';
@@ -60,6 +61,10 @@ class Main extends React.Component {
           dispatch={this.props.dispatch}
           selectedSnapshot={this.props.selectedSnapshot}
           selectedDrawing={this.props.selectedDrawing}
+        />
+        <DigitModal
+          dispatch={this.props.dispatch}
+          selectedSnapshot={this.props.selectedSnapshot}
         />
       </div>
     );

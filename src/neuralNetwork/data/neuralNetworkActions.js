@@ -7,8 +7,9 @@ export const SET_NEURAL_NETWORKS = 'SET_NEURAL_NETWORKS';
 export const SET_SELECTED_NEURAL_NETWORK = 'SET_SELECTED_NEURAL_NETWORK';
 export const SET_SNAPSHOT_INDEX = 'SET_SNAPSHOT_INDEX';
 export const SET_SELECTED_DRAWING = 'SET_SELECTED_DRAWING';
-export const SET_LAYER_MODAL = 'SET_LAYER_MODAL';
 export const SET_SELECTED_NETWORK_SUMMARY_ID = 'SET_SELECTED_NETWORK_SUMMARY_ID';
+export const SET_LAYER_MODAL = 'SET_LAYER_MODAL';
+export const SET_DIGIT_MODAL = 'SET_DIGIT_MODAL';
 
 export function setSnapshotIndex(index) {
   return {
@@ -68,5 +69,12 @@ export function setLayerModal(indexMap) {
   return {
     type: SET_LAYER_MODAL,
     payload: indexMap
+  }
+}
+
+export function setDigitModal(index) {
+  return {
+    type: SET_DIGIT_MODAL,
+    payload: index
   }
 }

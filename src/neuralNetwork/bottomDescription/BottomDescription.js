@@ -13,27 +13,27 @@ export default class BottomDescription extends React.Component {
           <p>
             Neural networks are an exciting subset of machine learning algorithms. Although theorized about for more then half a century,
             recent advancements in computer processing power and easier access to large datasets have
-            allowed neural networks to make a comeback as a premier machine learning solution.
+            allowed neural networks to offer best in class solutions to difficult problems.
             Versions of neural networks, <strong>called deep neural networks</strong>,
-            are being applied to many ground breaking technologies including use in self driving cars, recognizing objects in images
+            are being applied to many technologies including use in self driving cars, recognizing objects in images
             and videos, and powering novel voice recognition systems.
           </p>
           <p>
-            The purpose of this visualization is to view a <strong>basic feed forward neural network</strong> in action.
-            We use the MNIST dataset as it is well known by students and researchers in the machine learning community and because it makes
-            a nice vizualization possible.
             The MNIST dataset contains 60,000 handwritten numbers collected from Census Bureau employees and highschool students.
-            For more information see <a href="http://yann.lecun.com/exdb/mnist/">Yann Lecun's MNIST Database</a>
+            We use the MNIST dataset as it is well known by students and researchers in the machine learning community and because it makes
+            a nice vizualization possible. For more information see <a href="http://yann.lecun.com/exdb/mnist/">Yann Lecun's MNIST Database</a>
           </p>
           <p>
+            The purpose of this visualization is to view <strong>basic feed forward neural networks</strong> in action.
+            The networks have learned to read numbers written by people, and then guess the values of the number.
             The goal of this project is <strong>not to create the most accurate neural network
             possible</strong>. In fact, some researchers have had categorization accuracies over 99% while we are
             working in the 80% - 95% range. We simply want to enforce the intuition of how a "function" is built that maps inputs
-            to outputs using network weights and biases.
+            to outputs (by using network weights and biases).
           </p>
 
           <h2>
-            Network Information
+            Visualization Information
           </h2>
 
           <p>
@@ -59,14 +59,15 @@ export default class BottomDescription extends React.Component {
           </p>
 
           <p>
-            When the network is initially run, we save a snapshot (equivalent to an epoch) of the network at different points in time.
-            Use the slider to see how the network weights and biases change over time.
+            <strong>Click the biases or the output digits directly on the visualization
+            for a break down of calculations and network accuracy.</strong>
           </p>
 
           <p>
-            The input layer consits of 784 input nodes. The original image is a 28 x 28 pixel handwritten number (28 x 28 = 784). We flatten the image and each pixel becomes
-            an <strong>input node</strong> to feed information into the network. Imagine taking each row of pixels in the picture, turning them horizontally, and stacking them on top of each other.
-          </p>
+            When the network is initially run, we save a snapshot (equivalent to an epoch) of the network at different points in time.
+            <strong> Use the slider to see how the network weights and biases change over time.</strong>
+            </p>
+
           <h2>
             Credits
           </h2>

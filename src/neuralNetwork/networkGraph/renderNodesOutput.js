@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
-import { setLayerModal } from '../data/neuralNetworkActions';
+import { setLayerModal, setDigitModal } from '../data/neuralNetworkActions';
 
 export default function (svg, nodes, lastActivations,
   hasTrainingPoint, testResultsSummary, dispatch, layer) {
@@ -96,14 +96,20 @@ export default function (svg, nodes, lastActivations,
     });
 
   // Number Label
-  elems.select('.output-number-label')
+  const numberLabels = elems.select('.output-number-label')
     .attr('dx', graphConstants.OUTPUT_LAYER_NODE_WIDTH)
     .attr('dy', yScale(1) / 2 + 4)
     .attr('stroke-width', '2')
     .attr('font-size', 28)
     .attr('text-anchor', 'middle')
     .attr('stroke', 'rgb(60,60,60)')
+    .attr('cursor', 'pointer')
     .text((d, i) => i);
+
+  numberLabels.on('click', (d, nodeIndex) => {
+    dispatch(setDigitModal(nodeIndex));
+    d3.event.stopPropagation();
+  })
 
   // Bias
   const biasLabels = elems.select('.bias')

@@ -10,6 +10,7 @@ const initialState = {
   snapshotIndex: null,
   selectedDrawing: null,
   layerModal: null,
+  digitModal: null,
 };
 
 export default function neuralNetworkReducer(state = initialState, action) {
@@ -34,6 +35,9 @@ export default function neuralNetworkReducer(state = initialState, action) {
 
     case neuralNetworkActions.SET_LAYER_MODAL:
       return Object.assign({}, state, { layerModal: action.payload });
+
+    case neuralNetworkActions.SET_DIGIT_MODAL:
+      return Object.assign({}, state, { digitModal: action.payload });
 
     default:
       return state;
