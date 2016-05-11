@@ -25,7 +25,7 @@ export default class InfoButtons extends React.Component {
         <BiasHistoryInfo
           layer={0}
           selectedNetwork={this.props.selectedNetwork}
-          style={{ top: '25px', left: `${graphConstants.WIDTH / 2 - z0}px` }}
+          style={{ top: '25px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
         />,
         <ActivationHistoryInfo
           layer={1}

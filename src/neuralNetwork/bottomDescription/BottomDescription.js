@@ -3,11 +3,18 @@ import * as graphConstants from '../networkGraph/graphConstants';
 
 export default class BottomDescription extends React.Component {
   render() {
-    return (
-      <div style={{textAlign: 'center', marginTop: '150px',  lineHeight: '1.4', background: 'white'}}>
 
-        <div style={{ display: 'inline-block', marginTop: '30px', marginBottom: '30px', maxWidth: graphConstants.WIDTH, textAlign: 'left' }}>
-          <h2>
+    const h2Style = {
+      textAlign: 'center',
+      marginTop: '25px',
+      marginBottom: '5px'
+    };
+
+    return (
+      <div style={{ textAlign: 'center', marginTop: '150px', lineHeight: '1.4', background: 'white' }}>
+
+        <div style={{ display: 'inline-block', marginTop: '30px', marginBottom: '30px', maxWidth: '800px', textAlign: 'left' }}>
+          <h2 style={h2Style}>
             What are Neural Networks and the MNIST datasets?
           </h2>
           <p>
@@ -32,12 +39,12 @@ export default class BottomDescription extends React.Component {
             to outputs (by using network weights and biases).
           </p>
 
-          <h2>
+          <h2 style={h2Style}>
             Visualization Information
           </h2>
 
           <p>
-            The visualization has 2 states.
+            The visualization has 2 states. Toggle between them by clicking "Feed network with MNIST drawings" above.
           </p>
 
           <ul>
@@ -45,7 +52,7 @@ export default class BottomDescription extends React.Component {
               <strong> The first (blue and grey color)</strong> is a trained network with weights
               and biases. Blue edges are positive, grey edges are negative. Thicker edges (the lines connecting layers)
               represent a larger absolute value of the weight. Biases are the black numbers between
-              the edges. <span style={{fontStyle:"italic"}}>
+              the edges. <span style={{ fontStyle:'italic'}}>
                 Note: Edges are thicker and thinner relative to edges in their layer.
                 Edge thickness should not be compared between layers.
               </span>
@@ -57,8 +64,6 @@ export default class BottomDescription extends React.Component {
             </li>
           </ul>
 
-
-
           <p>
             <strong>Click the biases or the output digits directly on the visualization
             for a break down of calculations and network accuracy.</strong>
@@ -69,18 +74,16 @@ export default class BottomDescription extends React.Component {
             <strong> Use the slider to see how the network weights and biases change over time.</strong>
           </p>
 
-          <h2>
+          <h2 style={h2Style}>
             Some Intuitions Gained
           </h2>
-          <p>
-            Use the visualization to confirm these.
-          </p>
+
           <ul>
             <li>
               784 x 30 edges (the maximum connections between layers in this visualization)
               is considered a small number of edges.
               Yet the more you stare at and analyze these edges and their calculations, the more you grasp
-              the scope and complexity of interactions in large modern networks. For comparison, the
+              the scope and complexity of interactions in large modern networks. For another comparison, the
               human brain has levels of magnitude more connections then this visualization.
             </li>
             <li style={{marginTop: '10px'}}>
@@ -104,7 +107,7 @@ export default class BottomDescription extends React.Component {
               transformations are techniques that can help.
             </li>
           </ul>
-          <h2>
+          <h2 style={h2Style}>
             Credits
           </h2>
 
