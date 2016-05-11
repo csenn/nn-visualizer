@@ -57,9 +57,7 @@ export default class InfoButtons extends React.Component {
     if (!this.props.selectedDrawing) {
       return false;
     }
-    const modalTitle = this.props.layer === 2
-      ? 'Network Predictions For Current Drawing'
-      : 'Activation History';
+    const modalTitle = 'Activation for drawing fed through in each Epoch'
 
     return (
       <InfoButtonTemplate

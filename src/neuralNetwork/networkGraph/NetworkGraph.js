@@ -60,7 +60,10 @@ export default class Network extends React.Component {
       .attr('transform', `translate(0, ${graphConstants.HEADER_HEIGHT})`);
 
     // Render header layer
-    renderHeaderLayer(svg, nodes[1].length, hasTrainingPoint);
+    renderHeaderLayer(
+        svg,
+        nodes
+    );
 
     // Render Nodes. Each Layer is different enough that it makes sense to split
     renderNodesInput(
