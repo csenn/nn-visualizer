@@ -2,11 +2,20 @@ const _ = require('lodash');
 const jsonfile = require('jsonfile');
 const path = require('path');
 const express = require('express');
-const webpack = require('webpack');
-const config = require('../webpack.config.dev');
-
 const app = express();
-const compiler = webpack(config);
+
+if (process.env.NODE_ENV !== 'production') {
+  const webpack = require('webpack');
+  const config = require('../webpack.config.dev');
+  const compiler = webpack(config);
+
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
 
 const networks = [
   {
@@ -52,19 +61,6 @@ const networks = [
     accuracy: '93%'
   },
 ];
-
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath
-}));
-
-app.use(require('webpack-hot-middleware')(compiler));
-
-// app.get('/awesome', (req, res) => {
-//   jsonfile.readFile(path.join(__dirname, 'json', 'mnist', 'testing_0-499'), (err, file) => {
-//     res.send(file);
-//   });
-// });
 
 app.get('/network', (req, res) => {
   res.send(networks);
