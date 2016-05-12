@@ -34,8 +34,6 @@
     "eslint-plugin-babel": "^3.0.0",
     "eslint-plugin-react": "^3.16.1",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.13.3",
-    "file-loader": "^0.8.5",
     "jest-cli": "^11.0.0",
     "json-loader": "^0.5.4",
     "mnist-data": "^1.2.6",
@@ -54,6 +52,8 @@
   },
   "dependencies": {
     "axios": "^0.9.1",
+    "express": "^4.13.3",
+    "file-loader": "^0.8.5",
     "d3": "^3.5.16",
     "jsonfile": "^2.3.0",
     "lodash": "^4.11.0",

@@ -51,8 +51,14 @@ module.exports = {
         test: /\.json$/,
         loader: 'json-loader'
       },
-      	{ test: /\.woff(2)?/,               loader: "url-loader?limit=10000&minetype=application/font-woff" },
-      			{ test: /\.(jpg|gif|ttf|eot|svg|png)/,  loader: "file-loader" }
+      {
+          test: /\.woff(2)?/,
+          loader: "url-loader?limit=10000&minetype=application/font-woff"
+      },
+      {
+          test: /\.(jpg|gif|ttf|eot|svg|png)/,
+          loader: "file-loader"
+      }
     ]
   }
 };
