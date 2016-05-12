@@ -4,7 +4,10 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
+console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV !== 'production') {
+  console.log('asdasdasdasdasdasdasdasd');
   const webpack = require('webpack');
   const config = require('../webpack.config.dev');
   const compiler = webpack(config);
