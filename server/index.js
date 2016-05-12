@@ -86,7 +86,7 @@ app.get('/network/:id', function (req, res) {
 });
 
 app.get('/static/bundle.js', function(req, res) {
-  res.send(path.join(__dirname, '..', 'dist', 'bundle.js'));
+  res.sendFile(path.join(__dirname, '..', 'dist', 'bundle.js'));
 })
 
 app.get('*', (req, res) => {
