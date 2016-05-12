@@ -6,19 +6,19 @@ const app = express();
 
 console.log(process.env.NODE_ENV);
 
-if (process.env.NODE_ENV !== 'production') {
-  console.log('asdasdasdasdasdasdasdasd');
-  const webpack = require('webpack');
-  const config = require('../webpack.config.dev');
-  const compiler = webpack(config);
-
-  app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
-    publicPath: config.output.publicPath
-  }));
-
-  app.use(require('webpack-hot-middleware')(compiler));
-}
+// if (process.env.NODE_ENV !== 'production') {
+//   console.log('asdasdasdasdasdasdasdasd');
+//   const webpack = require('webpack');
+//   const config = require('../webpack.config.dev');
+//   const compiler = webpack(config);
+//
+//   app.use(require('webpack-dev-middleware')(compiler, {
+//     noInfo: true,
+//     publicPath: config.output.publicPath
+//   }));
+//
+//   app.use(require('webpack-hot-middleware')(compiler));
+// }
 
 const networks = [
   {
