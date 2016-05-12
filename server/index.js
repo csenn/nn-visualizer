@@ -4,21 +4,18 @@ const path = require('path');
 const express = require('express');
 const app = express();
 
-console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV !== 'production') {
+  const webpack = require('webpack');
+  const config = require('../webpack.config.dev');
+  const compiler = webpack(config);
 
-// if (process.env.NODE_ENV !== 'production') {
-//   console.log('asdasdasdasdasdasdasdasd');
-//   const webpack = require('webpack');
-//   const config = require('../webpack.config.dev');
-//   const compiler = webpack(config);
-//
-//   app.use(require('webpack-dev-middleware')(compiler, {
-//     noInfo: true,
-//     publicPath: config.output.publicPath
-//   }));
-//
-//   app.use(require('webpack-hot-middleware')(compiler));
-// }
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: config.output.publicPath
+  }));
+
+  app.use(require('webpack-hot-middleware')(compiler));
+}
 
 const networks = [
   {
@@ -92,12 +89,18 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
-
-app.listen(process.env.PORT || 3000, 'localhost', (err) => {
+const port = process.env.PORT || 3000;
+app.listen(port, function(err) {
   if (err) {
     console.log(err);
     return;
   }
-
-  console.log('Listening at http://localhost:3000');
+  console.log('Node app is running on port', app.get('port'));
 });
+
+
+// app.listen(process.env.PORT || 3000, 'localhost', (err) => {
+//
+//
+//   console.log('Listening at http://localhost:3000');
+// });
