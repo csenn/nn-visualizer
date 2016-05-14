@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import RaisedButton from 'material-ui/lib/raised-button';
 import { connect } from 'react-redux';

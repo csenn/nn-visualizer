@@ -68,56 +68,6 @@ class Main extends React.Component {
         />
       </div>
     );
-
-    // return false;
-
-
-    // const $$snapshot = this.props.$$network.getIn(
-    //   ['snapshots', String(this.props.snapshotIndex)]
-    // );
-    //
-    // if (this.props.isLoading || !$$snapshot) {
-    //   return (
-    //     <div style={{ textAlign: 'center', marginTop: '20px' }}>
-    //       Loading...
-    //     </div>
-    //   );
-    // }
-    //
-    // const totalEpochs = _.max(
-    //   this.props.$$network.get('snapshots').keySeq().toJS().map(n => Number(n))
-    // );
-    //
-    // const isAnyModalOpen = _.isNumber(this.state.layerModalIndex);
-    //
-    // return (
-    //   <div className="container text-center">
-    //     <NetworkToolbar
-    //       dispatch={this.props.dispatch}
-    //       isDrawingSelected={!!this.props.$$selectedDrawing}
-    //       snapshotIndex={this.props.snapshotIndex}
-    //       onSliderChange={this._onSliderChange}
-    //       testResultsSummary={this.props.testResultsSummary}
-    //       totalEpochs={totalEpochs}
-    //     />
-    //     <div style={{ textAlign: 'center' }}>
-    //       <NetworkGraph
-    //         isAnyModalOpen={isAnyModalOpen}
-    //         dispatch={this.props.dispatch}
-    //         $$snapshot={$$snapshot}
-    //         testResultsSummary={this.props.testResultsSummary}
-    //         $$selectedDrawing={this.props.$$selectedDrawing}
-    //       />
-    //
-    //       <InfoButtons
-    //         $$network={this.props.$$network}
-    //         $$selectedDrawing={this.props.$$selectedDrawing}
-    //       />
-    //     </div>
-    //     <BottomDescription/>
-    //     <LayerModal/>
-    //   </div>
-    // );
   }
 }
 

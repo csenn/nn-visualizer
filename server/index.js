@@ -85,26 +85,22 @@ app.get('/network/:id', function (req, res) {
   });
 });
 
-app.get('/static/bundle.js', function(req, res) {
+// use this instead.
+// app.use('/static', express.static('public'));
+
+app.get('/static/bundle.js', function (req, res) {
   res.sendFile(path.join(__dirname, '..', 'dist', 'bundle.js'));
-})
+});
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, function(err) {
+app.listen(port, function (err) {
   if (err) {
     console.log(err);
     return;
   }
-  console.log('Node app is running on port', app.get('port'));
+  console.log('Node app is running on port', port);
 });
-
-
-// app.listen(process.env.PORT || 3000, 'localhost', (err) => {
-//
-//
-//   console.log('Listening at http://localhost:3000');
-// });

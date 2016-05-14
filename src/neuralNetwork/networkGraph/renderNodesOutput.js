@@ -2,10 +2,25 @@ import _ from 'lodash';
 import d3 from 'd3';
 import * as graphConstants from './graphConstants';
 import { setLayerModal, setDigitModal } from '../data/neuralNetworkActions';
+import TrendingUp from 'material-ui/lib/svg-icons/action/trending-up';
+
+const checkboxSvg = `
+  <svg style="display:inline-block;height:40px;width:40px;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;fill:#43A047;">
+    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" data-reactid=".0.0.1.0.0.1.0.0.1:2:$/=10.0"></path>
+  </svg>
+`
+const closeSvg = `
+  <svg style="display:inline-block;height:40px;width:40px;transition:all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;fill:#e53935">
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path>
+  </svg>
+`
+
 
 export default function (svg, nodes, lastActivations,
-  hasTrainingPoint, testResultsSummary, dispatch, layer) {
+  selectedDrawing, testResultsSummary, dispatch, layer) {
   let maxIndex = null;
+
+  const hasTrainingPoint = !!selectedDrawing;
 
   if (lastActivations) {
     const activations = _.flatten(lastActivations);
@@ -30,6 +45,12 @@ export default function (svg, nodes, lastActivations,
       const y = yScale(nodeIndex) + 2;
       return `translate(${x}, ${y})`;
     });
+
+  // append(checkboxSvg)
+    // .attr('font-family', 'icomoon')
+    // .attr('class', 'icon-github-nn')
+    // .attr('font-size',  '16px' )
+    // .text(function(d) { return '\e900' });
 
   enteringElems.append('rect')
     .attr('class', 'output-rect');
@@ -126,4 +147,26 @@ export default function (svg, nodes, lastActivations,
     dispatch(setLayerModal({ nodeIndex, layerIndex: layer - 1 }));
     d3.event.stopPropagation();
   });
+
+
+  // Add icons
+  svg.selectAll('.result-icon-box').remove();
+  if (_.isNumber(maxIndex)) {
+    svg.append('g')
+      .attr('class', 'result-icon-box')
+      .attr('transform', () => {
+        const width = graphConstants.WIDTH;
+        const height = selectedDrawing.yIndex === maxIndex
+          ? yScale(maxIndex) + 10
+          : yScale(maxIndex) + 15;
+        return `translate(${width - 20}, ${height})`;
+      })
+      .html(() => {
+        if (selectedDrawing.yIndex === maxIndex) {
+          return checkboxSvg;
+        } else {
+          return closeSvg;
+        }
+      })
+  }
 }

@@ -81,7 +81,7 @@ export default class Network extends React.Component {
       graphBody,
       nodes[nodes.length - 1],
       hasTrainingPoint && activations[activations.length - 1],
-      hasTrainingPoint,
+      selectedDrawing,
       testResultsSummary,
       dispatch,
       nodes.length - 1
