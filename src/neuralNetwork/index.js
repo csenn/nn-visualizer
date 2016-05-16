@@ -61,6 +61,7 @@ class Main extends React.Component {
         <LayerModal
           dispatch={this.props.dispatch}
           selectedSnapshot={this.props.selectedSnapshot}
+          selectedNetworkSummary={this.props.selectedNetworkSummary}
           selectedDrawing={this.props.selectedDrawing}
         />
         <DigitModal

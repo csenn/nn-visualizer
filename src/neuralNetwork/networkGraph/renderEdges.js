@@ -71,7 +71,11 @@ export default function (svg, edgeLayers, nodes, hasTrainingData) {
       }
       if (hasTrainingData) {
         if (thicken) {
-          return d.isOn ? '1.5' : '.6';
+          // return '.9';
+          return zScore * .8;
+          // const factor =  d.isOn ? 1.2 : .7;
+          // return zScore * factor;
+          //return d.isOn ? '1.5' : '.6';
         }
         return zScore * 0.08;
       } else {

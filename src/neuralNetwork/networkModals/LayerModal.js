@@ -36,7 +36,8 @@ class LayerModal extends React.Component {
     const roundedSummation = Math.round(summation * 1000) / 1000;
 
     let str = 'a_{j}^{l} =\\sigma(' + roundedSummation + ' + ' + roundedBias + ')';
-    str += '=' +  Math.round(calculateSigmoid(bias + summation) * 1000) / 1000;
+    const activation = this.props.selectedNetworkSummary.activation;
+    str += '=' +  Math.round(calculateSigmoid(activation, bias + summation) * 1000) / 1000;
 
     return (
       <div style={{ marginTop: '15px' }}>
