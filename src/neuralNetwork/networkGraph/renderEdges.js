@@ -65,7 +65,10 @@ export default function (svg, edgeLayers, nodes, hasTrainingData) {
     })
     .attr('stroke-width', (d, i, layerIndex) => {
       const thicken = edgeLayers[layerIndex].length < 1000;
-      const zScore = Math.abs(d.zScore);
+      let zScore = Math.abs(d.zScore);
+      if (zScore > 6) {
+        zScore = 6;
+      }
       if (hasTrainingData) {
         if (thicken) {
           return d.isOn ? '1.5' : '.6';

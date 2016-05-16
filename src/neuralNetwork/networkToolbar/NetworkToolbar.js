@@ -43,6 +43,7 @@ export default class extends React.Component {
           <Item label="Hidden Nodes" value={summary.hiddenNodes}/>
           <Item label="Learning Rate" value={summary.eta}/>
           <Item label="Activation" value={summary.activation}/>
+          <Item label="Cost" value={summary.cost}/>
         </div>
 
         <NetworkChooser/>

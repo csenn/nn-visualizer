@@ -29,7 +29,8 @@ export default class InfoButtons extends React.Component {
       const [epochActivations, s] = feedDrawingThroughNetwork(
         selectedDrawing.x,
         network[epochIndex].biases,
-        network[epochIndex].weights
+        network[epochIndex].weights,
+        this.props.selectedNetworkSummary.activation
       );
       activations.push(epochActivations[this.props.layer]);
     });

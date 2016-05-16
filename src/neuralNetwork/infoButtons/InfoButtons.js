@@ -31,6 +31,7 @@ export default class InfoButtons extends React.Component {
           layer={1}
           selectedNetwork={this.props.selectedNetwork}
           selectedDrawing={this.props.selectedDrawing}
+          selectedNetworkSummary={this.props.selectedNetworkSummary}
           style={{ top: '67px', left: `${graphConstants.WIDTH / 2 - 90}px` }}
         />
       );
@@ -50,12 +51,14 @@ export default class InfoButtons extends React.Component {
           layer={1}
           selectedNetwork={this.props.selectedNetwork}
           selectedDrawing={this.props.selectedDrawing}
+          selectedNetworkSummary={this.props.selectedNetworkSummary}
           style={{ top: '67px', left: `${graphConstants.WIDTH / 3 - 60}px` }}
         />,
         <ActivationHistoryInfo
           layer={2}
           selectedNetwork={this.props.selectedNetwork}
           selectedDrawing={this.props.selectedDrawing}
+          selectedNetworkSummary={this.props.selectedNetworkSummary}
           style={{ top: '67px', left: `${2 * graphConstants.WIDTH / 3 - 90}px` }}
         />
       );
@@ -96,6 +99,7 @@ export default class InfoButtons extends React.Component {
           layer={this._isLong() ? 3 : 2}
           selectedNetwork={this.props.selectedNetwork}
           selectedDrawing={this.props.selectedDrawing}
+          selectedNetworkSummary={this.props.selectedNetworkSummary}
           style={{ top: '110px', right: '25px' }}
         />
 

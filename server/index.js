@@ -22,44 +22,105 @@ const networks = [
     path: 'eta_3_hidden_5.json',
     hiddenNodes: 5,
     eta: 3.0,
-    activation: 'Sigmoid',
-    accuracy: '87%'
+    activation: 'Logistic',
+    accuracy: '87%',
+    improvedWeightInit: false,
+    cost: 'Quadratic'
   },
   {
     path: 'eta_3_hidden_10.json',
     hiddenNodes: 10,
     eta: 3.0,
-    activation: 'Sigmoid',
-    accuracy: '90%'
+    activation: 'Logistic',
+    accuracy: '90%',
+    improvedWeightInit: false,
+    cost: 'Quadratic'
   },
   {
     path: 'eta_3_hidden_20.json',
     hiddenNodes: 20,
     eta: 3.0,
-    activation: 'Sigmoid',
-    accuracy: '93%'
+    activation: 'Logistic',
+    accuracy: '93%',
+    improvedWeightInit: false,
+    cost: 'Quadratic'
   },
   {
     path: 'eta_3_hidden_30.json',
     hiddenNodes: 30,
     eta: 3.0,
-    activation: 'Sigmoid',
-    accuracy: '94%'
+    activation: 'Logistic',
+    accuracy: '94%',
+    improvedWeightInit: false,
+    cost: 'Quadratic'
   },
   {
     path: 'eta_.3_hidden_30.json',
     hiddenNodes: 30,
     eta: 0.3,
-    activation: 'Sigmoid',
-    accuracy: '82%'
+    activation: 'Logistic',
+    accuracy: '82%',
+    improvedWeightInit: false,
+    cost: 'Quadratic'
   },
   {
-    path: 'eta_3_hidden_20_15.json',
-    hiddenNodes: '20, 15',
-    eta: 3,
-    activation: 'Sigmoid',
-    accuracy: '93%'
+    path: 'eta_.3_hidden_30_improvedWeights.json',
+    hiddenNodes: 30,
+    eta: 0.3,
+    activation: 'Logistic',
+    accuracy: '95%',
+    improvedWeightInit: true,
+    cost: 'Quadratic'
   },
+  //running
+  {
+    path: 'eta_.01_hidden_30_tanh.json',
+    hiddenNodes: '30',
+    eta: 0.01,
+    activation: 'Tanh',
+    accuracy: '93%',
+    improvedWeightInit: true,
+    cost: 'Quadratic'
+  },
+  {
+    path: 'eta_.3_hidden_30_crossEntropy_improvedWeights_tanh.json',
+    hiddenNodes: 30,
+    eta: 0.03,
+    activation: 'Tanh',
+    accuracy: '93%',
+    improvedWeightInit: true,
+    cost: 'Cross Entropy'
+  },
+  {
+    path: 'eta_.1_hidden_5_5_crossEntropy_improvedWeights.json',
+    hiddenNodes: '5, 5',
+    eta: 0.1,
+    activation: 'Logistic',
+    accuracy: '88%',
+    improvedWeightInit: true,
+    cost: 'Cross Entropy'
+  },
+  // running
+  {
+    path: 'eta_.1_hidden_20_15_crossEntropy_improvedWeights_tanh.json',
+    hiddenNodes: '20, 15',
+    eta: 0.1,
+    activation: 'Tanh',
+    accuracy: '94%',
+    improvedWeightInit: true,
+    cost: 'Cross Entropy'
+  }
+
+
+  // {
+  //   path: 'eta_3_hidden_20_15.json',
+  //   hiddenNodes: '20, 15',
+  //   eta: 3,
+  //   activation: 'Logistic',
+  //   accuracy: '93%',
+  //   improvedWeightInit: false,
+  //   cost: 'Quadratic'
+  // }
 ];
 
 app.get('/network', (req, res) => {

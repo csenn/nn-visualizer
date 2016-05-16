@@ -45,23 +45,32 @@ class NetworkChooser extends React.Component {
       return false;
     }
     const rows = this.props.networkSummaries.map((summary, index) => {
+
+      const weight = summary.improvedWeightInit
+        ? 'Gaussian(0,1) * 1/sqrt(n)'
+        : 'Gaussian(0,1)';
+
       return (
         <TableRow key={summary.path} selected={this.state.selectedRowIndex === index}>
           <TableRowColumn>{summary.accuracy}</TableRowColumn>
           <TableRowColumn>{summary.hiddenNodes}</TableRowColumn>
           <TableRowColumn>{summary.eta}</TableRowColumn>
           <TableRowColumn>{summary.activation}</TableRowColumn>
+          <TableRowColumn>{summary.cost}</TableRowColumn>
+          <TableRowColumn style={{width: '140px'}}>{weight}</TableRowColumn>
         </TableRow>
       );
     });
     return (
-      <Table onRowSelection={this._onRowSelection} >
+      <Table onRowSelection={this._onRowSelection} style={{fontFamily: 'Raleway'}}>
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>Accuracy</TableHeaderColumn>
-            <TableHeaderColumn># of Hidden Nodes</TableHeaderColumn>
+            <TableHeaderColumn>Hidden Layers</TableHeaderColumn>
             <TableHeaderColumn>Learning Rate</TableHeaderColumn>
             <TableHeaderColumn>Activation</TableHeaderColumn>
+            <TableHeaderColumn>Cost</TableHeaderColumn>
+            <TableHeaderColumn style={{width: '140px'}}>Weight Init</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody deselectOnClickaway={false}>
@@ -101,6 +110,8 @@ class NetworkChooser extends React.Component {
           title="Choose a model to visualize"
           actions={actions}
           modal={false}
+          contentStyle={{width: '80%', maxWidth: 'none'}}
+          titleStyle={{fontFamily: 'Raleway'}}
           open={this.state.isOpen}
         >
         {this._renderContent()}

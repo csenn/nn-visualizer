@@ -16,11 +16,11 @@ class Main extends React.Component {
   constructor(props) {
     super(props);
     props.dispatch(getNetworks());
-    props.dispatch(getNetwork('eta_3_hidden_20_15.json'));
+    props.dispatch(getNetwork('eta_.1_hidden_20_15_crossEntropy_improvedWeights_tanh.json'));
   }
 
   render() {
-   if (this.props.isLoading || !this.props.selectedSnapshot) {
+    if (this.props.isLoading || !this.props.selectedSnapshot) {
       return (
         <div style={{ textAlign: 'center', marginTop: '100px' }}>
           <div style={{ marginBottom: '15px' }}>Loading</div>
@@ -53,6 +53,7 @@ class Main extends React.Component {
           />
           <InfoButtons
             selectedNetwork={this.props.selectedNetwork}
+            selectedNetworkSummary={this.props.selectedNetworkSummary}
             selectedDrawing={this.props.selectedDrawing}
           />
         </div>
@@ -84,6 +85,10 @@ const mapStateToProps = (state) => {
   const selectedSnapshot = selectedNetwork.snapshots
     && selectedNetwork.snapshots[String(snapshotIndex)];
 
+  const selectedNetworkSummary = _.find(networkSummaries, {
+    path: selectedNetworkSummaryId
+  });
+
   let testResultsSummary = null;
   if (selectedSnapshot) {
     const { testResults } = selectedSnapshot;
@@ -103,7 +108,8 @@ const mapStateToProps = (state) => {
     const [activations, zs] = feedDrawingThroughNetwork(
       selectedDrawing.x,
       selectedSnapshot.biases,
-      selectedSnapshot.weights
+      selectedSnapshot.weights,
+      selectedNetworkSummary
     );
     /* Let's cheat a bit and just pass activations and zs down with drawing */
     Object.assign(selectedDrawing, { activations, zs });
@@ -117,33 +123,8 @@ const mapStateToProps = (state) => {
     selectedDrawing,
     selectedSnapshot,
     testResultsSummary,
-    selectedNetworkSummary: _.find(networkSummaries, { path: selectedNetworkSummaryId })
+    selectedNetworkSummary
   };
-
-  // debugger
-  //
-  // const isLoading = $$state.getIn(['neuralNetwork', 'isLoading']);
-  // const snapshotIndex = $$state.getIn(['neuralNetwork', 'snapshotIndex']);
-  // const $$network = $$state.getIn(['neuralNetwork', 'network']);
-  // const $$testResults = $$network.getIn(['snapshots', String(snapshotIndex), 'testResults']);
-  // const $$selectedDrawing = $$state.getIn(['neuralNetwork', 'selectedDrawing']);
-  //
-  // let testResultsSummary;
-  // if ($$testResults) {
-  //   const testResults = $$testResults.toJS();
-  //   testResultsSummary = Object.keys(testResults).reduce((prev, curr) => {
-  //     const wrongCount = _.values(testResults[curr].wrong).reduce((prev1, curr2) => {
-  //       return prev1 + curr2.length;
-  //     }, 0);
-  //     prev[curr] = {
-  //       wrongCount,
-  //       correctCount: testResults[curr].correct.length
-  //     };
-  //     return prev;
-  //   }, {});
-  // }
-  //
-  // return { $$network, snapshotIndex, testResultsSummary, $$selectedDrawing, isLoading};
 };
 
 export default connect(mapStateToProps)(Main);

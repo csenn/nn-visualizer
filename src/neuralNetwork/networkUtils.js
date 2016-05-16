@@ -14,22 +14,28 @@ export function uncompressImage(compressedImage) {
   return image;
 }
 
-export function calculateSigmoid(num) {
-  return 1 / (1 + Math.pow(Math.E, -num));
+export function calculateSigmoid(activation, num) {
+  if (activation === 'Logistic') {
+    return 1 / (1 + Math.pow(Math.E, -num));
+  } else if (activation === 'Tanh') {
+    return Math.tanh(num);
+  }
+  throw new Error('Invalid sigmoid');
 }
 
 function roundThousandth(num) {
   return Math.round(num * 1000) / 1000;
 }
 
-export function feedDrawingThroughNetwork(x, biases, weights) {
+export function feedDrawingThroughNetwork(x, biases, weights, selectedNetworkSummary) {
   let activation = x;
   const activations = [x];
   const zs = [];
+  const boundCalculcateSigmoid = _.partial(calculateSigmoid, selectedNetworkSummary.activation);
   for (let i = 0; i < biases.length; i++) {
     const cross = crossProduct(weights[i], activation);
     const z = addMatrix(cross, biases[i]);
-    activation = applyFunctionOverMatrix(z, calculateSigmoid);
+    activation = applyFunctionOverMatrix(z, boundCalculcateSigmoid);
     zs.push(z);
     activations.push(activation);
   }
@@ -73,15 +79,10 @@ export function convertToGraph(selectedSnapshot, dataPoint) {
     });
   });
 
-  const flatWights = _.flattenDeep(weights);
-  const weightAverage = simpleStats.mean(flatWights);
-  const weightStdDev = simpleStats.standardDeviation(flatWights);
-
-
-  // Visually Examine Weights
-  // console.log(_.take(_.sortBy(flatWights, w => - Math.abs(w)), 100));
-
   weights.forEach((weightLayer, layerIndex) => {
+    const flatWeights = _.flattenDeep(weightLayer);
+    const weightAverage = simpleStats.mean(flatWeights);
+    const weightStdDev = simpleStats.standardDeviation(flatWeights);
     weightLayer.forEach((weightRow, weightRowIndex) => {
       weightRow.forEach((weight, weightIndex) => {
         let edgeOn = false;
@@ -116,12 +117,6 @@ export function convertToGraph(selectedSnapshot, dataPoint) {
       });
     });
   });
-
-  // if (activations) {
-  //   edges = _.sortBy(edges, (e) => e.isOn);
-  // } else {
-  //   edges = _.sortBy(edges, (e) => Math.abs(e.zScore));
-  // }
 
   return { nodes, edges, activations };
 }

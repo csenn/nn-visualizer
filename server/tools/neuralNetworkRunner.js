@@ -29,6 +29,8 @@ function clean(data, isTest) {
     var flattened = _.flatten(image);
     for (var j = 0; j < flattened.length; j++) {
       flattened[j] = [flattened[j] / 255];
+      // var a = -1 + (flattened[j] / 255 * 2);
+      // flattened[j] = [a];
     }
 
     var result = { x: flattened };
@@ -97,6 +99,8 @@ module.exports = function(options, fileName) {
     epochs: epochCount,
     miniBatchSize: 10,
     eta: options.eta,
+    costFunction: options.costFunction,
+    activationType: options.activationType,
     testData: clean(testing_data, true),
     onStateUpdate: (networkState, epoch) => {
 

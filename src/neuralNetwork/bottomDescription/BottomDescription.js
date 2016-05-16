@@ -84,7 +84,7 @@ export default class BottomDescription extends React.Component {
               is considered a small number of edges.
               Yet the more you stare at and analyze these edges and their calculations, the more you grasp
               the scope and complexity of interactions in large modern networks. For another comparison, the
-              human brain has levels of magnitude more connections then this visualization.
+              human brain has orders of magnitude more connections then this visualization.
             </li>
             <li style={{marginTop: '10px'}}>
               A network with only 5 hidden nodes has a perfomance of 87%. These results were considerably better

@@ -157,7 +157,7 @@ export default function (svg, nodes, lastActivations,
       .attr('transform', () => {
         const width = graphConstants.WIDTH;
         const height = selectedDrawing.yIndex === maxIndex
-          ? yScale(maxIndex) + 10
+          ? yScale(maxIndex) + 12
           : yScale(maxIndex) + 15;
         return `translate(${width - 20}, ${height})`;
       })
