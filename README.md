@@ -19,6 +19,6 @@ Convolutional neural networks also seem like a cool next thing to visualize... M
 
 
 ##### Credits
-[Simple Redux Boilerplate ](https://github.com/tsaiDavid/simple-redux-boilerplate)
-The authors of React, Redux, D3.js and everything else in the package.json.
-Michael Nielsen's excellent [book.](http://neuralnetworksanddeeplearning.com/)
+[Simple Redux Boilerplate] (https://github.com/tsaiDavid/simple-redux-boilerplate) was used to start off the app. 
+Credit of course goes to the authors of React, Redux, D3.js and everything else in the package.json.
+We also highly suggest Michael Nielsen's [excellent book.](http://neuralnetworksanddeeplearning.com/)
