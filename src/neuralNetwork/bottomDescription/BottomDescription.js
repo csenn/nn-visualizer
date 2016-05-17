@@ -89,17 +89,17 @@ export default class BottomDescription extends React.Component {
               is considered a small number of edges.
               Yet the more you analyze (and stare at) these edges and their calculations, the more you grasp
               the scope and complexity of interactions in large modern networks. For another comparison, the
-              human brain has orders of magnitude more connections then this visualization.
+              human brain has orders of magnitude more connections than this visualization.
             </li>
             <li style={{marginTop: '10px'}}>
-              Tuning paramters is tough. Even in these simple models, relationships
+              Tuning parameters is tough. Even in these simple models, relationships
               between learning rate, activation functions, cost functions,
               and hidden layers are difficult to intuit. Rules of thumb can be developed,
               but the whole process still feels a little bit like black magic.
             </li>
             <li style={{marginTop: '10px'}}>
-              A network with only 5 hidden nodes has a perfomance of 87%. These results were considerably better
-              then expected, and when feeding in digits it's a great visualization to play with to see how
+              A network with only 5 hidden nodes has a performance of 87%. These results were considerably better
+              than expected, and when feeding in digits it's a great visualization to play with to see how
               the activations in the hidden layer effect those in the output layer.
             </li>
             <li style={{marginTop: '10px'}}>
@@ -110,16 +110,15 @@ export default class BottomDescription extends React.Component {
             </li>
             <li style={{marginTop: '10px'}}>
               The network with the lowest accuracy of 82% is nice to look at because it
-              learns slower over all epochs. It also categorized every zero wrong.
-              According to the charts, given better weight initilization or
+              learns slower over all epochs. It also categorized every 0 incorrectly.
+              According to the charts, given better weight initialization or
               more epochs to learn from, it is likely performance would have
-              continued to improve. but the
-              fact that it did so poorly with zero was curious. Assuming it was
-              not a bug of some sort, something interesting must have happened.
+              continued to improve. Assuming it wasn't a bug, the
+              fact that it did so poorly with 0 is curious and the reason is unknown.
             </li>
             <li style={{marginTop: '10px'}}>
-              Not shown, but tested. Shifting test images more then a few pixels can
-              do havoc to the network's accuracy. Convolutional neural
+              Not shown, but tested. Shifting test images more than a few pixels can
+              wreak havoc on the network's accuracy. Convolutional neural
               networks and manufacturing new training data with image
               transformations are techniques that can help.
             </li>

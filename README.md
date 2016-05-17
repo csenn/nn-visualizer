@@ -15,4 +15,10 @@ for using D3.js.
 ##### Future
 There are more statistics that could be visualized such as the change in cost, fine grained analysis of the change in weights, or gradients analysis. Relu, other activation functions, and softmax are common techniques that could be added. The neural networks could be run in real time using a library such as Tensor Flow on the backend.
 
-Convolutional neural networks also seem like a cool next thing to visualize... Maybe three.js??
+Convolutional neural networks also seem like a cool next thing to visualize... Maybe Three.js??
+
+
+##### Credits
+[Simple Redux Boilerplate ](https://github.com/tsaiDavid/simple-redux-boilerplate)
+The authors of React, Redux, D3.js and everything else in the package.json.
+Michael Nielsen's excellent [book.](http://neuralnetworksanddeeplearning.com/)
