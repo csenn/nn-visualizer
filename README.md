@@ -1,6 +1,6 @@
 ### Visualization of a feed forward Neural Network using MNIST dataset
 
-See [visualization and project details here](nn-mnist.sennabaum.com)
+See [visualization and project details here](http://nn-mnist.sennabaum.com)
 
 ##### Why?
 This project started off as an attempt to run an MNIST classification neural network in the browser with
