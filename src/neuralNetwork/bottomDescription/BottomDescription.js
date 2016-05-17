@@ -28,7 +28,7 @@ export default class BottomDescription extends React.Component {
           <p>
             The MNIST dataset contains 60,000 handwritten numbers collected from Census Bureau employees and highschool students.
             We use the MNIST dataset as it is well known by students and researchers in the machine learning community and because it makes
-            a nice vizualization possible. For more information see <a href="http://yann.lecun.com/exdb/mnist/">Yann Lecun's MNIST Database</a>
+            a nice vizualization possible. For more information see <a href="http://yann.lecun.com/exdb/mnist/">Yann Lecun's MNIST Database.</a>
           </p>
           <p>
             The purpose of this visualization is to view <strong>basic feed forward neural networks</strong> in action.
@@ -58,9 +58,12 @@ export default class BottomDescription extends React.Component {
               </span>
             </li>
             <li style={{marginTop: '10px'}}>
-              <strong> The second (yellow and grey color)</strong> is a trained network with weight, biases, and activations being fed an MNIST image.
-              Yellow lines represent <strong>edges exiting active nodes</strong>. Yellow nodes have an activation above 0.5.
-              It's meant to look like a flashlight illuminating certain paths through the network.
+              <strong> The second (yellow and grey color)</strong> is a trained
+              network with weight, biases, and activations being fed an MNIST image.
+              Yellow lines represent <strong>edges exiting active nodes</strong>.
+              Yellow nodes are active. Thicker edges represent a larger absolute
+              value of the weight. It's meant to look like a flashlight
+              illuminating certain paths through the network.
             </li>
           </ul>
 
@@ -70,8 +73,10 @@ export default class BottomDescription extends React.Component {
           </p>
 
           <p>
-            When the network is initially run, we save a snapshot (equivalent to an epoch) of the network at different points in time.
-            <strong> Use the slider to see how the network weights and biases change over time.</strong>
+            These networks were run and saved as json in advance. We save a snapshot (equivalent
+            to an epoch) of the network at different points in time.
+            <strong> Use the slider to see how the network weights and
+            biases change over time.</strong>
           </p>
 
           <h2 style={h2Style}>
@@ -82,9 +87,15 @@ export default class BottomDescription extends React.Component {
             <li>
               784 x 30 edges (the maximum connections between layers in this visualization)
               is considered a small number of edges.
-              Yet the more you stare at and analyze these edges and their calculations, the more you grasp
+              Yet the more you analyze (and stare at) these edges and their calculations, the more you grasp
               the scope and complexity of interactions in large modern networks. For another comparison, the
               human brain has orders of magnitude more connections then this visualization.
+            </li>
+            <li style={{marginTop: '10px'}}>
+              Tuning paramters is tough. Even in these simple models, relationships
+              between learning rate, activation functions, cost functions,
+              and hidden layers are difficult to intuit. Rules of thumb can be developed,
+              but the whole process still feels a little bit like black magic.
             </li>
             <li style={{marginTop: '10px'}}>
               A network with only 5 hidden nodes has a perfomance of 87%. These results were considerably better
@@ -92,13 +103,19 @@ export default class BottomDescription extends React.Component {
               the activations in the hidden layer effect those in the output layer.
             </li>
             <li style={{marginTop: '10px'}}>
-              Networks with a learning rate of 3.0 gained a high percentage of their accuracy bumps in just the first epoch. The final
-              epochs offered smaller improvements.
+              Most networks gained a large percentage of their final accuracy
+              in just one epoch. And it usually was the case that a higher accuracy
+              in the first epoch meant a higher final accuracy. We expected at
+              least some networks to spread their learning out over more epochs.
             </li>
             <li style={{marginTop: '10px'}}>
-              The network with a learning rate of 0.3 is nice to look at because it
-              learns slower over all epochs. Given more epochs to learn from,
-              it is likely performance would have continued to improve.
+              The network with the lowest accuracy of 82% is nice to look at because it
+              learns slower over all epochs. It also categorized every zero wrong.
+              According to the charts, given better weight initilization or
+              more epochs to learn from, it is likely performance would have
+              continued to improve. but the
+              fact that it did so poorly with zero was curious. Assuming it was
+              not a bug of some sort, something interesting must have happened.
             </li>
             <li style={{marginTop: '10px'}}>
               Not shown, but tested. Shifting test images more then a few pixels can
@@ -116,7 +133,7 @@ export default class BottomDescription extends React.Component {
             Michael Nielsen's <a href="http://neuralnetworksanddeeplearning.com/">Neural Networks and Deep Learning</a>
             <span> The</span> network and charts were built using D3.
             View logic and data management were handled with ReactJS and Redux.
-            View our package.json for all of our dependencies.
+            View our <a href="https://github.com/csenn/nn-visualizer">package.json</a> for all of our dependencies.
           </p>
 
         </div>

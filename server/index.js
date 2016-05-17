@@ -46,20 +46,20 @@ const networks = [
     cost: 'Quadratic'
   },
   {
-    path: 'eta_3_hidden_30.json',
-    hiddenNodes: 30,
-    eta: 3.0,
-    activation: 'Logistic',
-    accuracy: '94%',
-    improvedWeightInit: false,
-    cost: 'Quadratic'
-  },
-  {
     path: 'eta_.3_hidden_30.json',
     hiddenNodes: 30,
     eta: 0.3,
     activation: 'Logistic',
     accuracy: '82%',
+    improvedWeightInit: false,
+    cost: 'Quadratic'
+  },
+  {
+    path: 'eta_3_hidden_30.json',
+    hiddenNodes: 30,
+    eta: 3.0,
+    activation: 'Logistic',
+    accuracy: '94%',
     improvedWeightInit: false,
     cost: 'Quadratic'
   },
@@ -72,7 +72,6 @@ const networks = [
     improvedWeightInit: true,
     cost: 'Quadratic'
   },
-  //running
   {
     path: 'eta_.01_hidden_30_tanh.json',
     hiddenNodes: '30',
@@ -100,7 +99,6 @@ const networks = [
     improvedWeightInit: true,
     cost: 'Cross Entropy'
   },
-  // running
   {
     path: 'eta_.1_hidden_20_15_crossEntropy_improvedWeights_tanh.json',
     hiddenNodes: '20, 15',
@@ -110,22 +108,14 @@ const networks = [
     improvedWeightInit: true,
     cost: 'Cross Entropy'
   }
-
-
-  // {
-  //   path: 'eta_3_hidden_20_15.json',
-  //   hiddenNodes: '20, 15',
-  //   eta: 3,
-  //   activation: 'Logistic',
-  //   accuracy: '93%',
-  //   improvedWeightInit: false,
-  //   cost: 'Quadratic'
-  // }
 ];
 
 app.get('/network', (req, res) => {
   res.send(networks);
 });
+
+// Network Cache that will have only one key for now.
+const cache = {};
 
 app.get('/network/:id', function (req, res) {
   const filename = req.params.id;
@@ -138,27 +128,40 @@ app.get('/network/:id', function (req, res) {
     return res.status(500).send('Network does not exist');
   }
 
+  // Simple optimization since this network is always asked for first. This is
+  // coupled to client code and is brittle. The cache could be extended to
+  // all networks, but I am not really sure if that would cause a memory
+  // issue, so this is safe and easy.
+  if (filename === 'eta_.1_hidden_20_15_crossEntropy_improvedWeights_tanh.json') {
+    if (cache[filename]) {
+      return res.send(cache[filename]);
+    }
+  }
+
   jsonfile.readFile(path.join(__dirname, 'json', 'networks', filename), (err, file) => {
     if (err) {
       return res.status(500).send(err);
+    }
+    if (filename === 'eta_.1_hidden_20_15_crossEntropy_improvedWeights_tanh.json') {
+      cache[filename] = file;
     }
     res.send(file);
   });
 });
 
 // use this instead.
-// app.use('/static', express.static('public'));
+app.use('/static', express.static('dist'));
 
-app.get('/static/bundle.js', function (req, res) {
-  res.sendFile(path.join(__dirname, '..', 'dist', 'bundle.js'));
-});
+// app.get('/static/bundle.js', function (req, res) {
+//   res.sendFile(path.join(__dirname, '..', 'dist', 'bundle.js'));
+// });
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, function (err) {
+app.listen(port, (err) => {
   if (err) {
     console.log(err);
     return;

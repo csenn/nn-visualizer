@@ -43,7 +43,14 @@ export default class Network extends React.Component {
     d3.select(this.refs['chart-svg']).selectAll('*').remove();
   }
   buildNetwork() {
-    const { selectedSnapshot, selectedDrawing, testResultsSummary, dispatch } = this.props;
+    const {
+      selectedSnapshot,
+      selectedDrawing,
+      testResultsSummary,
+      dispatch,
+      selectedNetworkSummary
+    } = this.props;
+
     if (!selectedSnapshot) {
       return false;
     }
@@ -75,7 +82,8 @@ export default class Network extends React.Component {
       graphBody,
       nodes.slice(1, nodes.length - 1),
       hasTrainingPoint,
-      dispatch
+      dispatch,
+      selectedNetworkSummary
     );
     renderNodesOutput(
       graphBody,

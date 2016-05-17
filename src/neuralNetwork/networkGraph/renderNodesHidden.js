@@ -2,7 +2,7 @@ import d3 from 'd3';
 import * as graphConstants from './graphConstants';
 import { setLayerModal } from '../data/neuralNetworkActions';
 
-export default function (svg, hiddenLayers, hasTrainingPoint, dispatch) {
+export default function (svg, hiddenLayers, hasTrainingPoint, dispatch, selectedNetworkSummary) {
 
   const xScale = d3.scale.linear()
     .domain([0, hiddenLayers.length + 1])
@@ -15,6 +15,15 @@ export default function (svg, hiddenLayers, hasTrainingPoint, dispatch) {
     return d3.scale.linear()
       .domain([0, hiddenLayers[index].length])
       .range([0, graphConstants.HEIGHT - graphConstants.HEADER_HEIGHT]);
+  }
+
+  function isActiveNode(num) {
+    if (selectedNetworkSummary.activation === 'Logistic') {
+      return num > 0.5;
+    } else if (selectedNetworkSummary.activation === 'Tanh') {
+      return num > 0;
+    }
+    throw new Error('Unexpected activation type');
   }
 
   const layers = svg
@@ -56,12 +65,12 @@ export default function (svg, hiddenLayers, hasTrainingPoint, dispatch) {
       .attr('ry', 3)
       .attr('display', hasTrainingPoint ? 'inherit' : 'none')
       .attr('stroke', d => {
-        return d.activation > 0.5
+        return isActiveNode(d.activation)
           ? graphConstants.WITH_TRAINING_ON
           : graphConstants.WITH_TRAINING_OFF;
       })
       .attr('fill', d => {
-        return d.activation > .5
+        return isActiveNode(d.activation)
           ? graphConstants.WITH_TRAINING_ON
           : graphConstants.WITH_TRAINING_OFF;
       });
@@ -78,7 +87,7 @@ export default function (svg, hiddenLayers, hasTrainingPoint, dispatch) {
         .attr('text-anchor', 'middle')
         .attr('stroke-width', '.5')
         .attr('display', hasTrainingPoint ? 'inherit' : 'none')
-        .attr('stroke', d => d.activation > .5 ? 'black' : 'white')
+        .attr('stroke', d => isActiveNode(d.activation) ? 'black' : 'white')
         .text(d => d.activation);
 
   // Bias Label Entering

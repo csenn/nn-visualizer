@@ -49,6 +49,7 @@ class Main extends React.Component {
             snapshotIndex={this.props.snapshotIndex}
             selectedSnapshot={this.props.selectedSnapshot}
             testResultsSummary={this.props.testResultsSummary}
+            selectedNetworkSummary={this.props.selectedNetworkSummary}
             selectedDrawing={this.props.selectedDrawing}
           />
           <InfoButtons

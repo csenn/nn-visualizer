@@ -71,8 +71,8 @@ export default function (svg, edgeLayers, nodes, hasTrainingData) {
       }
       if (hasTrainingData) {
         if (thicken) {
-          // return '.9';
           return zScore * .8;
+          // return '.9';
           // const factor =  d.isOn ? 1.2 : .7;
           // return zScore * factor;
           //return d.isOn ? '1.5' : '.6';
@@ -93,7 +93,7 @@ export default function (svg, edgeLayers, nodes, hasTrainingData) {
       } else {
         return d.weight > 0
           ? graphConstants.NO_TRAINING_NEGATIVE
-          : graphConstants.NO_TRAINING_POSITIVE ;
+          : graphConstants.NO_TRAINING_POSITIVE;
       }
     });
 
