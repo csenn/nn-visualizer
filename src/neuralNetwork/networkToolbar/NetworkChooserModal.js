@@ -11,7 +11,7 @@ import {
   TableHeaderColumn,
   TableRow,
   TableRowColumn
-} from 'material-ui/lib/Table';
+} from 'material-ui/lib/table';
 
 class NetworkChooser extends React.Component {
   constructor(nextProps) {
