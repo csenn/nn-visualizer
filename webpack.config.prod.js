@@ -37,11 +37,11 @@ module.exports = {
      * Loaders are switched into a minmizing mode. Obviously, you'd only want to run
      * your production code through this!
      */
-    new webpack.optimize.UglifyJsPlugin({
-      compressor: {
-        warnings: false
-      }
-    })
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compressor: {
+    //     warnings: true
+    //   }
+    // })
   ],
   module: {
     loaders: [
