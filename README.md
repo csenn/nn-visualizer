@@ -6,7 +6,7 @@ See [visualization and project details here](http://nn-mnist.sennabaum.com)
 This project started off as an attempt to run an MNIST classification neural network in the browser with
 a real time visualization. See this repo for why we [changed our mind.](https://github.com/csenn/basic-nn-js)
 
-Instead, we ran the neural nets in advance and saved snapshots of them through the learning process. This
+Instead, we ran the neural nets in advance and saved snapshots of them through the learning process. This 
 turned out to provide exactly the type of experience we were looking for without having to push the browser so hard.
 
 This project was a great way to learn the details of simple feedforward neural networks. It was also a nice refresher
