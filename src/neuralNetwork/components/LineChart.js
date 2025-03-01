@@ -1,7 +1,7 @@
 import React from 'react';
 import d3 from 'd3';
 import _ from 'lodash';
-import './lineChart.scss';
+import './lineChart.css';
 
 export default class LineChart extends React.Component {
   constructor(props) {

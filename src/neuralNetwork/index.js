@@ -9,7 +9,7 @@ import NetworkToolbar from './networkToolbar/NetworkToolbar';
 import InfoButtons from './infoButtons/InfoButtons';
 import BottomDescription from './bottomDescription/BottomDescription';
 import { feedDrawingThroughNetwork } from './networkUtils';
-import './neuralNetwork.scss';
+import './neuralNetwork.css';
 import CircularProgress from 'material-ui/lib/circular-progress';
 
 class Main extends React.Component {

@@ -1,0 +1,9 @@
+.slick-prev:before {
+  color: black;
+}
+.slick-next:before {
+  color: black;
+}
+.slick-center {
+  border-bottom: solid 7px #00bcd4;
+}

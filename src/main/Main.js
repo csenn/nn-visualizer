@@ -5,7 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import IconButton from 'material-ui/lib/icon-button';
 // import ActionHome from 'material-ui/lib/svg-icons/action/home';
 
-import './main.scss';
+import './main.css';
 
 class App extends Component {
   _onGithubClick() {
