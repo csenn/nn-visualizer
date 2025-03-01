@@ -7,7 +7,7 @@ import IconButton from 'material-ui/lib/icon-button';
 
 import './main.scss';
 
-export default class App extends Component {
+class App extends Component {
   _onGithubClick() {
     window.open('https://github.com/csenn/nn-visualizer', '_blank');
   }
