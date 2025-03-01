@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   //devtool: 'cheap-module-eval-source-map',
@@ -12,13 +13,23 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: './'
   },
   plugins: [
     /**
      * This is where the magic happens! You need this to enable Hot Module Replacement!
      */
+
+
     new webpack.HotModuleReplacementPlugin(),
+
+    new HtmlWebpackPlugin({
+      template: './index.html', // Source HTML file
+      filename: 'index.html', // Output file in dist/
+      inject: 'body' // Injects scripts at the end of the body
+    }),
+
+
     /**
      * NoErrorsPlugin prevents your webpack CLI from exiting with an error code if
      * there are errors during compiling - essentially, assets that include errors

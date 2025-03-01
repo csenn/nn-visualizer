@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -9,7 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/static/'
+    publicPath: './'
   },
   plugins: [
     /**
@@ -18,6 +19,13 @@ module.exports = {
      * more predictable.
      */
     new webpack.optimize.OccurenceOrderPlugin(),
+
+    new HtmlWebpackPlugin({
+      template: './index.html', // Source HTML file
+      filename: 'index.html', // Output file in dist/
+      inject: 'body' // Injects scripts at the end of the body
+    }),
+
     /**
      * See description in 'webpack.config.dev' for more info.
      */
